@@ -15,6 +15,10 @@ def index():
 def movies():
     return render_template('free_movies.html')
 
+@app.route('/personal_card')
+def card():
+    return render_template("card.html")
+
 
 if __name__ == '__main__':
     app.run(host=LOCAL_HOST , port=LOCAL_PORT, debug=True)
