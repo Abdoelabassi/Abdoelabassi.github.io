@@ -1,25 +1,44 @@
+---
+const { twitter, bluesky, buymeacoffee, github, linkedin, researchgate} = Astro.props;
+
+---
 <footer class="footer">
     <div class="container">
       <hr>
       <div class="row">
         <div class="col-sm-6 text-muted">
   
-          <p>&copy; 2023 Abderrazaq El.</p>
+          <p>&copy; 2024 Abderrazaq El.</p>
   
         </div>
         <div class="col-sm-6">
   
           <!-- Social professional networking icons -->
           <ul class="social-icons pull-right">
-            <li><a href="https://twitter.com/aeparticle_el97" target="_blank"><i class="fab fa-twitter fa-2x"></i></a></li>
-            <li><a href="https://www.linkedin.com/in/el-abassi-abderrazaq/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a></li>
-            <!--<li><a href="" target="_blank"><i class="ai ai-google-scholar-square ai-2x"></i></a></li> -->
-            <li><a href="https://github.com/Abdoelabassi" target="_blank"><i class="fab fa-github ai-2x"></i></a></li>
-            <li><a href="https://www.researchgate.net/profile/El-Abassi-Abderrazaq" target="_blank"><i class="fab fa-researchgate fa-2x"></i></a></li>
+            <li><a href={twitter} target="_blank"><i class="fab fa-twitter fa-2x"></i></a></li>
+            <li><a href={linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a></li>
+            <li><a href={bluesky} target="_blank"><i class="fab fa-blue-sky ai-2x"></i></a></li>
+            <li><a href={github} target="_blank"><i class="fab fa-github ai-2x"></i></a></li>
+            <li><a href={researchgate} target="_blank"><i class="fab fa-researchgate fa-2x"></i></a></li>
+            <li><a href={buymeacoffee} target="_blank" class="fab fa-buymecoffee " ></a></li>
           </ul>
   
         </div>
       </div>
     </div>
   </footer><!-- jQuery Javascript Library -->
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Bootstrap JS Library -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  <!-- html file include script | used for navbar and footer -->
+  <script>
+    import "../../lib/utils.ts";
+  </script>
+  <script>
+    import {w3IncludeHTML} from "../../lib/utils";
+    w3IncludeHTML(() => {console.log("called")})
+  </script>
   

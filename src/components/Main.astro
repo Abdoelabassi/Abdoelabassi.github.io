@@ -1,6 +1,9 @@
+---
+const {email, phnenumber} = Astro.props;
+---
 <div class="row">
     <div class="col-sm-4">
-      <img class="center-block img img-responsive" src="img/abdo.jpeg" alt="Image of Jane Smith">
+      <img class="center-block img img-responsive" src="../images/abdo.jpeg" alt="Image of Jane Smith">
 
       <p id="title"><strong>EL Abassi Abderrazaq</strong><br>
         <span id="program">High Energy Physics (hep-exp)</span>
@@ -16,11 +19,11 @@
           </tr>
           <tr>
             <td><i class="fas fa-phone"></i></td>
-            <td><a href="https://wa.me/+212608733452">(+212) 608733452</a></td>
+            <td><a href="https://wa.me/+212608733452">{phnenumber}</a></td>
           </tr>
           <tr>
             <td><i class="fas fa-at"></i></td>
-            <td><a href="mailto:abderrazaq.elabassi@uit.ac.ma">abderrazaq.elabassi@uit.ac.ma</a></td>
+            <td><a href="mailto:abderrazaq.elabassi@uit.ac.ma">{email}</a></td>
           </tr>
         </tbody>
       </table>

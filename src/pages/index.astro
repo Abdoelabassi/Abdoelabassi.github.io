@@ -1,14 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
+import '../styles/main.css';
 import Main from '../components/Main.astro';
+import Header from '../components/Header.astro';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+import { pathHasLocale } from 'astro:i18n';
+
+const info = {
+  //url: 'https://abdoelabassi.github.io/',
+  twitter: 'https://twitter.com/aeparticle_el97',
+  bluesky: 'bsky.app/profile/aeparticle97.bsky.social',
+  buymeacoffee: 'https://buymeacoffee.com/abderrezaqya',
+  github: 'https://github.com/abdoelabassi',
+  linkedin: 'https://www.linkedin.com/in/el-abassi-abderrazaq/',
+  researchgate: 'https://www.researchgate.net/profile/El-Abassi-Abderrazaq',
+}
+const infoPersonal = {
+  email: 'abderrazaq.elabassi@uit.ac.ma',
+  phonenumber: '+212608733452',
+}
+
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-<Main/>
-<Footer/>
+  <Header title="Abderrazaq"/>
+  <NavBar/>
+<Main {...infoPersonal} />
+<Footer {...info} />
 </Layout>
 
 <style is:global>

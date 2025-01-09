@@ -1,9 +1,14 @@
+---
+import '../styles/main.css'
+ const { title } = Astro.props;
+
+---
 <head>
     <!-- Metadata for the Webpage -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Abderrazaq El.</title>
+    <title>{title}</title>
   
     <!-- Favicons -- We recommend this site for generating favicons: https://www.favicon-generator.org/ -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png">
@@ -38,9 +43,6 @@
   
     <!-- Academicons Courtesy of https://jpswalsh.github.io/academicons/ -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
-  
-    <!-- Local styles -->
-    <link rel="stylesheet" href="css/main.css">
   
   </head>
   
