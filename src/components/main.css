@@ -1,17 +1,198 @@
----
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
-import Main from '../components/Main.astro';
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
+:root {
+  --bright-blue: #007bff;
+  --graphite: #506578;
+  --slate-gray: lightslategray;
+  --maroon: maroon;
+  --nd-blue: #20364c;
+  --white: white;
+}
 
-<Layout>
-<Main/>
-<Footer/>
-</Layout>
+html {
+  font-size: 16px !important;
+}
 
-<style is:global>
+body {
+  font-size: 1rem;
+  font-family: "Open Sans", Arial, sans-serif;
+  background: #FFFFFF;
+  color: var(--graphite);
+}
+
+/* Colors */
+.dark-blue {
+  color: #20364c !important;
+}
+
+.bright-blue {
+  color: var(--bright-blue);
+}
+
+.white {
+  color: var(--white) !important;
+}
+
+.badge-bright-blue {
+  background: var(--bright-blue);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#badge-more {
+  background-color: #1585cf;
+  color: white;
+  cursor: pointer;
+}
+
+/* Degree area -------------------------------------------------------------------- */
+#education {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#education li {
+  margin-bottom: 1rem;
+}
+
+.university {
+  color: gray;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", Arial, sans-serif;
+  /* color: #20364c; */
+  color: var(--maroon) !important;
+  font-weight: 600;
+}
+
+h1 {
+  margin-bottom: 3rem;
+}
+
+h2, h3 {
+  margin: 0 0 2rem !important;
+  color: slategray;
+}
+
+h4 {
+  text-transform: uppercase;
+}
+
+h4, h5, h6 {
+  color: slategray !important;
+}
+
+.panel-heading h5 {
+  font-style: italic;
+  font-weight: 500;
+  color: #1585cf !important;
+}
+
+#projects {
+  padding: 0 !important;
+}
+
+#projects .panel {
+  border: none;
+}
+
+#projects .panel-body h5 {
+  font-weight: 600;
+  color: var(--maroon) !important;
+  font-size: 1.1rem;
+}
+
+#projects .panel-heading {
+  padding: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  width: 100%;
+  min-height: 200px;
+}
+
+#projects .panel-heading.proj-1 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-2 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-3 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-4 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-5 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-6 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-7 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-8 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-9 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-10 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-11 {
+  background-image: url(https://unsplash.it/300/200);
+}
+#projects .panel-heading.proj-12 {
+  background-image: url(https://unsplash.it/300/200);
+}
+
+p, table, tr, td, ul, li, blockquote, nav, a, footer, dl, dt, dd {
+  font-size: 1rem;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 400;
+}
+
+dt {
+  font-weight: 600;
+}
+
+blockquote {
+  border-left-color: slategray;
+  color: slategray;
+}
+
+blockquote blockquote {
+  border-left: none;
+  margin: 1.5rem;
+  font-style: italic;
+}
+
+cite {
+  font-size: 1.5rem !important;
+  display: block;
+  margin-top: 1rem;
+}
+
+p {
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+blockquote footer {
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+  text-indent: -1.8rem;
+}
+
+.publications {
+  list-style-type: none;
+  padding-left: 2.5rem;
+}
+
 .publications li {
   margin-left: 2rem;
   text-indent: -2.5rem;
@@ -297,50 +478,3 @@ dd {
   background-color: #1585cf;
   opacity: .8;
 }
-
-.panel-default {
-  border: none;
-  box-shadow: none;
-  border-radius: 0px;
-  border-bottom: 1px dotted silver;
-}
-
-.panel-default h5 {
-  font-style: normal;
-}
-
-.panel-default:last-child {
-  border-bottom: none !important;
-}
-
-.panel-default .panel-heading {
-  background-color: transparent !important;
-  border-bottom: 0px !important;
-  border-bottom-color: white !important;
-}
-
-.panel-default .panel-body {
-  border-top: none !important;
-  padding-top: 0px;
-  padding-right: 8rem;
-}
-
-.panel-default .panel-heading a:hover {
-text-decoration: none !important;
-border-bottom: none !important;
-padding-bottom: 0;
-}
-
-.panel-default .in {
-padding-top: 0 !important;
-color: black;
-}
-
-.panel-default a[aria-expanded="true"] {
-color: black;
-}
-
-.panel-group .panel-heading+.panel-collapse>.panel-body {
-border-top: 0px;
-}
-</style>
