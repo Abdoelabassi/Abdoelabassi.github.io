@@ -1,0 +1,39 @@
+---
+import Header from "../components/Header.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <Header title="CV"/>
+    <NavBar/>
+    <div class="spacer-div-3 hidden-xs hidden-xs"></div>
+
+    <!-- Main content    -->
+    <div id="main-container" class="container">
+  
+      <div class="row">
+        <div class="col-sm-12">
+  
+          <h1>Vitae</h1>
+  
+          <p>Find my curriculum vitae, below. References available upon request.</p>
+  
+          <p class='text-right'><a href='https://drive.google.com/file/d/1i-94Mp8vt6a8zsxLAK8vULTk7B4M8v4s/view?usp=drive_link' target='_blank'><i class='fas fa-print fa-fw' aria-hidden='true'></i>&nbsp;Print Vitae</a></p><iframe width='100%'
+            height='900px' frameborder='0' scrolling='yes' class='embed-responsive-item' src='https://drive.google.com/file/d/1i-94Mp8vt6a8zsxLAK8vULTk7B4M8v4s/view?usp=drive_link' allowfullscreen></iframe>
+  
+        </div>
+      </div>
+  
+    </div>
+  
+    <!-- Back-to-top button -->
+    <a role="button" id="topper" data-toggle="tooltip" data-placement="top" title="Top" class="btn scroll-link" href="#top"><i class="fa fa-fw fa-2x fa-caret-up" aria-hidden="true"></i></a>
+
+    <script>
+        import '../../lib/utils.ts';
+    </script>
+  
+    <Footer/>
+</Layout>
