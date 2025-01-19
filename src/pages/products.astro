@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const products: CollectionEntry<'products'>[] = await getCollection('products');
+---
+
+<Layout>
+    <Header/>
+    <NavBar/>
+    <section>
+        <h2>Collection</h2>
+        <h3>For absxyzk</h3>
+        <h4>Latest</h4>
+        <div>
+            {products.map((product) => (
+                <div>
+                    <img src={product.data.image} alt={product.data.title} />
+                    <h5>
+                        <a href={`/products/${product.slug}`} >{product.data.title}</a>
+                    </h5>
+                    <p>{product.data.price}</p>
+                    <p>{product.data.marque}</p>
+                    <p>{product.data.description}</p>
+                </div>
+            ))}
+        </div>
+    </section>
+    <Footer/>
+</Layout>
