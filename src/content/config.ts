@@ -7,8 +7,13 @@ export const collections = {
             date: z.date(),
             marque: z.string(),
             price: z.number(),
+            oldprice: z.number().optional(),
+            discount: z.number().optional(),
+            rating: z.number().optional(),
+            stock: z.number().optional(),
+            shipping: z.string().optional(),
             image: z.string(),
-            content: z.string(),
+            content: z.string().optional(),
             description: z.string().max(200)
         })
     })

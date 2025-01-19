@@ -1,9 +1,10 @@
 ---
 title: Canon PIXMA TS3140 - Imprimante Jet d’encre couleur multifonction - Wifi - Photo
 date: 2025-01-19
-slug: Canon-PIXMA-TS3140
+slug: CanonPIXMA-TS3140
 marque: Canon
 price: 429
+oldprice: 599
 image: /images/imprimant.jpg
 description: Impression, numérisation et copie à domicile sans effort
 ---
