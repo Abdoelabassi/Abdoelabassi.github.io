@@ -1,8 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import NavBar from "../components/NavBar.astro";
-import Footer from "../components/Footer.astro";
 import Product from "../components/Products";
 
 import { getCollection } from "astro:content";
@@ -11,9 +8,6 @@ import type { CollectionEntry } from "astro:content";
 const products: CollectionEntry<'products'>[] = await getCollection('products');
 ---
 
-<Layout>
-    <Header/>
-    <NavBar/>
+<Layout title="">
     <Product products={products} />
-    <Footer/>
 </Layout>

@@ -1,13 +1,10 @@
 ---
-import Header from "../components/Header.astro";
-import NavBar from "../components/NavBar.astro";
-import Footer from "../components/Footer.astro";
-import Layout from "../layouts/Layout.astro";
+
+import MainLayout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-    <Header title="CV"/>
-    <NavBar/>
+<MainLayout title="">
+   
     <div class="spacer-div-3 hidden-xs hidden-xs"></div>
 
     <!-- Main content    -->
@@ -34,6 +31,5 @@ import Layout from "../layouts/Layout.astro";
     <script>
         import '../../lib/utils.ts';
     </script>
-  
-    <Footer/>
-</Layout>
+
+</MainLayout>
