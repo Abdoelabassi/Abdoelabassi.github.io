@@ -1,6 +1,37 @@
 ---
 const { twitter, bluesky, buymeacoffee, github, linkedin, researchgate} = Astro.props;
-
+const contactInfo = [
+  {
+    name: "",
+    url: "mailto:abderrezaq@outlook.com",
+    icon: "icon-[mdi--email]",
+  },
+  {
+    name: "",
+    url: "https://github,com/Abdoelabassi",
+    icon: "icon-[mdi--github]",
+  },
+  {
+    name: "",
+    url: "https://linkedin.com/in/el-abassi-abderrazaq",
+    icon: "icon-[mdi--linkedin]",
+  },
+  {
+    name: "",
+    url: "https://twitter.com/aelabassi",
+    icon: "icon-[logos--x]",
+  },
+  {
+    name: "",
+    url: "https://bsky.app/profile/aelabassidev.bsky.social",
+    icon: "icon-[logos--bluesky]",
+  },
+  {
+    name: "",
+    url: "https://orcid.org/0009-0002-0516-9465",
+    icon: "icon-[logos--orcid]",
+  },
+]
 ---
 <footer class="footer">
     <div class="container">
@@ -8,19 +39,20 @@ const { twitter, bluesky, buymeacoffee, github, linkedin, researchgate} = Astro.
       <div class="row">
         <div class="col-sm-6 text-muted">
   
-          <p>&copy; 2024 Abderrazaq El.</p>
+          <p>&copy; {new Date().getFullYear()} Abderrazaq El.</p>
   
         </div>
         <div class="col-sm-6">
   
           <!-- Social professional networking icons -->
           <ul class="social-icons pull-right">
-            <li><a href={twitter} target="_blank"><i class="fab fa-twitter fa-2x"></i></a></li>
-            <li><a href={linkedin} target="_blank"><i class="fab fa-linkedin fa-2x"></i></a></li>
-            <li><a href={bluesky} target="_blank"><i class="fab fa-blue-sky ai-2x"></i></a></li>
-            <li><a href={github} target="_blank"><i class="fab fa-github ai-2x"></i></a></li>
-            <li><a href={researchgate} target="_blank"><i class="fab fa-researchgate fa-2x"></i></a></li>
-            <li><a href={buymeacoffee} target="_blank" class="fab fa-buymecoffee " ></a></li>
+            {contactInfo.map((item) => (
+              <li>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  <i class={item.icon}></i>
+                </a>
+              </li>
+            ))}
           </ul>
   
         </div>

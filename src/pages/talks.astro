@@ -1,0 +1,86 @@
+---
+import MainLayout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+const talks = [
+  {
+    title: "Talk Title 1",
+    event: "Conference Name",
+    location: "City, Country",
+    date: "October 2023",
+    description: "A brief description of the talk, including the main topics covered and key takeaways for the audience.",
+    links: [
+      { icon: "tabler:presentation", url: "#", label: "Slides" },
+      { icon: "tabler:video", url: "#", label: "Video" }
+    ]
+  },
+  {
+    title: "Talk Title 2",
+    event: "Workshop Name",
+    location: "City, Country",
+    date: "May 2023",
+    description: "A brief description of the talk, including the main topics covered and key takeaways for the audience.",
+    links: [
+      { icon: "tabler:presentation", url: "#", label: "Slides" }
+    ]
+  },
+  {
+    title: "Talk Title 3",
+    event: "Seminar Series",
+    location: "Virtual",
+    date: "February 2023",
+    description: "A brief description of the talk, including the main topics covered and key takeaways for the audience.",
+    links: [
+      { icon: "tabler:presentation", url: "#", label: "Slides" },
+      { icon: "tabler:video", url: "#", label: "Video" }
+    ]
+  }
+];
+---
+
+<MainLayout title="Talks - Your Name">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">Talks</h1>
+    
+    <div class="space-y-8">
+      {talks.map(talk => (
+        <div class="border-l-4 border-emerald-500 pl-4 py-1">
+          <h2 class="text-xl font-bold mb-1">{talk.title}</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-2">
+            {talk.event} | {talk.location} | {talk.date}
+          </p>
+          <p class="text-gray-700 dark:text-gray-300 mb-3">{talk.description}</p>
+          
+          <div class="flex gap-3">
+            {talk.links.map(link => (
+              <a 
+                href={link.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                <Icon name={link.icon} class="w-4 h-4" />
+                <span>{link.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-6">Upcoming Talks</h2>
+      
+      <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+        <h3 class="text-xl font-bold mb-1">Upcoming Talk Title</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-2">
+          Conference Name | City, Country | Month Year
+        </p>
+        <p class="text-gray-700 dark:text-gray-300">
+          A brief description of the upcoming talk, including the main topics that will be covered.
+        </p>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+

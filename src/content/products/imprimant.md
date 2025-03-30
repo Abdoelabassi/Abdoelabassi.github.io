@@ -5,6 +5,7 @@ slug: CanonPIXMA-TS3140
 marque: Canon
 price: 429
 oldprice: 599
+discount: 20
 image: /images/imprimant.jpg
 description: Impression, numérisation et copie à domicile sans effort
 ---

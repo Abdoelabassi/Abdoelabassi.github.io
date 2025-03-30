@@ -1,0 +1,194 @@
+---
+import MainLayout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+const experience = [
+  {
+    title: "Research Software Engineer",
+    organization: "Research Institute Name",
+    location: "City, Country",
+    period: "2022 - Present",
+    description: "Description of your responsibilities and achievements in this role. Include key projects, technologies used, and impact of your work.",
+    skills: ["Python", "R", "Machine Learning", "Data Analysis"]
+  },
+  {
+    title: "PhD Researcher",
+    organization: "University Name",
+    location: "City, Country",
+    period: "2017 - 2021",
+    description: "Description of your research focus, methodologies used, and key findings. Include any teaching or mentoring responsibilities.",
+    skills: ["Research Methods", "Statistical Analysis", "Scientific Writing"]
+  },
+  {
+    title: "Research Assistant",
+    organization: "University Name",
+    location: "City, Country",
+    period: "2015 - 2017",
+    description: "Description of your responsibilities and contributions to research projects. Include technologies and methods used.",
+    skills: ["Data Collection", "Literature Review", "Lab Techniques"]
+  }
+];
+
+const education = [
+  {
+    degree: "PhD in Field",
+    institution: "University Name",
+    location: "City, Country",
+    period: "2017 - 2021",
+    description: "Thesis title and brief description of your research focus. Include any honors or awards."
+  },
+  {
+    degree: "MSc in Field",
+    institution: "University Name",
+    location: "City, Country",
+    period: "2015 - 2017",
+    description: "Brief description of your coursework and any research projects. Include any honors or awards."
+  },
+  {
+    degree: "BSc in Field",
+    institution: "University Name",
+    location: "City, Country",
+    period: "2012 - 2015",
+    description: "Brief description of your major and any relevant coursework or projects."
+  }
+];
+
+const publications = [
+  {
+    title: "Publication Title 1",
+    authors: "Your Name, Co-author One, Co-author Two",
+    journal: "Journal Name",
+    year: "2023",
+    doi: "10.1000/journal.2023.001"
+  },
+  {
+    title: "Publication Title 2",
+    authors: "Co-author One, Your Name, Co-author Three",
+    journal: "Journal Name",
+    year: "2022",
+    doi: "10.1000/journal.2022.002"
+  }
+];
+
+const skills = [
+  {
+    category: "Programming",
+    items: ["Python", "R", "JavaScript", "SQL", "MATLAB"]
+  },
+  {
+    category: "Data Science",
+    items: ["Machine Learning", "Statistical Analysis", "Data Visualization", "Big Data"]
+  },
+  {
+    category: "Tools",
+    items: ["Git", "Docker", "Linux", "AWS", "Jupyter"]
+  },
+  {
+    category: "Languages",
+    items: ["English (Native)", "Spanish (Fluent)", "French (Basic)"]
+  }
+];
+---
+
+<MainLayout title="CV - Your Name">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Curriculum Vitae</h1>
+      <a 
+        href="/cv.pdf" 
+        target="_blank" 
+        class="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors"
+      >
+        <Icon name="tabler:download" class="w-5 h-5" />
+        <span>Download PDF</span>
+      </a>
+    </div>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Experience</h2>
+      <div class="space-y-6">
+        {experience.map(job => (
+          <div>
+            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
+              <h3 class="text-xl font-bold">{job.title}</h3>
+              <span class="text-gray-600 dark:text-gray-400">{job.period}</span>
+            </div>
+            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{job.organization}, {job.location}</p>
+            <p class="mb-2">{job.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {job.skills.map(skill => (
+                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-sm">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Education</h2>
+      <div class="space-y-6">
+        {education.map(edu => (
+          <div>
+            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
+              <h3 class="text-xl font-bold">{edu.degree}</h3>
+              <span class="text-gray-600 dark:text-gray-400">{edu.period}</span>
+            </div>
+            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{edu.institution}, {edu.location}</p>
+            <p>{edu.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Selected Publications</h2>
+      <div class="space-y-4">
+        {publications.map(pub => (
+          <div>
+            <h3 class="font-bold">{pub.title}</h3>
+            <p class="text-gray-700 dark:text-gray-300">{pub.authors}</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {pub.journal}, {pub.year}. DOI: 
+              <a 
+                href={`https://doi.org/${pub.doi}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                {pub.doi}
+              </a>
+            </p>
+          </div>
+        ))}
+        <p class="mt-2">
+          <a href="/publications" class="text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+            <span>View all publications</span>
+            <Icon name="tabler:arrow-right" class="w-4 h-4" />
+          </a>
+        </p>
+      </div>
+    </section>
+    
+    <section>
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {skills.map(skillGroup => (
+          <div>
+            <h3 class="text-lg font-bold mb-2">{skillGroup.category}</h3>
+            <div class="flex flex-wrap gap-2">
+              {skillGroup.items.map(item => (
+                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</MainLayout>
+

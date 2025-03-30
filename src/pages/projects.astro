@@ -1,153 +1,90 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import NavBar from "../components/NavBar.astro";
-import Footer from "../components/Footer.astro";
----
-<Layout>
-    <Header title="Projects"/>
-    <NavBar/>
-    <div id="main-container" class="container">
+import MainLayout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
-        <div class="row">
-          <div class="col-sm-12">
-            <h1>Projects: Under work</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum quas fugiat repellendus ex adipisci! Consectetur dolorem facere perferendis placeat repellat aspernatur odio, explicabo, ab quaerat non saepe reprehenderit tempore,
-              architecto neque eum quis culpa vel numquam voluptas dolores. Cumque similique vel culpa alias vero optio iusto, nisi deserunt officiis, perferendis, magni illum ad iure commodi magnam labore soluta atque. Exercitationem esse provident
-              dolorum non vero incidunt nisi cum est dolorem quis accusamus, nemo autem vel labore adipisci voluptatum, repudiandae maxime at ratione ab dolore quam ducimus. Cupiditate.</p>
+const projects = [
+  {
+    title: "Project Name 1",
+    description: "A brief description of the project, its goals, and the technologies used. This should give visitors a clear understanding of what the project is about.",
+    image: "/placeholder.svg?height=200&width=400",
+    tags: ["Python", "Machine Learning", "Data Analysis"],
+    links: [
+      { icon: "tabler:brand-github", url: "https://github.com/Abdoelabassi/", label: "GitHub" },
+      { icon: "tabler:external-link", url: "#", label: "Live Demo" },
+      { icon: "tabler:file-text", url: "#", label: "Paper" }
+    ]
+  },
+  {
+    title: "Project Name 2",
+    description: "A brief description of the project, its goals, and the technologies used. This should give visitors a clear understanding of what the project is about.",
+    image: "/placeholder.svg?height=200&width=400",
+    tags: ["R", "Statistics", "Data Visualization"],
+    links: [
+      { icon: "tabler:brand-github", url: "https://github.com/", label: "GitHub" },
+      { icon: "tabler:external-link", url: "#", label: "Live Demo" }
+    ]
+  },
+  {
+    title: "Project Name 3",
+    description: "A brief description of the project, its goals, and the technologies used. This should give visitors a clear understanding of what the project is about.",
+    image: "/placeholder.svg?height=200&width=400",
+    tags: ["JavaScript", "Web Development", "API"],
+    links: [
+      { icon: "tabler:brand-github", url: "https://github.com/", label: "GitHub" },
+      { icon: "tabler:external-link", url: "#", label: "Live Demo" }
+    ]
+  }
+];
+---
+
+<MainLayout title="Projects - Your Name">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-bold mb-8">Projects</h1>
     
+    <div class="space-y-12">
+      {projects.map((project, index) => (
+        <div class={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-6`}>
+          <div class="md:w-1/2">
+            <Image 
+              src={project.image || "/placeholder.svg"} 
+              alt={project.title} 
+              width={400} 
+              height={200} 
+              class="w-full h-auto rounded-lg shadow-md"
+            />
           </div>
-    
+          
+          <div class="md:w-1/2">
+            <h2 class="text-2xl font-bold mb-2">{project.title}</h2>
+            <p class="mb-4 text-gray-700 dark:text-gray-300">{project.description}</p>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            
+            <div class="flex gap-3">
+              {project.links.map(link => (
+                <a 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
+                  aria-label={link.label}
+                >
+                  <Icon name={link.icon} class="w-5 h-5" />
+                  <span>{link.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-    
-        <div class="row push-down-2" id="projects">
-    
-        <!-- If you don't want the cards to be links, simply remove the {data-url='some link'} attribute -->
-    
-    
-            <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-1">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 1</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-2">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 2</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-3">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 3</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-            <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-4">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 4</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-5">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 5</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-6">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 6</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-            <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-7">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 7</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-8">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 8</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-9">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 9</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-            <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-10">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 10</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-11">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 11</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-              <div class="col-sm-6 col-md-4">
-                  <div class="panel panel-default pointer" data-url="https://google.com">
-                      <div class="panel-heading proj-12">
-                      </div>
-                      <div class="panel-body">
-                  <h5>Project 12</h5>
-                  <p>Description of project hereLorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ex sed illo, fugit?</p></div>
-                  </div>
-              </div>
-    
-          </div>
-          <!-- row -->
-    
-      </div>
-    
-      <!-- Back-to-top button -->
-      <a role="button" id="topper" data-toggle="tooltip" data-placement="top" title="Top" class="btn scroll-link" href="#top"><i class="fa fa-fw fa-2x fa-caret-up" aria-hidden="true"></i></a>
-      <Footer/>
-</Layout>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
