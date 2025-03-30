@@ -1,0 +1,35 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths(){
+    const products: CollectionEntry<'products'>[] = await getCollection("products");
+    return products.map((product) => {
+        return {
+            params: {
+                slug: product.slug
+            },
+            props: {
+                product
+            }
+        }
+    });
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+---
+<Layout>
+    <div class="container mx-auto p-4">
+    <h1>{product.data.title}</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <h1 class="">More photos</h1>
+        <img src='/images/1.jpeg' alt={product.data.title} />
+        <img src='/images/2.jpeg' alt={product.data.title} />
+        <img src='/images/3.jpeg' alt={product.data.title} />
+    </div>
+    <img src={product.data.image} alt={product.data.title} />
+    <p>{product.data.price}</p>
+    <Content />
+    </div>
+</Layout>

@@ -1,367 +1,128 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import '../styles/main.css';
-import Main from '../components/Main.astro';
-import Header from '../components/Header.astro';
-import NavBar from '../components/NavBar.astro';
-import Footer from '../components/Footer.astro';
-import { pathHasLocale } from 'astro:i18n';
+import MainLayout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
-const info = {
-  //url: 'https://abdoelabassi.github.io/',
-  twitter: 'https://twitter.com/aeparticle_el97',
-  bluesky: 'bsky.app/profile/aeparticle97.bsky.social',
-  buymeacoffee: 'https://buymeacoffee.com/abderrezaqya',
-  github: 'https://github.com/abdoelabassi',
-  linkedin: 'https://www.linkedin.com/in/el-abassi-abderrazaq/',
-  researchgate: 'https://www.researchgate.net/profile/El-Abassi-Abderrazaq',
-}
-const infoPersonal = {
-  email: 'abderrazaq.elabassi@uit.ac.ma',
-  phonenumber: '+212608733452',
-}
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// You would replace this with your actual profile image
+import profileImage from '../assets/abdo.jpeg';
 ---
 
-<Layout>
-  <Header title="Abderrazaq"/>
-  <NavBar/>
-<Main {...infoPersonal} />
-<Footer {...info} />
-</Layout>
+<MainLayout title="EL Abassi Abderrazaq - Academic Researcher">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="flex flex-col md:flex-row gap-10 mb-12">
+      <div class="md:w-1/3 flex flex-col items-center text-center">
+        <div class="w-48 h-48 rounded-full overflow-hidden mb-6">
+          <Image 
+            src={profileImage || "/placeholder.svg"} 
+            alt="Profile photo" 
+            width={192} 
+            height={192} 
+            class="w-full h-full object-cover"
+          />
+        </div>
+        
+        <h1 class="text-2xl font-bold mb-1">EL Abassi Abderrazaq</h1>
+        <p class="text-lg mb-4">PhD student in Particle Physics</p>
+        
+        <div class="space-y-1 text-emerald-600 dark:text-emerald-400">
+          <a href="#" class="block hover:underline">Laboratoire de Physique des Matériaux et Subatomiques</a>
+          <a href="#" class="block hover:underline">Department of Physics</a>
+          <a href="#" class="block hover:underline">University of Ibn Tofail, Kenitra</a>
+        </div>
+        
+        <div class="flex justify-center mt-6 space-x-4">
+          <a href="https://twitter.com/aeparticle_el97" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="tabler:brand-x" class="w-6 h-6" />
+            <span class="sr-only">X</span>
+          </a>
+          <a href="https://bsky.app/profile/aeparticle.bsky.social" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="tabler:brand-bluesky" class="w-6 h-6" />
+            <span class="sr-only">Bluesky</span>
+          </a>
+          <a href="https://scholar.google.com/" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="simple-icons:googlescholar" class="w-6 h-6" />
+            <span class="sr-only">Google Scholar</span>
+          </a>
+          <a href="https://orcid.org/my-orcid?orcid=0009-0002-0516-9465" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="simple-icons:orcid" class="w-6 h-6" />
+            <span class="sr-only">Orcid</span>
+          </a>
+          <a href="https://linkedin.com/in/el-abassi-abderrazaq" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="tabler:brand-linkedin" class="w-6 h-6" />
+            <span class="sr-only">LinkedIn</span>
+          </a>
+          <a href="https://github.com/Abdoelabassi" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="tabler:brand-github" class="w-6 h-6" />
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a href="https://www.kaggle.com/elabbassiabderezzaq" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="simple-icons:kaggle" class="w-6 h-6" />
+            <span class="sr-only">Kaggle</span>
+          </a>
+          <a href="https://hep.social/@Aelabassya" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="simple-icons:mastodon" class="w-6 h-6" />
+            <span class="sr-only">Mastodon</span>
+          </a>
+          <a href="https://hep.social/@Aelabassya" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
+            <Icon name="simple-icons:researchgate" class="w-6 h-6" />
+            <span class="sr-only">ResearchGate</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="md:w-2/3">
+        <h2 class="text-3xl font-bold mb-6">About me</h2>
+        
+        <div class="prose max-w-none dark:prose-invert">
+          <p>I'm Abderrazaq EL Abassi, a PhD student in Particle Physics at the University of Ibn Tofail, Kenitra. 
+            I'm working under the supervision of <a href="#">Prof. Mohamed Gouighri</a>.</p>
+          
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Interests</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Neutrino Physics</li>
+              <li>LHC physics</li>
+              <li>Machine Learning and Deep Learning</li>
+              <li>Software Engineering</li>
+              <li>Science Communication</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="text-2xl font-bold mb-4">Education</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:school" class="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span class="font-medium">PhD in Particle Physics, 2021 - present</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 ml-7">University Ibn Tofail - Kenitra</p>
+              </div>
+              
+              <div>
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:school" class="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span class="font-medium">MSc in Mathematical Physics, 2018 - 2020</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 ml-7">Mohammed V University - Rabat</p>
+              </div>
+              
+              <div>
+                <div class="flex items-center gap-2">
+                  <Icon name="tabler:school" class="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span class="font-medium">Bachelor/Licence in Physics, 2015 - 2018</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 ml-7">University Moulay Ismail - Meknes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
 
-<style is:global>
-.publications li {
-  margin-left: 2rem;
-  text-indent: -2.5rem;
-  ;
-}
-
-/* Links */
-#main-container a {
-  color: #1585cf;
-  font-weight: 500;
-}
-
-#main-container a:hover {
-  color: #1585cf;
-  border-bottom: 1px dashed #1585cf;
-  text-decoration: none;
-  padding-bottom: 2px;
-}
-
-/* Contact info area, index.html page ------------------------------------------------- */
-#title {
-  color: #20364c;
-  margin-top: 2rem;
-  font-weight: 600;
-  font-size: 1.4rem;
-  text-align: center;
-}
-
-#program {
-  color: gray;
-  text-align: center;
-}
-
-iframe {
-  padding: 3px;
-  border: 1px solid lightgray;
-}
-
-/* Format the nav  ---------------------------------------------------------- */
-nav {
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-  background: var(--nd-blue) !important;
-}
-
-.navbar-inverse .navbar-nav>li>a {
-  color: white !important;
-  font-weight: 400;
-}
-
-.navbar-inverse li.active {
-  border-bottom: 2px solid white !important;
-}
-
-.navbar-inverse .navbar-nav>.active>a {
-  background-color: var(--nd-blue) !important;
-}
-
-.navbar-inverse .navbar-nav>li.active {
-  color: white !important;
-}
-
-.navbar-inverse {
-  background: #20364c;
-  font-weight: 400;
-  color: white !important;
-  border-radius: 0;
-}
-
-.navbar-header button {
-  border: 1px solid white !important;
-}
-
-.navbar-header button:hover {
-  background: transparent !important;
-}
-
-/* Utility classes for positioning content ----------------------------------- */
-.padding-left-1 {
-  padding-left: 1rem !important;
-}
-
-.padding-left-2 {
-  padding-left: 2rem !important;
-}
-
-.push-down-1 {
-  margin-top: 1rem !important;
-}
-
-.push-down-2 {
-  margin-top: 2rem !important;
-}
-
-.push-down-3 {
-  margin-top: 3rem !important;
-}
-
-.push-down-4 {
-  margin-top: 4rem !important;
-}
-
-.pull-up-1 {
-  margin-top: -1rem !important;
-}
-
-.pull-up-2 {
-  margin-top: -1rem !important;
-}
-
-.pull-up-3 {
-  margin-top: -1rem !important;
-}
-
-.spacer-div-3 {
-  height: 45px !important;
-}
-
-#link-to-docs,
-#link-to-teaching-philosophy {
-  color: #1585cf;
-}
-
-#link-to-docs:hover,
-#link-to-docs:active,
-#link-to-docs:visited,
-#link-to-docs:focus {
-  border: 1px solid #1585cf !important;
-  padding-bottom: 6px !important;
-  background: transparent !important;
-}
-
-/* Setting Lines after headers */
-h3 {
-  position: relative;
-}
-
-h3 span {
-  background-color: white;
-  padding-right: 10px;
-}
-
-h3:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0.5em;
-  border-top: 2px solid slategray;
-  z-index: -1;
-}
-
-/* Format the footer ---------------------------------------------------------- */
-footer {
-  padding-bottom: 2rem;
-}
-
-/* Format the social-professional network icons ------------------------------ */
-.social-icons {
-  list-style-type: none;
-}
-
-.social-icons li {
-  padding-left: .75rem;
-  display: inline-block;
-}
-
-.social-icons li a {
-  color: #1585cf;
-}
-
-.social-icons li a:hover {
-  opacity: .8;
-  text-decoration: none !important;
-}
-
-/* All Links panels ---------------------------------------------- */
-#links .panel-default {
-  border-radius: 0;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-}
-
-#links .panel-heading {
-  border-bottom: none;
-}
-
-#links img {
-  margin-right: 3rem;
-  margin-bottom: 2rem;
-  width: 100px;
-  padding: 3px;
-  border: 1px solid silver;
-}
-
-/* Lists ------------------------------------------------------------- */
-/* Add bottom margin to the description lists */
-dd {
-  margin-bottom: 1rem;
-}
-
-/* Set the anchor element to display block */
-.list-group li a {
-  display: block;
-}
-
-/* Narrow the viewport ----------------------------------------------- */
-/* Customize container */
-@media only screen and (min-width: 767px) {
-  .container {
-    max-width: 730px;
-  }
-}
-
-/* Responsive: Portrait tablets and up */
-@media only screen and (min-width: 768px) {
-
-  /* Remove the padding we set earlier */
-  .container {
-    max-width: 900px;
-  }
-}
-
-/* Accordion panels ----------------------------------------------------- */
-/* plus glyph for showing collapsible panels */
-.panel-heading .accordion-plus-toggle:before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f068";
-  float: right;
-  color: silver;
-}
-
-.panel-heading .accordion-plus-toggle.collapsed:before {
-  content: "\f067";
-  color: silver;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-}
-
-/* arrow glyph for showing collapsible panels */
-.panel-heading .accordion-arrow-toggle:before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f078";
-  float: right;
-  color: silver;
-}
-
-.panel-heading .accordion-arrow-toggle.collapsed:before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f054";
-  color: silver;
-}
-
-/* sets the link to the width of the entire panel title */
-.panel-title>a {
-  display: block;
-}
-
-/* Back to top button */
-/* Back to top button ----------------------------------------------------- */
-#topper {
-  display: none;
-  position: fixed;
-  bottom: 300px;
-  right: 0px;
-  z-index: 99;
-  border: none;
-  outline: none;
-  background-color: #1585cf;
-  color: white;
-  padding: 12px 6px 12px 6px;
-  border-radius: .25rem 0 0 .25rem;
-  cursor: pointer;
-  font-size: .8rem;
-}
-
-#topper:hover {
-  background-color: #1585cf;
-  opacity: .8;
-}
-
-.panel-default {
-  border: none;
-  box-shadow: none;
-  border-radius: 0px;
-  border-bottom: 1px dotted silver;
-}
-
-.panel-default h5 {
-  font-style: normal;
-}
-
-.panel-default:last-child {
-  border-bottom: none !important;
-}
-
-.panel-default .panel-heading {
-  background-color: transparent !important;
-  border-bottom: 0px !important;
-  border-bottom-color: white !important;
-}
-
-.panel-default .panel-body {
-  border-top: none !important;
-  padding-top: 0px;
-  padding-right: 8rem;
-}
-
-.panel-default .panel-heading a:hover {
-text-decoration: none !important;
-border-bottom: none !important;
-padding-bottom: 0;
-}
-
-.panel-default .in {
-padding-top: 0 !important;
-color: black;
-}
-
-.panel-default a[aria-expanded="true"] {
-color: black;
-}
-
-.panel-group .panel-heading+.panel-collapse>.panel-body {
-border-top: 0px;
-}
-</style>

@@ -1,11 +1,83 @@
 ---
+import { Icon } from 'astro-icon/components';
+import '../styles/global.css';
 
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Academic personal website" } = Astro.props;
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1); // remove the first "/"
 ---
 
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col">
+    <header class="border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <nav class="flex items-center space-x-6 text-sm mx-auto">
+          <a href="/" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === '' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Home</a>
+          <a href="/skills" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'skills' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Skills</a>
+          <a href="/projects" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'projects' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Projects</a>
+          <a href="/talks" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'talks' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Talks</a>
+          <a href="/publications" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'publications' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Publications</a>
+          <a href="/cv" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'cv' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>CV</a>
+        </nav>
+        <div class="flex items-center space-x-2">
+          <button aria-label="Search" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+            <Icon name="tabler:search" class="w-5 h-5" />
+          </button>
+          <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+            <Icon name="tabler:moon" class="w-5 h-5 dark:hidden" />
+            <Icon name="tabler:sun" class="w-5 h-5 hidden dark:block" />
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <main class="flex-grow">
+      <slot />
+    </main>
+    
+    <footer class="border-t border-gray-200 dark:border-gray-800 py-6 mt-12">
+      <div class="container mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        <p>© Copyright {new Date().getFullYear()} Your Name</p>
+      </div>
+    </footer>
+
+    <script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      
+      // Check for saved theme preference or use the system preference
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      })();
+      
+      // Apply the theme
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      // Save the theme preference when toggled
+      themeToggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    </script>
+  </body>
 </html>
