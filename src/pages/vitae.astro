@@ -1,35 +1,183 @@
 ---
+import MainLayout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
-import MainLayout from "../layouts/Layout.astro";
+const experience = [
+  {
+    title: "PhD Researcher",
+    organization: "University of Ibn-Todail",
+    location: "Kenitra, Morocco",
+    period: "2021 - present",
+    description: "Underground Neutrinos Physics in collaboration with Hyper-Kamiokande experiment",
+    skills: ["Physics Simulation", "Statistical Analysis", "Scientific Writing", "Collaboration"]
+  },
+  {
+    title: "Master in High Energy Physics",
+    organization: "University Mohammed V",
+    location: "Rabat, Morocco",
+    period: "2019 - 2020",
+    description: "Dark Matter search: Statistical Combination of invisible Higgs decays",
+    skills: ["Satatistical Analysis", "Combination analysis"]
+  }
+];
+
+const education = [
+  {
+    degree: "PhD in Particle Physics",
+    institution: "University Ibn-Tofail",
+    location: "Kenitra, Morocco",
+    period: "2021 - present",
+    description: "Long-base line neutrinos oscillation analysis, and Low-energy scale calibration of Far detector using DTG neutron generator"
+  },
+  {
+    degree: "MSc in Mathematical Physics",
+    institution: "University Mohammed V",
+    location: "Rabat, Morocco",
+    period: "2018 - 2020",
+    description: "Specialized on High Energy Physics, and thesis titled: Statistical Combination of invisible Higgs decays in Vector Boson Fusion with ATLAS detector"
+  },
+  {
+    degree: "BSc in Physics",
+    institution: "University Moulay Ismail",
+    location: "Mekenes, Morocco",
+    period: "2015 - 2018",
+    description: "Specialized on Material Physics"
+  }
+];
+
+const publications = [
+  {
+    title: "",
+    authors: "",
+    journal: "",
+    year: "",
+    doi: ""
+  }
+];
+
+const skills = [
+  {
+    category: "Programming",
+    items: ["Python", "C++", "Rust", "JavaScript/TypeScript", "SQL", "MATLAB", "Bash Scripting"]
+  },
+  {
+    category: "Data Science",
+    items: ["Machine Learning", "Statistical Analysis", "Data Visualization", "Physics Simulation"]
+  },
+  {
+    category: "Tools",
+    items: ["Git", "Docker", "Linux", "CI/CD", "Jupyter"]
+  },
+  {
+    category: "Physics simulation",
+    items: ["Geant4", "ROOT", "Pythia"]
+  },
+  {
+    category: "Languages",
+    items: ["Arabic (Native)", "English (Conversational)", "Spanish (basic)", "French (middle)", "Japanese (basic)"]
+  }
+];
 ---
 
-<MainLayout title="">
-   
-    <div class="spacer-div-3 hidden-xs hidden-xs"></div>
-
-    <!-- Main content    -->
-    <div id="main-container" class="container">
-  
-      <div class="row">
-        <div class="col-sm-12">
-  
-          <h1>Vitae</h1>
-  
-          <p>Find my curriculum vitae, below. References available upon request.</p>
-  
-          <p class='text-right'><a href='https://drive.google.com/file/d/1i-94Mp8vt6a8zsxLAK8vULTk7B4M8v4s/view?usp=drive_link' target='_blank'><i class='fas fa-print fa-fw' aria-hidden='true'></i>&nbsp;Print Vitae</a></p><iframe width='100%'
-            height='900px' frameborder='0' scrolling='yes' class='embed-responsive-item' src='https://drive.google.com/file/d/1i-94Mp8vt6a8zsxLAK8vULTk7B4M8v4s/view?usp=drive_link' allowfullscreen></iframe>
-  
-        </div>
-      </div>
-  
+<MainLayout title="CV - Your Name">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Curriculum Vitae</h1>
+      <a 
+        href="main.pdf" 
+        target="_blank" 
+        class="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors"
+      >
+        <Icon name="tabler:download" class="w-5 h-5" />
+        <span>Download PDF (v1)</span>
+      </a>
     </div>
-  
-    <!-- Back-to-top button -->
-    <a role="button" id="topper" data-toggle="tooltip" data-placement="top" title="Top" class="btn scroll-link" href="#top"><i class="fa fa-fw fa-2x fa-caret-up" aria-hidden="true"></i></a>
-
-    <script>
-        import '../../lib/utils.ts';
-    </script>
-
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Experience</h2>
+      <div class="space-y-6">
+        {experience.map(job => (
+          <div>
+            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
+              <h3 class="text-xl font-bold">{job.title}</h3>
+              <span class="text-gray-600 dark:text-gray-400">{job.period}</span>
+            </div>
+            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{job.organization}, {job.location}</p>
+            <p class="mb-2">{job.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {job.skills.map(skill => (
+                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-sm">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Education</h2>
+      <div class="space-y-6">
+        {education.map(edu => (
+          <div>
+            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
+              <h3 class="text-xl font-bold">{edu.degree}</h3>
+              <span class="text-gray-600 dark:text-gray-400">{edu.period}</span>
+            </div>
+            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{edu.institution}, {edu.location}</p>
+            <p>{edu.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Selected Publications</h2>
+      <div class="space-y-4">
+        {publications.map(pub => (
+          <div>
+            <h3 class="font-bold">{pub.title}</h3>
+            <p class="text-gray-700 dark:text-gray-300">{pub.authors}</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {pub.journal} {pub.year}
+              <a 
+                href={`https://doi.org/${pub.doi}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                {pub.doi}
+              </a>
+            </p>
+          </div>
+        ))}
+        <p class="mt-2">
+          <a href="/publications" class="text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+            <span>View all publications</span>
+            <Icon name="tabler:arrow-right" class="w-4 h-4" />
+          </a>
+        </p>
+      </div>
+    </section>
+    
+    <section>
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Skills</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {skills.map(skillGroup => (
+          <div>
+            <h3 class="text-lg font-bold mb-2">{skillGroup.category}</h3>
+            <div class="flex flex-wrap gap-2">
+              {skillGroup.items.map(item => (
+                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
 </MainLayout>
+
