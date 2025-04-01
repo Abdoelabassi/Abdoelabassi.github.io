@@ -24,3 +24,7 @@ pnpm-debug.log*
 .idea/
  # vscode setting folder
 .vscode/
+
+# private
+src/assets/cv-latex/
+

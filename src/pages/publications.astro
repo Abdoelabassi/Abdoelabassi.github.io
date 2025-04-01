@@ -4,44 +4,20 @@ import { Icon } from 'astro-icon/components';
 
 const publications = [
   {
-    title: "Publication Title 1",
-    authors: "Your Name, Co-author One, Co-author Two",
-    journal: "Journal Name",
-    year: "2023",
-    doi: "10.1000/journal.2023.001",
-    abstract: "This is the abstract of the publication. It provides a brief summary of the research, methodology, and findings.",
+    title: "",
+    authors: "",
+    journal: "",
+    year: "",
+    doi: "1",
+    abstract: ".",
     links: [
       { icon: "tabler:file-text", url: "#", label: "PDF" },
       { icon: "tabler:code", url: "#", label: "Code" },
       { icon: "tabler:external-link", url: "#", label: "Publisher" }
     ]
   },
-  {
-    title: "Publication Title 2",
-    authors: "Co-author One, Your Name, Co-author Three",
-    journal: "Journal Name",
-    year: "2022",
-    doi: "10.1000/journal.2022.002",
-    abstract: "This is the abstract of the publication. It provides a brief summary of the research, methodology, and findings.",
-    links: [
-      { icon: "tabler:file-text", url: "#", label: "PDF" },
-      { icon: "tabler:code", url: "#", label: "Code" },
-      { icon: "tabler:external-link", url: "#", label: "Publisher" }
-    ]
-  },
-  {
-    title: "Publication Title 3",
-    authors: "Your Name, Co-author Four",
-    journal: "Journal Name",
-    year: "2021",
-    doi: "10.1000/journal.2021.003",
-    abstract: "This is the abstract of the publication. It provides a brief summary of the research, methodology, and findings.",
-    links: [
-      { icon: "tabler:file-text", url: "#", label: "PDF" },
-      { icon: "tabler:code", url: "#", label: "Code" },
-      { icon: "tabler:external-link", url: "#", label: "Publisher" }
-    ]
-  }
+  
+ 
 ];
 ---
 
@@ -54,10 +30,10 @@ const publications = [
         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
           <h2 class="text-xl font-bold mb-2">{pub.title}</h2>
           <p class="text-gray-700 dark:text-gray-300 mb-1">{pub.authors}</p>
-          <p class="text-gray-600 dark:text-gray-400 mb-4">{pub.journal}, {pub.year}</p>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">{pub.journal} {pub.year}</p>
           
           <div class="mb-4">
-            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Abstract</h3>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Loading ....</h3>
             <p class="text-gray-700 dark:text-gray-300">{pub.abstract}</p>
           </div>
           
