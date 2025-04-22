@@ -1,0 +1,42 @@
+---
+import type { Video } from '../types';
+
+interface Props {
+  video: Video;
+}
+
+const { video } = Astro.props;
+
+// Format the view count
+function formatViews(views: number): string {
+  if (views >= 1000000) {
+    return `${(views / 1000000).toFixed(1)}M views`;
+  } else if (views >= 1000) {
+    return `${(views / 1000).toFixed(1)}K views`;
+  }
+  return `${views} views`;
+}
+---
+
+<a href={`/video/${video.id}`} class="block bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+  <div class="relative">
+    <img 
+      src={video.thumbnail} 
+      alt={`Thumbnail for ${video.title}`} 
+      class="w-full aspect-video object-cover"
+      loading="lazy"
+    />
+    <span class="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+      {video.duration}
+    </span>
+  </div>
+  
+  <div class="p-4">
+    <h2 class="font-semibold text-lg mb-2 line-clamp-2">{video.title}</h2>
+    <p class="text-gray-600 dark:text-gray-300 text-sm mb-2 line-clamp-2">{video.description}</p>
+    <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+      <span>{formatViews(video.views)}</span>
+      <span>{video.uploadDate}</span>
+    </div>
+  </div>
+</a>

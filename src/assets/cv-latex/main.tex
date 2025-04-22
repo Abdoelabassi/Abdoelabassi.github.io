@@ -1,0 +1,298 @@
+% FortySecondsCV LaTeX template
+% Copyright © 2019 René Wirnata <rene.wirnata@pandascience.net>
+% Licensed under the 3-Clause BSD License. See LICENSE file for details.
+%
+% Attributions
+% ------------
+% * fortysecondscv is based on the twentysecondcv class by Carmine Spagnuolo 
+%   (cspagnuolo@unisa.it), released under the MIT license and available under
+%   https://github.com/spagnuolocarmine/TwentySecondsCurriculumVitae-LaTex
+% * further attributions are indicated immediately before corresponding code
+
+%-------------------------------------------------------------------------------
+%                             ADDITIONAL PACKAGES
+%-------------------------------------------------------------------------------
+\documentclass[
+  a4paper, 
+%   showframes,
+   maincolor=cvblue,
+   sectioncolor=cvblue,
+%  subsectioncolor=orange
+%   sidebarwidth=0.4\paperwidth,
+%   topbottommargin=0.03\paperheight,
+%   leftrightmargin=20pt
+]{fortysecondscv}
+
+% improve word spacing and hyphenation
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{rotating}
+
+% take care of proper font encoding
+\ifxetex
+	\usepackage{fontspec}
+	\defaultfontfeatures{Ligatures=TeX}
+% \newfontfamily\headingfont[Path = fonts/]{segoeuib.ttf} % local font
+\else
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+% \usepackage[sfdefault]{noto} % use noto google font
+\fi
+
+% enable mathematical syntax for some symbols like \varnothing
+\usepackage{amssymb}
+
+% bubble diagram configuration
+\usepackage{smartdiagram}
+\smartdiagramset{
+  % defaut font size is \large, so adjust to harmonize with sidebar layout
+  bubble center node font = \footnotesize,
+  bubble node font = \footnotesize,
+  % default: 4cm/2.5cm; make minimum diameter relative to sidebar size
+  bubble center node size = 0.3\sidebartextwidth,
+  bubble node size = 0.25\sidebartextwidth,
+  distance center/other bubbles = 1.5em,
+  % set center bubble color
+  bubble center node color = maincolor!70,
+  % define the list of colors usable in the diagram
+  set color list = {maincolor!10, maincolor!40,
+  maincolor!20, maincolor!60, maincolor!35},
+  % sets the opacity at which the bubbles are shown
+  bubble fill opacity = 0.8,
+}
+
+
+%-------------------------------------------------------------------------------
+%                            PERSONAL INFORMATION
+%-------------------------------------------------------------------------------
+% profile picture
+\cvprofilepic{abdo}
+% your name
+\cvname{\LARGE EL Abassi Abderrazaq}
+% job title/career
+%\cvjobtitle{Assistant Professor of\\[0.2em] Robotics Engineering}
+\cvjobtitle{}
+ 
+
+% date of birth
+\cvbirthday{\textbf{Date of Birth}: Mar. 01, 1997}
+% short address/location, use \newline if more than 1 line is required
+\cvaddress{University Campus, Kenitra}
+% phone number
+\cvphone{+212608733452}
+% email address
+\cvmail{abderrazaq.elabassi@uit.ac.ma}
+% personal website
+\cvsite{\href{https://abdoelabassi.github.io/}{\textbf{Website:}: https://abdoelabassi.github.io/}}
+% pgp key
+
+\cvkey{ORCID:0009-0002-0516-9465}{XXXX-YYYY-ZZZZ-MMMM} % put your actual ORCID here in the two brackets
+% add additional information
+% \newcommand{\additional}{some more?}
+
+
+%-------------------------------------------------------------------------------
+%                              SIDEBAR 1st PAGE
+%-------------------------------------------------------------------------------
+% overwrite default icons and order of personal information
+% \renewcommand{\personaltable}{%
+% 	\begin{personal}[0.8em]
+% 		\circleicon{\faKey}      & \cvkey  \\
+% 		\circleicon{\faAt}       & \cvmail \\
+% 		\circleicon{\faGlobe}    & \cvsite \\
+% 		\circleicon{\faPhone}    & \cvphone \\
+% 		\circleicon{\faEnvelope} & \cvaddress \\
+% 		\circleicon{\faInfo}     & \cvbirthday \\
+% 		% add another line
+% 		\circleicon{\faQuestion} & \additional
+% 	\end{personal}
+% }
+
+% add more profile sections to sidebar on first page
+\addtofrontsidebar{
+	% include gosquare national flags from https://github.com/gosquared/flags;
+	% naming according to ISO 3166-1 alpha-2 country codes
+	\graphicspath{{pics/flags/}}
+
+% 	\profilesection{Languages}
+% 		\pointskill{\flag{CN.png}}{Chinese}{5}
+% 		\pointskill{\flag{DE.png}}{German}{3}
+%   	\pointskill{\flag{GB.png}}{English}{3}
+%   	\pointskill{\flag{FR.png}}{French}{3}
+       \profilesection{Short Bio}
+	   \aboutme{I'm Abderrazaq El Abassi, PhD student in Particle Physics at Ibn-Tofail University}
+
+
+	
+
+
+	\profilesection{Skills}
+	\chartlabel{Programming:}\\
+		\pointskill{}{Python, JavaScript}{4}
+            \pointskill{}{TypeScript}{3}
+		\pointskill{}{C, C++}{3}
+		        \pointskill{}{Java}{2}
+ 		\pointskill{}{Rust}{2}
+            \pointskill{}{Bash scripting}{3}
+            \pointskill{}{Matlab}{2}
+            \pointskill{}{Mathematica}{2}
+        	\chartlabel{data analysis:}\\
+    	\pointskill{}{pandas, numpy, scipy}{4}
+		\pointskill{}{PyROOT, scikit-hep}{3}
+	\chartlabel{C++ Tools:}\\
+		\pointskill{}{ROOT, GEANT4}{3}
+		\pointskill{}{ROOFit ROOStats}{2}
+            \pointskill{}{TMVA}{2}
+	\chartlabel{ML tools:}\\
+ 		\pointskill{}{scikit-learn, LightGBM}{2}
+            \pointskill{}{PyTorch, TensorFlow}{3}
+
+}
+
+
+%-------------------------------------------------------------------------------
+%                              SIDEBAR 2nd PAGE
+%-------------------------------------------------------------------------------
+\addtobacksidebar{
+	
+
+% 	\chartlabel{Wheel Chart}
+
+% 	\wheelchart{4em}{2em}{%
+%   	20/3em/maincolor!50/Chill,
+%   	15/3em/maincolor!15/Play,
+%   	30/4em/maincolor!40/Sleep,
+%   	20/3em/maincolor!20/Eat
+% 	}
+\profilesection{Profiles}
+\centering
+\href{https://www.linkedin.com/in/el-abassi-abderrazaq/} 
+ {\includegraphics[width=0.2\sidebartextwidth]{in.png}} 
+ 
+ %\href{https://www.researchgate.net/profile/Haitham_El-Hussieny}
+%{\includegraphics[width=0.2\sidebartextwidth]{pics/rg.png}}\quad  
+
+\href{https://github.com/Abdoelabassi}{\includegraphics[width=0.2\sidebartextwidth]{github.png}}
+	\profilesection{Languages}
+	\barskill{}{\textbf{Arabic} (Mother Tongue)}{100}
+	\barskill{}{\textbf{English}}{70}
+        \barskill{}{\textbf{French}}{50}
+	\barskill{}{\textbf{Japanese}}{10}
+ 
+ 
+}
+
+\addtothirdsidebar{
+\textbf{}\\
+\begin{turn}{-90}\chartlabel{Continuum Robots}\chartlabel{Growing Robots}\chartlabel{Shared Control}\chartlabel{Learning by Demonstrations}\chartlabel{Eye Gaze}\chartlabel{Mobile Robots}\chartlabel{Human-Robot Interaction}\chartlabel{Optimal Control}\end{turn}
+
+}
+
+%-------------------------------------------------------------------------------
+%                         TABLE ENTRIES RIGHT COLUMN
+%-------------------------------------------------------------------------------
+\begin{document}
+% \sidebarwidth=0\paperwidth
+% \newgeometry{right=1cm,left=1cm,bottom=0.1cm,top=1cm}
+
+% \vskip30pt
+
+% \begin{center}
+%     {\color{cvblue} \Huge Cover Letter}
+% \end{center}
+% \vskip20pt
+
+% {
+% }
+
+
+\newpage
+\restoregeometry
+\sidebarwidth=0.35\paperwidth
+
+\makefrontsidebar
+
+\cvsection{Working Experience}
+\begin{cvtable}
+    \cvitem{June, 2021 -- ongoing}{\color{cvsectioncolor}PhD research}{\textbf{University of Ibn-Tofail, MA}}{Contributed to low energy scale MC simulations and currently started on neutrinos long baseline selection, and reconstruction using Graphical Neural Networks, and Monte Carlo production with the  (\textbf{I}ntermediate \textbf{W}ater-\textbf{C}herenkov \textbf{D}etector) using simulation tools such as WCSim and a Likelihood fitter--fitQun for reconstruction}
+    \cvitem{March 2020, -- October 2020}{\color{cvsectioncolor} Master thesis }
+    {\textbf{Univeristy of Mohammed V, MA}}{We interpreted the total Higgs invisible branching ratio by combining different channels of Higgs decaying to Dark Matter particles known as WIMPs (\textbf{W}eakly \textbf{I}nteracting \textbf{M}assive \textbf{P}articles) in collaboration with Higgs invisible team.}
+	
+\end{cvtable}
+
+
+\cvsection{Education}
+\subsection{Postgraduate Studies}
+\begin{cvtable}
+	\cvitem{2021 -- on going}{\color{cvsectioncolor}Ph.D. in Particle Physics}{\href{www.fsk.uit.ac.ma}{\textbf{Ibn-Tofail University, Kenitra}}}
+		{\textbf{Title}: Sensitivity analysis of proton decay in positron plus neutral pion final state, and contribution to low-energy calibration of Hyper-Kamiokande Far detector using DTG neutron generator.\\
+		\textbf{Supervisors}: Prof. Mohamed Gouighri\\
+		\\
+		\chartlabel{Hyper-Kamiokande} \chartlabel{IWCD} \chartlabel{DTG} \chartlabel{proton decay}}
+		
+	\cvitem{2018 -- 2020}{\color{cvsectioncolor}M.Sc. in Mathematical Physics}{\href{www.fsr.ac.ma}{\textbf{Mohammed V University, Rabat}}}
+		{\textbf{Title}: Statistical Combination of invisible Higgs decays in Vector Boson Fusion using ATLAS detetctor\\
+		\textbf{Supervisors}: Prof. Mohamed Gouighri\\
+		\textbf{Grade: }CGPA: 3.3\\
+	\chartlabel{Dark Matter} \chartlabel{Higgs boson} \chartlabel{Higgs invisible} \chartlabel{Vector Boson Fusion} \chartlabel{ATLAS experiment} \chartlabel{CMS experiment}}
+\end{cvtable}
+
+
+\subsection{Undergraduate Study}
+\begin{cvtable}
+\cvitem{2015 -- 2018}{\color{cvsectioncolor}\small B.Sc. in Matter Science and Physics}{\href{https://www.fs-umi.ac.ma}{\textbf{Moulay Ismail Univ., Meknes}}}
+		{\textbf{Project Title}: Simulation of analogical filters, and Numerical filters using Matlab.\\
+        \\
+        \chartlabel{RC circuit} \chartlabel{RL circuit} \chartlabel{RLC circuit} \chartlabel{matlab} \chartlabel{FFT}}
+
+\cvitem{2015 -- 2018}{\color{cvsectioncolor}\small DEUG (University diploma) in Matter Sciences and Physics, and Chemistry}{\href{https://www.fs-umi.ac.ma}{\textbf{Moulay Ismail Univ., Meknes}}}{Fundamental physics, and chemistry: Classical Mechanics, and Electromagnetism, Thermodynamics, Quantum Mechanics, organic chemistry, crystallography, chemical reactions, and basic quantum chemistry...  \\
+\\
+    \chartlabel{Classical Mechanics} \chartlabel{Electromagnetism} \chartlabel{Quantum Mechanics} \chartlabel{Thermodynamics} \chartlabel{Organic Chemistry} \chartlabel{Crystallography} }
+
+	\end{cvtable}
+
+
+\cvsection{Training}
+\begin{cvtable}
+\cvitem{Jan 17/2022 -- March 11/2022 (online) }{\color{cvsectioncolor}\small ESIPAP - COURSE 2- Advanced lectures on detectors and applications.}{}
+		{The European School in Instrumentation for Particle and Astroparticle Physics (ESIPAP) aims at training Master, PhD students and professionals to the high standard of instrumentation in use in particle and astroparticle physics. \\
+  \chartlabel{Particle Physics} \chartlabel{Astro-particle} \chartlabel{Detectors}}
+	\end{cvtable}
+	
+% 	Ph.D. Theses: (Two students)
+% { . (2018 - 2020)
+% {  (2018 - 2020)
+% M.Sc. Theses: (Two students)
+% { An Intutive Input Interface for teloperation of a Multi-section Continuum Robot. (2019-2021)
+% {  (2019-2021)
+\newpage
+\makebacksidebar
+\cvsection{Conference participation}
+\begin{cvtable}
+	\cvitem{Poster session}{The first edition of African Conference on High Energy Physics (ACHEP)}{23-27 Oct 2023}{Prented a Poster titled Energy scale cross-calibration of Hyper-Kamiokande detector using Deuterium-Tritium neutron generator, and accepted for publication as a conference paper (official publication is still ongoing)}
+\end{cvtable}
+
+\cvsection{Certificates}
+\begin{cvtable}
+        \cvitem{ALX - Africa}{Software engineering}{ Jan 2023 - Ongoing}
+        {12 Month Program of programming: Data structures and algorithms with C, and web development, DevOps with Python JavaScript, and TypeScript: Specialized in Backend.}
+        \cvitem{Coursera}{Deep Learning Specialization} {Nov 10, 2024}
+        {An online non-credit course authorized by DeepLearning.AI and Stanford University and offered through Coursera, taught by Andrew ng.}
+        \cvitem{Coursera}{Machine Learning Specialization}{Mars 12,2024}{An online non-credit course authorized by DeepLearning.AI and Stanford University and offered through Coursera}
+        \cvitem{Edx}{Machine Learning with Python-From Linear Models to Deep Learning}{May 19, 2023}{A course of study offered by MITx, an online learning initiative of the Massachusetts Institute of Technology.}
+        \cvitem{DataCamp}{Data Scientist Associate}{Aug 30, 2023}{Data science career track provided by Datacamp}
+	\cvitem{Coursera}{Introduction à la programmation orientée objet (en C++)}{Nov 16 2023}{An online non-credit course authorized by École Polytechnique Fédérale de Lausanne and offered through Coursera}
+	
+        
+% 	\cvitem{Benha University}{ECE 447: Robotics Engineering}{Spring'17, Spring'19}{Robot Structure, Kinematics, Dynamic and Control.}
+% 	\cvitem{}{ECE 447: Robotics Engineering}{Spring'17, Spring'19}{Robot Structure, Kinematics, Dynamic and Control.}
+\end{cvtable}
+
+
+
+
+%\end{cvtable}
+
+%\cvsignature
+
+\end{document} 

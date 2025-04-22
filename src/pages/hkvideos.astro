@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import VideoCard from '../components/VideoCard.astro';
+import { videos } from '../data/videos';
+
+const pageTitle = 'Mini YouTube Platform';
+---
+
+<Layout title={pageTitle}>
+  <main>
+    <h1 class="text-center text-3xl font-bold my-8">{pageTitle}</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
+      {videos.map(video => (
+        <VideoCard video={video} />
+      ))}
+    </div>
+  </main>
+</Layout>
