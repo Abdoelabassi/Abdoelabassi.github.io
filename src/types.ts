@@ -6,5 +6,5 @@ export interface Video {
   videoUrl: string;
   duration: string;
   uploadDate: string;
-  views: number;
+  views: string;
 }
