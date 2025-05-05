@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "abdoelabassi.github.io",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^9.2.1",
     "@astrojs/react": "^4.1.5",
     "@astrojs/tailwind": "^5.1.4",
     "@tailwindcss/typography": "^0.5.10",
@@ -16,6 +17,7 @@
     "@types/react-dom": "^19.0.3",
     "astro": "^5.1.2",
     "astro-icon": "^1.1.5",
+    "numeral": "^2.0.6",
     "plyr": "^3.7.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -30,6 +32,7 @@
     "@iconify/tailwind": "^1.2.0",
     "@types/bootstrap": "^5.2.10",
     "@types/jquery": "^3.5.32",
+    "@types/numeral": "^2.0.5",
     "astro-meta-tags": "^0.3.1",
     "bootstrap": "^5.3.3",
     "i": "^0.3.7",

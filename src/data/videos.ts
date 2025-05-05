@@ -1,4 +1,5 @@
 import type { Video } from "../types";
+import numeral from "numeral";
 
 export const videos: Video[] = [
   {
@@ -13,9 +14,8 @@ export const videos: Video[] = [
   },
   {
     id: "2",
-    title: "TypeScript for Beginners",
-    description:
-      "A complete guide to TypeScript for beginners with practical examples.",
+    title: "Supernovae Neutrinos",
+    description: "Jost's thesis on Core-collpased Supernova detection ",
     thumbnail: "/thumbnails/typescript-beginners.jpg",
     videoUrl: "/videos/typescript-beginners.mp4",
     duration: "15:30",
@@ -25,11 +25,12 @@ export const videos: Video[] = [
   {
     id: "3",
     title: "Building a Video Platform",
-    description: "Step-by-step tutorial on building your own video platform.",
+    description:
+      "Agent Development Kit (ADK) Masterclass: Build AI Agents & Automate Workflows (Beginner to Pro)",
     thumbnail: "/thumbnails/video-platform.jpg",
-    videoUrl: "/videos/video-platform.mp4",
-    duration: "22:45",
-    uploadDate: "2025-04-10",
-    views: 870,
+    videoUrl: "https://www.youtube.com/watch?v=P4VFL9nIaIA",
+    duration: "3:12:47",
+    uploadDate: "2025-05-05",
+    views: Number.parseInt(numeral(14000).format("0.0a")),
   },
 ];
