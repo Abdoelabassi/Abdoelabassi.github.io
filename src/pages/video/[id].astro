@@ -11,6 +11,8 @@ export function getStaticPaths() {
     props: { video },
   }));
 }
+
+export const prerender = true
 // Get the video ID from the URL parameters
 const { id } = Astro.params;
 
