@@ -6,7 +6,7 @@ import fs from "node:fs";
 import { exec } from "node:child_process";
 import ffprobeStatic from "ffprobe-static";
 
-interface VideoMetadata {
+export interface VideoMetadata {
   duration: number; // in seconds
   dimensions: {
     width: number;
@@ -35,9 +35,7 @@ interface FFProbeData {
   };
 }
 
-export async function getVideoMetadata(
-  videoPath: string
-): Promise<VideoMetadata> {
+export async function getVideoMetadata(videoPath: string): Promise<number> {
   // Construct the absolute path to the video in the public folder
   const publicDir = path.join(process.cwd(), "public/videos");
   const absolutePath = path.join(publicDir, videoPath);
@@ -115,15 +113,7 @@ export async function getVideoMetadata(
     const formatFromProbe = ffprobeData.format.format_name || null;
     const format = formatFromProbe || fileExtension;
 
-    return {
-      duration,
-      dimensions,
-      format,
-      size: fileSizeInBytes,
-      bitrate,
-      codec,
-      frameRate,
-    };
+    return duration;
   } catch (error) {
     console.error("Error getting video metadata:", error);
     throw error;
