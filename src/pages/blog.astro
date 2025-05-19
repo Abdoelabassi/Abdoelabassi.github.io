@@ -12,15 +12,25 @@ const blogPosts: CollectionEntry<"blog">[] = await getCollection("blog");
         {
             blogPosts.map((post) => {
                 return (
-                    <div class="post">
-                        <h2>
-                            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+                    <div class="flex flex-col gap-4 p-6 mx-auto top-10 max-w-2xl rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <h2 class="text-2xl font-bold text-green-800 hover:text-blue-600 transition-colors duration-200">
+                            <a class="hover:underline" href={`/blog/${post.slug}`}>{post.data.title}</a>
                         </h2>
-                        <time datetime={post.data.date.toISOString()}>
+                        <time class="text-sm text-gray-500 font-medium" datetime={post.data.date.toISOString()}>
                             {post.data.date.toISOString()}
                         </time>
-                        <p>{post.data.description}</p>
-                        <a href={`/blog/${post.slug}`} class="big-link" >read post</a>
+                       
+                        <a class="inline-flex items-center font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200 mt-2 group w-fit" href={`/blog/${post.slug}`} class="big-link" >read post
+                            <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                stroke="currentColor"
+                            >  
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
                     </div>
                 )
             })
