@@ -1,0 +1,144 @@
+---
+import type { Video } from '../types';
+import VideoComp from './Video';
+
+interface Props {
+  video: Video;
+}
+
+const { video } = Astro.props;
+// aspect-video w-full bg-black
+---
+
+<div class="video-player-container">
+  <VideoComp
+  client:only="react"
+   urlEndpoint={import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT}
+   videoPath={video.videoUrl}
+   poster={video.thumbnail}
+   videoTitle={video.title}
+  />
+    
+
+  <div class="mt-2 flex items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+      <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+    </svg>
+    <span id="view-count" class="ml-1 text-sm text-gray-500">
+      {video.views.toLocaleString()} views
+    </span>
+  </div>
+</div>
+
+<!-- Plyr CSS and JS -->
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<script define:vars={{ videoId: video.id, initialViews: video.views }}>
+  // Import Plyr from npm
+  import Plyr from 'plyr';
+  
+  // Initialize Plyr when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const player = new Plyr('#player', {
+      controls: [
+        'play-large', 'play', 'progress', 'current-time', 'mute', 
+        'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+      ],
+      keyboard: { focused: true, global: true },
+    });
+    
+    // Optional: Track video progress
+    player.on('timeupdate', () => {
+      // Save current time to localStorage or your backend
+      const currentTime = player.currentTime;
+      localStorage.setItem(`video-${document.URL}`, currentTime.toString());
+    });
+    
+    // Optional: Resume from last watched position
+    player.on('ready', () => {
+      const savedTime = localStorage.getItem(`video-${document.URL}`);
+      if (savedTime) {
+        player.currentTime = parseFloat(savedTime);
+      }
+    });
+
+     // Track view when video plays
+      let viewCounted = false;
+      
+      player.on('play', async () => {
+        if (!viewCounted) {
+          try {
+            // Increment view count (after 5 seconds of playing to avoid counting brief views)
+            setTimeout(async () => {
+              if (player.playing) {
+                viewCounted = true;
+                await countView(videoId);
+              }
+            }, 5000);
+          } catch (error) {
+            console.error('Error counting view', error);
+          }
+        }
+      });
+      
+      // Function to count a view and update the UI
+      async function countView(videoId) {
+        try {
+          // Option 1: Using the API endpoint
+          const response = await fetch('/api/count-view', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ videoId })
+          });
+          
+          const data = await response.json();
+          if (data.success) {
+            updateViewCount(data.views);
+          }
+          
+          // Option 2: If you don't have API endpoints, use local storage
+          /*
+          const viewKey = `video-view-${videoId}`;
+          const hasViewed = localStorage.getItem(viewKey);
+          
+          if (!hasViewed) {
+            localStorage.setItem(viewKey, 'true');
+            
+            // Update local view count by 1
+            const newCount = initialViews + 1;
+            updateViewCount(newCount);
+          }
+          */
+        } catch (error) {
+          console.error('Failed to count view:', error);
+        }
+      }
+      
+      // Function to update the view count in the UI
+      function updateViewCount(count) {
+        const viewCountElement = document.getElementById('view-count');
+        if (viewCountElement) {
+          viewCountElement.textContent = `${count.toLocaleString()} views`;
+        }
+      }
+      
+      // Initial load of views
+      async function loadCurrentViews() {
+        try {
+          const response = await fetch(`/api/count-view?videoId=${videoId}`);
+          const data = await response.json();
+          if (data.views > 0) {
+            updateViewCount(data.views);
+          }
+        } catch (error) {
+          console.error('Failed to load view count:', error);
+        }
+      }
+      
+      loadCurrentViews();
+      
+  });
+  
+
+  
+</script>

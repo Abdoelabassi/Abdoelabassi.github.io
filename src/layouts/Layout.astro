@@ -2,12 +2,23 @@
 import { Icon } from 'astro-icon/components';
 import '../styles/global.css';
 
+
+
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  // Add other props for dynamic meta tags
 }
 
-const { title, description = "Academic personal website" } = Astro.props;
+const {
+  title = 'Abderrazaq EL Abassi - Personal Website',
+  description = 'Welcome to my personal website! Here you can find information about my skills, projects, talks, and publications.',
+  ogImage = '/images/abdo.jpeg',
+  canonicalUrl = Astro.url.href, // Get the current page URL
+} = Astro.props;
+
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1); // remove the first "/"
 ---
@@ -15,9 +26,58 @@ const currentPath = pathname.slice(1); // remove the first "/"
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <!-- Google Tag Manager -->
+    <script>
+      // The function itself (w, d, s, l, i)
+      (function(w: Window, d: Document, s: string, l: string, i: string){
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event:'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l !== 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        if (f.parentNode) { // Check if parentNode exists before inserting
+            f.parentNode.insertBefore(j,f);
+        }
+      })(window,document,'script','dataLayer','GTM-MCDSDXN3'); // Replace with your GTM ID
+    </script>
+  <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="canonical" href={canonicalUrl}>
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={canonicalUrl}>
+    <meta property="og:image" content={new URL(ogImage, Astro.site).href}>
+    <meta property="og:site_name" content="">
+    <meta property="og:locale" content="en_US">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@aeparticle_el97">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).href}>
+
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="author" content="Abderrazaq EL Abassi">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
@@ -30,12 +90,33 @@ const currentPath = pathname.slice(1); // remove the first "/"
           <a href="/projects" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'projects' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Projects</a>
           <a href="/talks" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'talks' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Talks</a>
           <a href="/publications" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'publications' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Publications</a>
-          <a href="/vitae" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'cv' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>CV</a>
+          <a href="/cv" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'cv' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>CV</a>
+          {/* <a href="/blog" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'publications' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Blog</a>*/}
+           <a href="/hkvideos" class="text-xl font-bold flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+          </svg>
+          ThesisToPodcast
+        </a>
+        
+        <div class="flex items-center gap-4">
+          <form class="hidden md:flex">
+            <input 
+              type="search" 
+              placeholder="Search..." 
+              class="px-4 py-1 border border-gray-300 dark:border-gray-600 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
+            />
+            <button type="submit" class="px-4 py-1 bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-600 border-l-0 rounded-r-full hover:bg-gray-200 dark:hover:bg-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </form>
+        </div>
         </nav>
         <div class="flex items-center space-x-2">
-          <button aria-label="Search" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-            <Icon name="tabler:search" class="w-5 h-5" />
-          </button>
+          
           <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
             <Icon name="tabler:moon" class="w-5 h-5 dark:hidden" />
             <Icon name="tabler:sun" class="w-5 h-5 hidden dark:block" />
@@ -50,7 +131,7 @@ const currentPath = pathname.slice(1); // remove the first "/"
     
     <footer class="border-t border-gray-200 dark:border-gray-800 py-6 mt-12">
       <div class="container mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
-        <p>© Copyright {new Date().getFullYear()} Abderrazaq EL Abassi</p>
+        <p>© Copyright {new Date().getFullYear()} EL Abassi Abderrazaq</p>
       </div>
     </footer>
 
@@ -80,4 +161,8 @@ const currentPath = pathname.slice(1); // remove the first "/"
       });
     </script>
   </body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCDSDXN3"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 </html>

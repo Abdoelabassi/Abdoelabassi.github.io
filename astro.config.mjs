@@ -1,23 +1,31 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
 
 import react from "@astrojs/react";
 
+import node from "@astrojs/node";
 import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  site:"https://Abdoelabassi.github.io",
+  site: "https://Abdoelabassi.github.io",
+  output: "server", // Required for API routes
+
+  // Add server adapter for deployment
+  // For example, with Node:
+  adapter: node({
+    mode: "standalone",
+  }),
   integrations: [
-    tailwind(), 
-    react(), 
+    tailwind(),
+    react(),
     icon({
       include: {
-        tabler: ['*'],
-        'simple-icons': ['*']
-      }
-    })
+        tabler: ["*"],
+        "simple-icons": ["*"],
+      },
+    }),
   ],
 });
