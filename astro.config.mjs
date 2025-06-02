@@ -8,6 +8,8 @@ import react from "@astrojs/react";
 import node from "@astrojs/node";
 import icon from "astro-icon";
 
+import mdx from "@astrojs/mdx";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://Abdoelabassi.github.io",
@@ -18,14 +20,10 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-  integrations: [
-    tailwind(),
-    react(),
-    icon({
-      include: {
-        tabler: ["*"],
-        "simple-icons": ["*"],
-      },
-    }),
-  ],
+  integrations: [tailwind(), react(), icon({
+    include: {
+      tabler: ["*"],
+      "simple-icons": ["*"],
+    },
+  }), mdx()],
 });
