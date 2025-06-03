@@ -1,7 +1,94 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import moment from "moment";
 ---
 
 <BlogLayout title="My Blog">
-   
+    <main class="container mx-auto flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 md:p-10 lg:p-16"></main>
+        <section class="lg:col-span-2 space-y-8">
+            <h2 class="text-4xl font-extrabold text-gray-800 mb-6 dark:text-gray-100">Latest Articles</h2>
+
+            <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 dark:bg-gray-800 dark:hover:shadow-2xl">
+                <img src="https://placehold.co/800x400/a78bfa/ffffff?text=Blog+Image+1" alt="Blog Post Image" class="w-full h-auto rounded-lg mb-4 object-cover">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">The Future of Web Development</h3>
+                <p class="text-gray-600 text-sm mb-3 dark:text-gray-400">
+                    <span class="font-medium">Abderrazaq</span> on <time datetime="2023-10-26">{moment("2025-06-03T11:14").fromNow()}</time> in <a href="#" class="text-indigo-600 hover:underline dark:text-indigo-400">Technology</a>
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4 dark:text-gray-300">
+                    Huper-kamiokande published it's first result on neutrinos oscillation of the Hyper-K long-baseline            
+                </p>
+                <a href="./post-1" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-600">Read More</a>
+            </article>
+
+            <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 dark:bg-gray-800 dark:hover:shadow-2xl">
+                <img src="https://placehold.co/800x400/60a5fa/ffffff?text=Blog+Image+2" alt="Blog Post Image" class="w-full h-auto rounded-lg mb-4 object-cover">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">Mastering Responsive Design</h3>
+                <p class="text-gray-600 text-sm mb-3 dark:text-gray-400">
+                    <span class="font-medium">By John Smith</span> on <time datetime="2023-10-20">October 20, 2023</time> in <a href="#" class="text-indigo-600 hover:underline dark:text-indigo-400">Design</a>
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4 dark:text-gray-300">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum...
+                </p>
+                <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-600">Read More</a>
+            </article>
+
+            <article class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 dark:bg-gray-800 dark:hover:shadow-2xl">
+                <img src="https://placehold.co/800x400/fbbf24/ffffff?text=Blog+Image+3" alt="Blog Post Image" class="w-full h-auto rounded-lg mb-4 object-cover">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-2 dark:text-gray-100">The Art of Storytelling in Content</h3>
+                <p class="text-gray-600 text-sm mb-3 dark:text-gray-400">
+                    <span class="font-medium">By Emily White</span> on <time datetime="2023-10-15">October 15, 2023</time> in <a href="#" class="text-indigo-600 hover:underline dark:text-indigo-400">Content Marketing</a>
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4 dark:text-gray-300">
+                    Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris...
+                </p>
+                <a href="#" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-indigo-700 transition duration-300 shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-600">Read More</a>
+            </article>
+
+        </section>
+
+    <aside class="lg:col-span-1 space-y-8">
+        <div class="bg-white rounded-xl shadow-lg p-6 dark:bg-gray-800">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4 dark:text-gray-100">Search</h3>
+            <div class="flex">
+                <input type="text" placeholder="Search articles..." class="flex-grow border border-gray-300 rounded-l-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400">
+                <button class="bg-indigo-600 text-white px-5 py-3 rounded-r-lg hover:bg-indigo-700 transition duration-300 dark:bg-indigo-700 dark:hover:bg-indigo-600">Search</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 dark:bg-gray-800">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4 dark:text-gray-100">Categories</h3>
+            <ul class="space-y-2">
+                <li><a href="#" class="text-gray-700 hover:text-indigo-600 hover:underline transition duration-300 block py-1 dark:text-gray-300 dark:hover:text-indigo-400">Technology (5)</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-600 hover:underline transition duration-300 block py-1 dark:text-gray-300 dark:hover:text-indigo-400">Design (3)</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-600 hover:underline transition duration-300 block py-1 dark:text-gray-300 dark:hover:text-indigo-400">Lifestyle (7)</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-600 hover:underline transition duration-300 block py-1 dark:text-gray-300 dark:hover:text-indigo-400">Travel (2)</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-indigo-600 hover:underline transition duration-300 block py-1 dark:text-gray-300 dark:hover:text-indigo-400">Food (4)</a></li>
+            </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 dark:bg-gray-800">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4 dark:text-gray-100">Recent Posts</h3>
+            <ul class="space-y-4">
+                <li>
+                    <a href="/post-1" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
+                        Huper-kamiokande published it's first result on neutrinos oscillation of the Hyper-K long-baseline
+                    </a>
+                    <p class="text-gray-500 text-sm dark:text-gray-400"></p>
+                </li>
+                <li>
+                    <a href="#" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
+                        10 Tips for Productive Remote Work
+                    </a>
+                    <p class="text-gray-500 text-sm dark:text-gray-400">October 25, 2023</p>
+                </li>
+                <li>
+                    <a href="#" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
+                        Exploring the Best Coffee Shops in Town
+                    </a>
+                    <p class="text-gray-500 text-sm dark:text-gray-400">October 22, 2023</p>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    </main>
 </BlogLayout>
