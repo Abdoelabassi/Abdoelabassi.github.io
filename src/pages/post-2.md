@@ -5,9 +5,9 @@ description: "Exploring CERN's ambitious Future Circular Collider project, a 91-
 date: 2025-06-03
 author: Abderrazaq
 draft: false
-image:{
+image: {
 src: "/images/fcc-tunnel-visualization.jpg",
-alt: "Conceptual visualization of the Future Circular Collider tunnel stretching beneath the Franco-Swiss border"
+alt: "Conceptual visualization of the Future Circular Collider tunnel stretching beneath the Franco-Swiss border" 
 }
 category: "Physics"
 ---

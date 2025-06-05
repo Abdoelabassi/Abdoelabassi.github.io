@@ -1,19 +1,12 @@
----
-import {Image, Picture} from "@astrojs/image/components"
-
-const {frontmatter} = Astro.props;
-import "../styles/global.css"
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title>Modern Blog Layout</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
-
         /* Base styles for light mode */
         body {
             font-family: 'Inter', sans-serif;
@@ -54,13 +47,13 @@ import "../styles/global.css"
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <header class="bg-white shadow-md py-4 px-6 md:px-10 lg:px-16 dark:bg-gray-800 sticky top-0 z-50 w-screen">
+    <header class="bg-white shadow-md py-4 px-6 md:px-10 lg:px-16 dark:bg-gray-800">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
             <a href="#" class="text-3xl font-bold text-indigo-700 rounded-lg p-2 hover:bg-indigo-50 transition duration-300 dark:text-indigo-400 dark:hover:bg-gray-700">My Awesome Blog</a>
             <nav class="mt-4 md:mt-0 flex items-center">
                 <ul class="flex flex-wrap justify-center gap-4 md:gap-6 mr-4">
-                    <li><a href="/" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">Home</a></li>
-                    <li><a href="/about" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">About</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">Home</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">About</a></li>
                     <li><a href="#" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">Categories</a></li>
                     <li><a href="#" class="text-gray-700 hover:text-indigo-700 font-medium transition duration-300 rounded-lg px-3 py-2 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-indigo-400 dark:hover:bg-gray-700">Contact</a></li>
                 </ul>
@@ -75,83 +68,10 @@ import "../styles/global.css"
             </nav>
         </div>
     </header>
-    <main class="max-w-6xl mx-auto px-6 py-12 flex flex-row gap-16">
-        <!-- Article Header -->
-        <article class="relative">
-            <header class="text-center mb-16 space-y-6">
-                <!-- Category Badge -->
-                {frontmatter.category && (
-                    <div class="flex justify-center">
-                        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z"></path>
-                            </svg>
-                            {frontmatter.category}
-                        </span>
-                    </div>
-                )}
 
-                <!-- Title -->
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent max-w-4xl mx-auto">
-                    {frontmatter.title ? frontmatter.title : "Untitled Article"}
-                </h1>
-
-                <!-- Meta Information -->
-                <div class="flex flex-wrap items-center justify-center gap-6 text-gray-600 dark:text-gray-400 text-sm">
-                    {frontmatter.author && (
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-medium text-xs">
-                                {frontmatter.author.charAt(0).toUpperCase()}
-                            </div>
-                            <span>{frontmatter.author}</span>
-                </div>
-                    )}
-                    {frontmatter.date && (
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            <time datetime={frontmatter.date}>{new Date(frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-                        </div>
-                    )}
-            </header>
-
-            <!-- Content -->
-            <div class="prose prose-lg prose-gray dark:prose-invert max-w-none">
-                <img src={frontmatter.image.src} alt={frontmatter.image.alt}/>
-                <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-gray-200/20 dark:border-gray-700/30 hover:shadow-2xl transition-all duration-500">
-                    <slot />
-                </div>
-            </div>
-
-
-            <!-- Article Footer -->
-            <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div class="flex items-center gap-4">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">Share this article:</span>
-                        <div class="flex gap-3">
-                            <button class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                </svg>
-                            </button>
-                            <button class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <a href="/" class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        Back to all posts
-                    </a>
-                </div>
-            </footer>
-        </article>
+    <main class="container mx-auto flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 md:p-10 lg:p-16">
+        <slot />
+    
         <aside class="lg:col-span-1 space-y-8">
             <div class="bg-white rounded-xl shadow-lg p-6 dark:bg-gray-800">
                 <h3 class="text-xl font-semibold text-gray-900 mb-4 dark:text-gray-100">Search</h3>
@@ -176,10 +96,10 @@ import "../styles/global.css"
                 <h3 class="text-xl font-semibold text-gray-900 mb-4 dark:text-gray-100">Recent Posts</h3>
                 <ul class="space-y-4">
                     <li>
-                        <a href="/post-1" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
-                            Huper-kamiokande published it's first result on neutrinos oscillation of the Hyper-K long-baseline
+                        <a href="#" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
+                            The Rise of AI in Everyday Life
                         </a>
-                        <p class="text-gray-500 text-sm dark:text-gray-400"></p>
+                        <p class="text-gray-500 text-sm dark:text-gray-400">October 28, 2023</p>
                     </li>
                     <li>
                         <a href="#" class="block text-gray-800 hover:text-indigo-600 font-medium transition duration-300 dark:text-gray-200 dark:hover:text-indigo-400">
@@ -198,17 +118,9 @@ import "../styles/global.css"
         </aside>
     </main>
 
-    <!-- Floating Action Button -->
-    <button class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50">
-        <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-        </svg>
-    </button>
-
-
     <footer class="bg-gray-800 text-white py-8 px-6 md:px-10 lg:px-16 mt-12 dark:bg-gray-900">
         <div class="container mx-auto text-center">
-            <p class="text-lg font-semibold mb-4 dark:text-gray-100">Blog</p>
+            <p class="text-lg font-semibold mb-4 dark:text-gray-100">My Awesome Blog</p>
             <nav class="mb-4">
                 <ul class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
                     <li><a href="#" class="hover:text-indigo-400 transition duration-300 dark:text-gray-300 dark:hover:text-indigo-400">Privacy Policy</a></li>
@@ -272,78 +184,3 @@ import "../styles/global.css"
     </script>
 </body>
 </html>
-
-<style>
-    @reference "tailwindcss";
-    /* Custom prose styles for better markdown rendering */
-    .prose {
-        @apply text-gray-800 dark:text-gray-200;
-    }
-
-    .prose h1,
-    .prose h2,
-    .prose h3,
-    .prose h4,
-    .prose h5,
-    .prose h6 {
-        @apply text-gray-900 dark:text-gray-100 font-bold;
-    }
-
-    .prose h2 {
-        @apply text-2xl md:text-3xl mt-12 mb-6 pb-3 border-b border-gray-200 dark:border-gray-700;
-    }
-
-    .prose h3 {
-        @apply text-xl md:text-2xl mt-8 mb-4;
-    }
-
-    .prose p {
-        @apply mb-6 leading-relaxed;
-    }
-
-    .prose blockquote {
-        @apply border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-r-lg italic;
-    }
-
-    .prose code {
-        @apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm font-mono;
-    }
-
-    .prose pre {
-        @apply bg-gray-900 dark:bg-gray-950 rounded-lg p-6 overflow-x-auto;
-    }
-
-    .prose pre code {
-        @apply bg-transparent p-0 text-gray-100;
-    }
-
-    .prose a {
-        @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 underline decoration-2 underline-offset-2;
-    }
-
-    .prose ul,
-    .prose ol {
-        @apply mb-6;
-    }
-
-    .prose li {
-        @apply mb-2;
-    }
-
-    .prose img {
-        @apply rounded-lg shadow-lg mx-auto my-8 hover:shadow-xl transition-shadow duration-300;
-    }
-
-    .prose table {
-        @apply w-full border-collapse bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg;
-    }
-
-    .prose th,
-    .prose td {
-        @apply border border-gray-200 dark:border-gray-700 px-4 py-3;
-    }
-
-    .prose th {
-        @apply bg-gray-50 dark:bg-gray-900 font-semibold;
-    }
-</style>
