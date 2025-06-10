@@ -47,6 +47,9 @@ importers:
       astro-icon:
         specifier: ^1.1.5
         version: 1.1.5
+      ffprobe-static:
+        specifier: ^3.1.0
+        version: 3.1.0
       format-duration:
         specifier: ^3.0.2
         version: 3.0.2
@@ -1702,6 +1705,9 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  ffprobe-static@3.1.0:
+    resolution: {integrity: sha512-Dvpa9uhVMOYivhHKWLGDoa512J751qN1WZAIO+Xw4L/mrUSPxS4DApzSUDbCFE/LUq2+xYnznEahTd63AqBSpA==}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -4944,6 +4950,8 @@ snapshots:
   fdir@6.4.5(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
+
+  ffprobe-static@3.1.0: {}
 
   fill-range@7.1.1:
     dependencies:
