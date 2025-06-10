@@ -15,16 +15,6 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "https://Abdoelabassi.github.io",
-
-  // Required for API routes
-  output: "server",
-
-  // Add server adapter for deployment
-  // For example, with Node:
-  adapter: node({
-    mode: "standalone",
-  }),
-
   integrations: [
     react(),
     icon({
