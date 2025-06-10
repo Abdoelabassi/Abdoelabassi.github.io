@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 :root {
   --bright-blue: #007bff;
   --graphite: #506578;
@@ -14,7 +16,7 @@ html {
 body {
   font-size: 1rem;
   font-family: "Open Sans", Arial, sans-serif;
-  background: #FFFFFF;
+  background: #ffffff;
   color: var(--graphite);
 }
 
@@ -60,7 +62,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Open Sans", Arial, sans-serif;
   /* color: #20364c; */
   color: var(--maroon) !important;
@@ -71,7 +78,8 @@ h1 {
   margin-bottom: 3rem;
 }
 
-h2, h3 {
+h2,
+h3 {
   margin: 0 0 2rem !important;
   color: slategray;
 }
@@ -80,7 +88,9 @@ h4 {
   text-transform: uppercase;
 }
 
-h4, h5, h6 {
+h4,
+h5,
+h6 {
   color: slategray !important;
 }
 
@@ -150,7 +160,19 @@ h4, h5, h6 {
   background-image: url(https://unsplash.it/300/200);
 }
 
-p, table, tr, td, ul, li, blockquote, nav, a, footer, dl, dt, dd {
+p,
+table,
+tr,
+td,
+ul,
+li,
+blockquote,
+nav,
+a,
+footer,
+dl,
+dt,
+dd {
   font-size: 1rem;
   font-family: "Open Sans", Arial, sans-serif;
   font-weight: 400;
@@ -196,7 +218,6 @@ blockquote footer {
 .publications li {
   margin-left: 2rem;
   text-indent: -2.5rem;
-  ;
 }
 
 /* Links */
@@ -238,7 +259,7 @@ nav {
   background: var(--nd-blue) !important;
 }
 
-.navbar-inverse .navbar-nav>li>a {
+.navbar-inverse .navbar-nav > li > a {
   color: white !important;
   font-weight: 400;
 }
@@ -247,11 +268,11 @@ nav {
   border-bottom: 2px solid white !important;
 }
 
-.navbar-inverse .navbar-nav>.active>a {
+.navbar-inverse .navbar-nav > .active > a {
   background-color: var(--nd-blue) !important;
 }
 
-.navbar-inverse .navbar-nav>li.active {
+.navbar-inverse .navbar-nav > li.active {
   color: white !important;
 }
 
@@ -357,7 +378,7 @@ footer {
 }
 
 .social-icons li {
-  padding-left: .75rem;
+  padding-left: 0.75rem;
   display: inline-block;
 }
 
@@ -366,7 +387,7 @@ footer {
 }
 
 .social-icons li a:hover {
-  opacity: .8;
+  opacity: 0.8;
   text-decoration: none !important;
 }
 
@@ -411,7 +432,6 @@ dd {
 
 /* Responsive: Portrait tablets and up */
 @media only screen and (min-width: 768px) {
-
   /* Remove the padding we set earlier */
   .container {
     max-width: 900px;
@@ -452,7 +472,7 @@ dd {
 }
 
 /* sets the link to the width of the entire panel title */
-.panel-title>a {
+.panel-title > a {
   display: block;
 }
 
@@ -469,12 +489,12 @@ dd {
   background-color: #1585cf;
   color: white;
   padding: 12px 6px 12px 6px;
-  border-radius: .25rem 0 0 .25rem;
+  border-radius: 0.25rem 0 0 0.25rem;
   cursor: pointer;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 #topper:hover {
   background-color: #1585cf;
-  opacity: .8;
+  opacity: 0.8;
 }

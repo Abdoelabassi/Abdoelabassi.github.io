@@ -1,0 +1,203 @@
+---
+import "../styles/global.css"
+---
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroTube - Your Video Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2d3748; /* Darker track for dark mode */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568; /* Slightly lighter thumb */
+            border-radius: 10px;
+        }
+        html.light ::-webkit-scrollbar-track {
+            background: #f0f0f0; /* Lighter track for light mode */
+        }
+        html.light ::-webkit-scrollbar-thumb {
+            background: #cccccc; /* Darker thumb for light mode */
+        }
+
+        /* Custom hover effect for video cards */
+        .video-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1); /* Larger shadow */
+            border-color: #ef4444; /* Red border on hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+
+    <header class="bg-gray-800 dark:bg-gray-950 p-4 shadow-lg flex flex-col md:flex-row items-center justify-between sticky top-0 z-50 rounded-b-lg">
+        <div class="flex items-center mb-4 md:mb-0">
+            <svg class="w-8 h-8 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+            </svg>
+            <h1 class="text-2xl font-bold text-white">AstroTube</h1>
+        </div>
+
+        <div class="flex-grow max-w-xl mx-auto w-full md:w-auto mb-4 md:mb-0">
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="Search videos..."
+                       class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-700 dark:bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 ease-in-out border border-gray-600 dark:border-gray-700">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <button id="theme-toggle"
+                    class="p-2 rounded-full bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 ease-in-out shadow-md">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12H2m8.003-4.373A9.003 9.003 0 0112 4a9.003 9.003 0 018.997 8.627zM12 15a3 3 0 100-6 3 3 0 000 6z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow container mx-auto p-4 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+1" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Amazing Travel Vlog: Exploring Mountains</h3>
+                <p class="text-sm text-gray-400">Channel Name • 1.2M views • 3 days ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+2" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Coding Tutorial: Build a React App</h3>
+                <p class="text-sm text-gray-400">Dev Guru • 500K views • 1 week ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+3" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Delicious Recipes: Quick Dinner Ideas</h3>
+                <p class="text-sm text-gray-400">Foodie Fan • 2.1M views • 2 months ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+4" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Gaming Highlights: Epic Wins Compilation</h3>
+                <p class="text-sm text-gray-400">Pro Gamer • 800K views • 4 days ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+5" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Science Explained: Quantum Physics Basics</h3>
+                <p class="text-sm text-gray-400">Science Hub • 1.5M views • 1 month ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+6" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Fitness Journey: From Couch to 5K</h3>
+                <p class="text-sm text-gray-400">Fit Life • 300K views • 2 weeks ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+7" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">Music Mix: Chill Lo-Fi Beats</h3>
+                <p class="text-sm text-gray-400">Relax Vibes • 4.5M views • 5 months ago</p>
+            </div>
+        </div>
+        <div class="video-card bg-gray-800 dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out border border-gray-700 dark:border-gray-800">
+            <img src="https://placehold.co/600x338/2d3748/a0aec0?text=Video+Thumbnail+8" alt="Video Thumbnail" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold text-white mb-2 leading-tight">DIY Crafts: Easy Home Decor Ideas</h3>
+                <p class="text-sm text-gray-400">Crafty Corner • 700K views • 1 month ago</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 dark:bg-gray-950 p-4 text-center text-gray-400 text-sm mt-8 rounded-t-lg">
+        <p>&copy; 2025 AstroTube. All rights reserved.</p>
+        <p>Built with ❤️ and Tailwind CSS.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+
+            // Check for saved theme preference or default to dark
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                htmlElement.classList.remove('light', 'dark');
+                htmlElement.classList.add(currentTheme);
+            } else {
+                // Default to dark if no preference is found
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (htmlElement.classList.contains('dark')) {
+                    htmlElement.classList.remove('dark');
+                    htmlElement.classList.add('light');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.classList.remove('light');
+                    htmlElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            // Select all video cards in the main content using the new class 'video-card'
+            const videoCards = document.querySelectorAll('.video-card');
+
+            searchInput.addEventListener('input', (event) => {
+                const searchTerm = event.target.value.toLowerCase();
+                console.log(`Searching for: "${searchTerm}"`); // Log search term for debugging
+
+                // In a real application, you would make an API call here
+                // For this example, we'll filter the existing cards
+                videoCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const channel = card.querySelector('p').textContent.toLowerCase();
+
+                    if (title.includes(searchTerm) || channel.includes(searchTerm)) {
+                        card.style.display = 'block'; // Show card
+                    } else {
+                        card.style.display = 'none'; // Hide card
+                    }
+                });
+
+                // You could also display a "No results found" message if all cards are hidden
+                const visibleCards = Array.from(videoCards).filter(card => card.style.display !== 'none');
+                if (visibleCards.length === 0 && searchTerm.length > 0) {
+                    // Example: display a message
+                    // console.log("No videos found matching your search.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

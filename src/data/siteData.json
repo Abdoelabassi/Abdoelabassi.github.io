@@ -1,0 +1,8 @@
+{
+  "title": "My Astro Site",
+  "description": "A academic website built with Astro",
+  "image": {
+    "src": "/images/abdo.jpeg",
+    "alt": "Astro Logo"
+  }
+}
