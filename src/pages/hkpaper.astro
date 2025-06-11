@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PDFViewer from '../components/PdfViewer';
+---
+
+
+<Layout >
+    <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 px-4 sm:px-6 lg:px-8">
+        <h1>PDF Document Viewer</h1>
+        
+        <!-- The client:load directive ensures the component runs on the client -->
+        <div class="ax-w-6xl mx-auto space-y-8">
+          <!-- You'll need to place your PDF file in the public folder -->
+          <PDFViewer
+             
+            fileUrl="/pdf/hyperk-paper.pdf" 
+            height="800px"
+            client:load 
+          />
+        </div>
+      </main>
+</Layput>
