@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import RenderLatex from '../components/RenderLatex';
 
 const publications = [
   {
@@ -9,7 +10,33 @@ const publications = [
     journal: "",
     year: "2025",
     doi: "10.48550/arXiv.2505.15019",
-    abstract: ".",
+    abstract: `
+    This paper presents the expected sensitivity to the
+neutrino oscillation parameters of the Hyper-Kamiokande
+long-baseline program. The Hyper-Kamiokande experi-
+ment, currently under construction in Japan, will measure
+the oscillations of accelerator-produced neutrinos with thou-
+sands of selected events per sample: this corresponds to an
+increase of statistics of a factor 25 to 100 with respect
+to recent results from the currently-running long-baseline
+neutrino oscillation experiment in Japan, T2K. In the most
+favorable scenario we will achieve the discovery of Charge-
+Parity (CP) violation in neutrino oscillation at 5σ \\mathrm{C.L.} in
+less than three years. With 10 years of data-taking, and as-
+suming a neutrino : antineutrino beam running ratio of 1:3, a
+CP violation discovery at 5σ \\mathrm{C.L.} is possible for more than
+60% of the actual values of the CP-violating phase, \\delta_{CP}.
+Moreover, we will measure \\delta_{CP} with a precision ranging
+from 20◦, in the case of maximal CP violation, to 6◦, in the
+case of CP conservation. We aim to achieve a 0.5% resolu-
+resolution on the \\Delta_{m32} parameter, and a resolution between 3%
+and 0.5% on the \\sin^{2} θ23 parameter, depending on its true
+value. These results are obtained by extending the analysis
+methods of T2K with dedicated tuning to take into account
+the Hyper-Kamiokande design: the larger far detector, the
+more powerful beam, the upgraded near detector ND280,
+and the planned additional Intermediate Water Cherenkov
+Detector`,
     links: [
       { icon: "tabler:file-text", url: "/hkpaper", label: "PDF" },
       { icon: "tabler:code", url: "#", label: "Code" },
@@ -46,7 +73,7 @@ const publications = [
           <p class="text-gray-600 dark:text-gray-400 mb-4">{pub.journal} {pub.year}</p>
           
           <div class="mb-4">
-            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Loading ....</h3>
+            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1"></h3>
             <p class="text-gray-700 dark:text-gray-300">{pub.abstract}</p>
           </div>
           
