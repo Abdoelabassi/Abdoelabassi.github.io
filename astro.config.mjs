@@ -32,4 +32,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  redirects: {
+    "/blog": "https://Abdoelabassi.github.io/blog", // for now
+  },
 });
