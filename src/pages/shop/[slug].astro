@@ -3,26 +3,29 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 
+
 export async function getStaticPaths() {
   const products = await getCollection('product');
   return products.map(product => ({
-    params: { slug: product.slug },
+    params: { slug: product.id },
     props: { product }
   }));
 }
 
 const { product } = Astro.props;
+console.log(product);
+
 const { Content } = await render(product);
 
 // Get related products (same category or random)
 const allProducts = await getCollection('product');
 const relatedProducts = allProducts
-  .filter(p => p.slug !== product.slug && p.data.category === product.data.category)
+  .filter(p => p.id !== product.id && p.data.category === product.data.category)
   .slice(0, 3);
 
 if (relatedProducts.length < 3) {
   const remaining = allProducts
-    .filter(p => p.slug !== product.slug && !relatedProducts.includes(p))
+    .filter(p => p.id !== product.id && !relatedProducts.includes(p))
     .slice(0, 3 - relatedProducts.length);
   relatedProducts.push(...remaining);
 }
@@ -218,7 +221,7 @@ if (relatedProducts.length < 3) {
                   )}
                   
                   <a 
-                    href={`/shop/${relatedProduct.slug}`}
+                    href={`/shop/${relatedProduct.id}`}
                     class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-300"
                   >
                     View

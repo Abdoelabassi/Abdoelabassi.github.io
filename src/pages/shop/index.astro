@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import ProductCard from '../../components/ProductCard';
 
 const products = await getCollection('product');
-console.log(products);
+//console.log(products);
 ---
 
 <Layout title="Shop - Premium Products">
@@ -40,7 +40,7 @@ console.log(products);
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map((product) => (
-          <ProductCard product={product.data} />
+          <ProductCard slug={product.id} product={product.data} />
         ))}
       </div>
 

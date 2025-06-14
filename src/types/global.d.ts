@@ -1,3 +1,4 @@
+import { file } from "astro/loaders";
 interface Window {
   // dataLayer is typically an array of objects.
   // The first push is usually {'gtm.start': number, event: string}
@@ -6,6 +7,7 @@ interface Window {
 }
 
 interface Product {
+  id: string;
   title: string;
   description?: string;
   price: number;
@@ -34,4 +36,5 @@ interface Product {
   publishedAt: Date;
   updatedAt?: Date;
   slug?: string | undefined; // Optional, used for Astro content collections
+  filePath?: string; // Path to the file in the content collection
 }

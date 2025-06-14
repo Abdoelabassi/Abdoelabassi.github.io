@@ -3,9 +3,10 @@ import { Star, ShoppingCart } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
+  slug?: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, slug }) => {
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -123,7 +124,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           disabled={!product.inStock}
           className="w-full bg-gray-900 text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          <a href={`/shop/${product.slug}`}>
+          <a href={`/shop/${slug}`}>
             <ShoppingCart className="w-4 h-4" />
           </a>
 
