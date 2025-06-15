@@ -281,6 +281,80 @@ if (relatedProducts.length < 3) {
       </section>
     )}
   </main>
+
+
+  <script>
+    // PayPal Configuration
+    const PAYPAL_CLIENT_ID= import.meta.env.PAYPAL_CLIENT_ID; // Replace with your actual PayPal client ID
+    const WHATSAPP_NUMBER = '+212691379754'; // Replace with your WhatsApp number (include country code)
+    
+    // Get product data from the page
+    const productTitle = document.querySelector('h1').textContent;
+    const productPrice = document.querySelector('.text-4xl.font-bold.text-gray-900').textContent.replace('$', '');
+    
+    // Initialize PayPal
+    if (window.paypal) {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: productPrice
+              },
+              description: productTitle
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            // Show success modal
+            document.getElementById('payment-success-modal').classList.remove('hidden');
+            
+            // You can also send the payment details to your server here
+            console.log('Payment completed by', details.payer.name.given_name);
+            
+            // Optional: Send to your backend
+            // fetch('/api/payment-success', {
+            //   method: 'POST',
+            //   headers: {
+            //     'Content-Type': 'application/json',
+            //   },
+            //   body: JSON.stringify({
+            //     orderId: data.orderID,
+            //     paymentId: details.id,
+            //     product: productTitle,
+            //     amount: productPrice,
+            //     payer: details.payer
+            //   })
+            // });
+          });
+        },
+        onError: function(err) {
+          console.error('PayPal Error:', err);
+          alert('Payment failed. Please try again or contact support.');
+        }
+      }).render('#paypal-button-container');
+    }
+    
+    // WhatsApp Contact
+    document.getElementById('whatsapp-contact').addEventListener('click', function() {
+      const message = `Hi! I'm interested in purchasing: ${productTitle} - $${productPrice}`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    });
+    
+    // Close success modal
+    document.getElementById('close-success-modal').addEventListener('click', function() {
+      document.getElementById('payment-success-modal').classList.add('hidden');
+    });
+    
+    // Close modal when clicking outside
+    document.getElementById('payment-success-modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.add('hidden');
+      }
+    });
+  </script>
 </Layout>
 
 <style>
