@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {MdArrowBack} from 'react-icons/md';
+import Heading from '../../components/Heading';
+
+---
+
+<Layout title='Cart'>
+   <div>
+    <Heading title='Shopping Cart'/>
+    <div class="grid grid-cols-5 text-xs gap-8 pb-4 items-center mt-10">
+        <div class="col-span-2 justify-self-start">Products</div>
+        <div class="justify-self-start">Price</div>
+        <div class="justify-self-start">Quantity</div>
+        <div class="col-span-2 justify-self-start">Total</div>
+    </div>
+    <div></div>
+   </div>
+</Layout>

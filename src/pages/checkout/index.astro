@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import Container from "../../components/Container"
+import FormWrap from "../../components/FormWrap"
+import Paypal from "../../components/Paypal"
+
+
+interface CheckoutProps{
+    product: Product
+}
+
+const {product} = Astro.props
+---
+
+<Layout>
+  <Container>
+    <FormWrap>
+      <Paypal product={product} />
+    </FormWrap>
+  </Container>
+</Layout>
