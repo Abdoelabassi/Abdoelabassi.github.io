@@ -10,7 +10,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/image": "^0.18.0",
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/node": "^9.2.2",
     "@astrojs/react": "^4.3.0",
@@ -48,7 +47,6 @@
     "@iconify/tailwind": "^1.2.0",
     "@types/bootstrap": "^5.2.10",
     "@types/jquery": "^3.5.32",
-    "@types/moment": "^2.13.0",
     "@types/numeral": "^2.0.5",
     "astro-meta-tags": "^0.3.2",
     "bootstrap": "^5.3.6",

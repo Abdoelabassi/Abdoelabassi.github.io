@@ -8,8 +8,6 @@ import icon from "astro-icon";
 
 import mdx from "@astrojs/mdx";
 
-import image from "@astrojs/image";
-
 import tailwindcss from "@tailwindcss/vite";
 
 import sentry from "@sentry/astro";
@@ -26,9 +24,6 @@ export default defineConfig({
       },
     }),
     mdx(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
     sentry({
       dsn: "https://5b44a6bd5db857a20405eb70cfc41803@o4509509422678016.ingest.de.sentry.io/4509509430673488",
       tracesSampleRate: 0,
