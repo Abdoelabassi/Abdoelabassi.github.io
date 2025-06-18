@@ -1,66 +1,10 @@
 ---
-import MainLayout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
+import Layout from '../layouts/Layout.astro';
 import ModernSkillsPage from '../components/Skills';
-import { 
-  Code2, 
-  Database, 
-  Globe, 
-  Smartphone, 
-  Award, 
-  ChevronRight,
-  Star,
-  TrendingUp,
-  Zap
-} from 'lucide-react';
 
-const skillCategories = [
-  {
-    title: "Programming Languages",
-    skills: [
-      { name: "Python", level: 80 },
-      { name: "JavaScript", level: 66 },
-      { name: "TypeScript", level: 60 },
-      { name: "C/C++", level: 50 },
-      { name: "SQL", level: 60 },
-      { name: "Rust", level: 45}
-    ]
-  },
-  {
-    title: "Data Science & ML",
-    skills: [
-      { name: "Data Analysis", level: 60 },
-      { name: "Machine Learning", level: 50 },
-      { name: "Deep Learning", level: 50 },
-      { name: "Statistical Modeling", level: 55 },
-      { name: "Data Visualization", level: 70 },
-    ]
-  },
-  {
-    title: "Tools & Technologies",
-    skills: [
-      {name: "Geant4/ROOT", level:50},
-      { name: "Git", level: 85 },
-      { name: "Docker/apptainer/singularity", level: 75 },
-      { name: "AWS", level: 65 },
-      { name: "Linux/bash-scripting", level: 80 },
-      { name: "Jupyter/Collab", level: 90 },
-    ]
-  },
-  {
-    title: "Domain Knowledge",
-    skills: [
-      { name: "Modern Physics", level: 80 },
-      { name: "HEP simulations", level: 55 },
-      { name: "Research Methods", level: 90 },
-      { name: "Scientific Writing", level: 85 },
-      { name: "Open Science", level: 80 },
-    ]
-  }
-];
 ---
 
-<MainLayout title="Skills - Your Name">
+<Layout title="Skills - Abderrazaq">
   <ModernSkillsPage client:only="react" />
-</MainLayout>
+</Layout>
 
