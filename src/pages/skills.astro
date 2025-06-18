@@ -1,16 +1,28 @@
 ---
 import MainLayout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import ModernSkillsPage from '../components/Skills';
+import { 
+  Code2, 
+  Database, 
+  Globe, 
+  Smartphone, 
+  Award, 
+  ChevronRight,
+  Star,
+  TrendingUp,
+  Zap
+} from 'lucide-react';
 
 const skillCategories = [
   {
     title: "Programming Languages",
     skills: [
       { name: "Python", level: 80 },
-      { name: "JavaScript", level: 75 },
-      { name: "TypeScript", level: 70 },
-      { name: "C/C++", level: 60 },
-      { name: "SQL", level: 65 },
+      { name: "JavaScript", level: 66 },
+      { name: "TypeScript", level: 60 },
+      { name: "C/C++", level: 50 },
+      { name: "SQL", level: 60 },
       { name: "Rust", level: 45}
     ]
   },
@@ -49,82 +61,6 @@ const skillCategories = [
 ---
 
 <MainLayout title="Skills - Your Name">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <h1 class="text-3xl font-bold mb-8">Skills</h1>
-    
-    <div class="grid md:grid-cols-2 gap-8">
-      {skillCategories.map(category => (
-        <div>
-          <h2 class="text-2xl font-bold mb-4">{category.title}</h2>
-          <div class="space-y-4">
-            {category.skills.map(skill => (
-              <div>
-                <div class="flex justify-between mb-1">
-                  <span class="font-medium">{skill.name}</span>
-                  <span class="text-gray-600 dark:text-gray-400">{skill.level}%</span>
-                </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                  <div 
-                    class="bg-emerald-600 dark:bg-emerald-400 h-2.5 rounded-full" 
-                    style={`width: ${skill.level}%`}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-    
-    <div class="mt-12">
-      <h2 class="text-2xl font-bold mb-6">Certifications</h2>
-      <div class="space-y-4">
-        <div class="flex items-start gap-3">
-          <Icon name="tabler:certificate" class="w-6 h-6 mt-0.5 text-emerald-600 dark:text-emerald-400" />
-          <div>
-            <h3 class="font-medium">ALX Software Engineering</h3>
-            <p class="text-gray-600 dark:text-gray-400"><a href="#">ALX africa</a> Feb, 2025</p>
-            <p class="mt-1">
-              I am a graduate of the ALX Software Engineering program, 
-              where I gained hands-on experience in software development, 
-              algorithms, data structures, and web development. 
-              This program has equipped me with the skills to tackle real-world challenges 
-              and build efficient software solutions.
-            </p>
-          </div>
-        </div>
-        
-        <div class="flex items-start gap-3">
-          <Icon name="tabler:certificate" class="w-6 h-6 mt-0.5 text-emerald-600 dark:text-emerald-400" />
-          <div>
-            <h3 class="font-medium">Deep Learning Specialization</h3>
-            <p class="text-gray-600 dark:text-gray-400"><a href="#">Deep Learning AI</a> Dec, 2024</p>
-            <p class="mt-1"> 5 courses of the Deep Learning Specialization. In this Specialization, 
-              I built neural network architectures such as Convolutional Neural Networks, 
-              Recurrent Neural Networks, LSTMs, Transformers, and learned how to make them better 
-              with strategies such as Dropout, BatchNorm, and Xavier/He initialization. 
-              I mastered these theoretical concepts, learned their industry applications using 
-              Python and TensorFlow, and tackled real-world cases such as speech recognition, music synthesis, 
-              chatbots, machine translation, natural language processing, and more.</p>
-            </p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <Icon name="tabler:certificate" class="w-6 h-6 mt-0.5 text-emerald-600 dark:text-emerald-400" />
-          <div>
-            <h3 class="font-medium">Machine Learning</h3>
-            <p class="text-gray-600 dark:text-gray-400"><a href="#">Machine Learning Specialization</a >Mar, 2024</p>
-            <p class="mt-1">All three courses of the Machine Learning Specialization! 
-              I studied modern machine learning concepts, including supervised learning 
-              (linear regression, logistic regression, neural networks, decision trees), 
-              unsupervised learning (clustering, anomaly detection), recommender systems, 
-              and reinforcement learning. I learned some of the best practices for building 
-              machine learning models. I also gained practical skills to apply machine 
-              learning techniques to challenging real-world problems.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ModernSkillsPage client:only="react" />
 </MainLayout>
 
