@@ -1,0 +1,364 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const experience = [
+  {
+    title: "PhD Researcher",
+    organization: "University of Ibn-Tofail",
+    location: "Kenitra, Morocco",
+    period: "2021 - present",
+    description: "Underground Neutrinos Physics in collaboration with Hyper-Kamiokande experiment",
+    skills: ["Physics Simulation", "Statistical Analysis", "Scientific Writing", "Collaboration"]
+  },
+  {
+    title: "Master in High Energy Physics",
+    organization: "University Mohammed V",
+    location: "Rabat, Morocco",
+    period: "2019 - 2020",
+    description: "Dark Matter search: Statistical Combination of invisible Higgs decays",
+    skills: ["Statistical Analysis", "Combination analysis"]
+  }
+];
+
+const education = [
+  {
+    degree: "PhD in Particle Physics",
+    institution: "University Ibn-Tofail",
+    location: "Kenitra, Morocco",
+    period: "2021 - present",
+    description: "Long-base line neutrinos oscillation analysis, and Low-energy scale calibration of Far detector using DTG neutron generator"
+  },
+  {
+    degree: "MSc in Mathematical Physics",
+    institution: "University Mohammed V",
+    location: "Rabat, Morocco",
+    period: "2018 - 2020",
+    description: "Specialized on High Energy Physics, and thesis titled: Statistical Combination of invisible Higgs decays in Vector Boson Fusion with ATLAS detector"
+  },
+  {
+    degree: "BSc in Physics",
+    institution: "University Moulay Ismail",
+    location: "Mekenes, Morocco",
+    period: "2015 - 2018",
+    description: "Specialized on Material Physics"
+  }
+];
+
+const publications = [
+  {
+    title: "",
+    authors: "",
+    journal: "",
+    year: "",
+    doi: ""
+  }
+];
+
+const skills = [
+  {
+    category: "Programming",
+    items: ["Python", "C++", "Rust", "JavaScript/TypeScript", "SQL", "MATLAB", "Bash Scripting"]
+  },
+  {
+    category: "Data Science",
+    items: ["Machine Learning", "Statistical Analysis", "Data Visualization", "Physics Simulation"]
+  },
+  {
+    category: "Tools",
+    items: ["Git", "Docker", "Linux", "CI/CD", "Jupyter"]
+  },
+  {
+    category: "Physics simulation",
+    items: ["Geant4", "ROOT", "Pythia"]
+  },
+  {
+    category: "Languages",
+    items: ["Arabic (Native)", "English (Conversational)", "Spanish (basic)", "French (middle)", "Japanese (basic)"]
+  }
+];
+---
+
+
+<Layout title="CV - Academic Researcher">
+  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Top Controls -->
+      <div class="flex justify-between items-center mb-8">
+        <!-- Theme Toggle -->
+        <button 
+          id="themeToggle"
+          class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200 dark:border-gray-700"
+          aria-label="Toggle theme"
+        >
+          <svg id="sunIcon" class="w-5 h-5 text-yellow-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+          </svg>
+          <svg id="moonIcon" class="w-5 h-5 text-gray-400 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+          </svg>
+        </button>
+
+        <!-- Download Button -->
+        <button 
+          id="downloadBtn"
+          class="inline-flex items-center px-6 py-3 bg-blue-600 dark:bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-700 dark:hover:bg-blue-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Download CV
+        </button>
+      </div>
+
+      <!-- CV Content -->
+      <div id="cvContent" class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-colors duration-300">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-8">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 class="text-4xl font-bold mb-2">Dr. [Your Name]</h1>
+              <p class="text-xl text-blue-100">PhD Researcher in Particle Physics</p>
+              <p class="text-lg text-blue-200 mt-1">Neutrino Physics • High Energy Physics • Data Analysis</p>
+            </div>
+            <div class="mt-4 md:mt-0 text-right">
+              <p class="text-blue-100">your.email@university.edu</p>
+              <p class="text-blue-100">+212 XXX XXX XXX</p>
+              <p class="text-blue-100">ORCID: 0000-0000-0000-0000</p>
+              <p class="text-blue-100">ResearchGate: /your-profile</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="p-8 space-y-8 text-gray-900 dark:text-gray-100">
+          <!-- Research Interests -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Research Interests</h2>
+            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+              Specialized in experimental particle physics with focus on neutrino oscillations and dark matter searches. 
+              Experienced in statistical analysis of large-scale physics experiments, detector calibration, and 
+              international collaboration in high-energy physics research.
+            </p>
+          </section>
+
+          <!-- Education -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Education</h2>
+            <div class="space-y-6">
+              {education.map((edu) => (
+                <div class="border-l-4 border-blue-600 pl-6">
+                  <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
+                    <div>
+                      <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{edu.degree}</h3>
+                      <p class="text-blue-600 dark:text-blue-400 font-medium">{edu.institution}</p>
+                      <p class="text-gray-600 dark:text-gray-400 text-sm">{edu.location}</p>
+                    </div>
+                    <span class="text-gray-600 dark:text-gray-400 font-medium mt-1 md:mt-0">{edu.period}</span>
+                  </div>
+                  <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{edu.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Research Experience -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Research Experience</h2>
+            <div class="space-y-6">
+              {experience.map((exp) => (
+                <div class="border-l-4 border-blue-600 pl-6">
+                  <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-2">
+                    <div>
+                      <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{exp.title}</h3>
+                      <p class="text-blue-600 dark:text-blue-400 font-medium">{exp.organization}</p>
+                      <p class="text-gray-600 dark:text-gray-400 text-sm">{exp.location}</p>
+                    </div>
+                    <span class="text-gray-600 dark:text-gray-400 font-medium mt-1 md:mt-0">{exp.period}</span>
+                  </div>
+                  <p class="text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">{exp.description}</p>
+                  <div class="flex flex-wrap gap-2">
+                    {exp.skills.map((skill) => (
+                      <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Technical Skills -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {skills.map((skillGroup) => (
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">{skillGroup.category}</h3>
+                  <div class="flex flex-wrap gap-2">
+                    {skillGroup.items.map((item) => (
+                      <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm border border-gray-200 dark:border-gray-600">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <!-- Publications -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Publications</h2>
+            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
+              <p class="text-gray-600 dark:text-gray-400 italic text-center">
+                Publications will be updated as research progresses. 
+                Currently preparing manuscripts on neutrino oscillation analysis and detector calibration studies.
+              </p>
+            </div>
+          </section>
+
+          <!-- Conferences & Presentations -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Conferences & Presentations</h2>
+            <div class="space-y-4">
+              <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                <h3 class="font-semibold text-gray-800 dark:text-gray-200">International Conference Presentations</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">
+                  Active participant in international physics conferences and workshops related to neutrino physics and detector development.
+                </p>
+              </div>
+              <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                <h3 class="font-semibold text-gray-800 dark:text-gray-200">Collaboration Meetings</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">
+                  Regular participation in Hyper-Kamiokande collaboration meetings and working groups.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Awards & Honors -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b-2 border-blue-600 pb-2">Awards & Honors</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700 dark:text-gray-300">PhD Research Fellowship</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700 dark:text-gray-300">Master's Degree with Distinction</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700 dark:text-gray-300">International Collaboration Member</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700 dark:text-gray-300">Academic Excellence Award</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or default to light mode
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.classList.toggle('dark', savedTheme === 'dark');
+    
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function() {
+        const isDark = html.classList.contains('dark');
+        html.classList.toggle('dark', !isDark);
+        localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+      });
+    }
+
+    // Download CV Functionality
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cvContent = document.getElementById('cvContent');
+
+    if (downloadBtn && cvContent) {
+      downloadBtn.addEventListener('click', function() {
+        const printWindow = window.open('', '_blank');
+        
+        if (printWindow) {
+          const isDark = html.classList.contains('dark');
+          const themeStyles = isDark ? `
+            body { background-color: #1f2937; color: #f9fafb; }
+            .cv-content { background-color: #374151; }
+            .section h2 { color: #e5e7eb; }
+            .skills-tag { background: #374151; color: #e5e7eb; border: 1px solid #4b5563; }
+          ` : `
+            body { background-color: white; color: #111827; }
+            .cv-content { background-color: white; }
+            .section h2 { color: #1f2937; }
+            .skills-tag { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+          `;
+
+          printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>Academic CV - Particle Physics Researcher</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+                .cv-content { max-width: 800px; margin: 0 auto; }
+                .header { background: linear-gradient(to right, #2563eb, #1d4ed8); color: white; padding: 30px; margin-bottom: 30px; }
+                .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+                .header p { margin: 5px 0; }
+                .section { margin-bottom: 30px; }
+                .section h2 { border-bottom: 2px solid #2563eb; padding-bottom: 10px; margin-bottom: 20px; }
+                .experience-item { margin-bottom: 20px; padding-left: 20px; border-left: 4px solid #2563eb; }
+                .skills-tag { display: inline-block; padding: 4px 8px; margin: 2px; border-radius: 12px; font-size: 0.85em; }
+                .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+                ul { padding-left: 20px; }
+                li { margin-bottom: 5px; }
+                ${themeStyles}
+                @media print {
+                  body { margin: 0; padding: 15px; background: white !important; color: black !important; }
+                  .header { background: #2563eb !important; }
+                  .skills-tag { background: #f3f4f6 !important; color: #374151 !important; border: 1px solid #d1d5db !important; }
+                }
+              </style>
+            </head>
+            <body>
+              ${cvContent.innerHTML}
+            </body>
+            </html>
+          `);
+          
+          printWindow.document.close();
+          
+          setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+          }, 500);
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    #downloadBtn, #themeToggle {
+      display: none;
+    }
+    
+    #cvContent {
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+</style>

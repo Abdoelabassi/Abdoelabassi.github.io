@@ -5,7 +5,7 @@ import { Icon } from 'astro-icon/components';
 const experience = [
   {
     title: "PhD Researcher",
-    organization: "University of Ibn-Todail",
+    organization: "University of Ibn-Tofail",
     location: "Kenitra, Morocco",
     period: "2021 - present",
     description: "Underground Neutrinos Physics in collaboration with Hyper-Kamiokande experiment",
@@ -80,104 +80,264 @@ const skills = [
 ---
 
 <MainLayout title="CV - Your Name">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold">Curriculum Vitae</h1>
-      <a 
-        href="https://Abdoelabassi.github.io/main.pdf" 
-        target="_blank" 
-        class="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors"
-      >
-        <Icon name="tabler:download" class="w-5 h-5" />
-        <span>Download PDF (v1)</span>
-      </a>
-    </div>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Experience</h2>
-      <div class="space-y-6">
-        {experience.map(job => (
-          <div>
-            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
-              <h3 class="text-xl font-bold">{job.title}</h3>
-              <span class="text-gray-600 dark:text-gray-400">{job.period}</span>
+  <main class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Download Button -->
+      <div class="mb-8 text-center">
+        <button 
+          id="downloadBtn"
+          class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Download CV
+        </button>
+      </div>
+
+      <!-- CV Content -->
+      <div id="cvContent" class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 class="text-4xl font-bold mb-2">John Doe</h1>
+              <p class="text-xl text-blue-100">Full Stack Developer</p>
             </div>
-            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{job.organization}, {job.location}</p>
-            <p class="mb-2">{job.description}</p>
-            <div class="flex flex-wrap gap-2">
-              {job.skills.map(skill => (
-                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-sm">
-                  {skill}
-                </span>
-              ))}
+            <div class="mt-4 md:mt-0 text-right">
+              <p class="text-blue-100">john.doe@email.com</p>
+              <p class="text-blue-100">+1 (555) 123-4567</p>
+              <p class="text-blue-100">LinkedIn: /in/johndoe</p>
+              <p class="text-blue-100">GitHub: /johndoe</p>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Education</h2>
-      <div class="space-y-6">
-        {education.map(edu => (
-          <div>
-            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
-              <h3 class="text-xl font-bold">{edu.degree}</h3>
-              <span class="text-gray-600 dark:text-gray-400">{edu.period}</span>
-            </div>
-            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{edu.institution}, {edu.location}</p>
-            <p>{edu.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Selected Publications</h2>
-      <div class="space-y-4">
-        {publications.map(pub => (
-          <div>
-            <h3 class="font-bold">{pub.title}</h3>
-            <p class="text-gray-700 dark:text-gray-300">{pub.authors}</p>
-            <p class="text-gray-600 dark:text-gray-400">
-              {pub.journal} {pub.year}
-              <a 
-                href={`https://doi.org/${pub.doi}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="text-emerald-600 dark:text-emerald-400 hover:underline"
-              >
-                {pub.doi}
-              </a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="p-8 space-y-8">
+          <!-- Professional Summary -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Professional Summary</h2>
+            <p class="text-gray-700 leading-relaxed">
+              Experienced Full Stack Developer with 5+ years of expertise in building scalable web applications. 
+              Proficient in modern JavaScript frameworks, cloud technologies, and agile development practices. 
+              Passionate about creating efficient, user-friendly solutions and mentoring junior developers.
             </p>
-          </div>
-        ))}
-        <p class="mt-2">
-          <a href="/publications" class="text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-            <span>View all publications</span>
-            <Icon name="tabler:arrow-right" class="w-4 h-4" />
-          </a>
-        </p>
-      </div>
-    </section>
-    
-    <section>
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Skills</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        {skills.map(skillGroup => (
-          <div>
-            <h3 class="text-lg font-bold mb-2">{skillGroup.category}</h3>
-            <div class="flex flex-wrap gap-2">
-              {skillGroup.items.map(item => (
-                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                  {item}
-                </span>
-              ))}
+          </section>
+
+          <!-- Technical Skills -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Frontend</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">React</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Vue.js</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">TypeScript</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Tailwind CSS</span>
+                  <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Astro.js</span>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Backend</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Node.js</span>
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Python</span>
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">PostgreSQL</span>
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">MongoDB</span>
+                  <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">AWS</span>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          </section>
+
+          <!-- Work Experience -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Work Experience</h2>
+            <div class="space-y-6">
+              <div class="border-l-4 border-blue-600 pl-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 class="text-xl font-semibold text-gray-800">Senior Full Stack Developer</h3>
+                  <span class="text-gray-600 font-medium">2021 - Present</span>
+                </div>
+                <p class="text-blue-600 font-medium mb-3">Tech Solutions Inc.</p>
+                <ul class="text-gray-700 space-y-1">
+                  <li>• Led development of microservices architecture serving 100K+ daily users</li>
+                  <li>• Implemented CI/CD pipelines reducing deployment time by 60%</li>
+                  <li>• Mentored 3 junior developers and conducted code reviews</li>
+                  <li>• Optimized database queries improving application performance by 40%</li>
+                </ul>
+              </div>
+
+              <div class="border-l-4 border-blue-600 pl-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 class="text-xl font-semibold text-gray-800">Full Stack Developer</h3>
+                  <span class="text-gray-600 font-medium">2019 - 2021</span>
+                </div>
+                <p class="text-blue-600 font-medium mb-3">Digital Innovations Ltd.</p>
+                <ul class="text-gray-700 space-y-1">
+                  <li>• Developed responsive web applications using React and Node.js</li>
+                  <li>• Collaborated with UX/UI designers to implement pixel-perfect designs</li>
+                  <li>• Integrated third-party APIs and payment gateways</li>
+                  <li>• Participated in agile development processes and sprint planning</li>
+                </ul>
+              </div>
+
+              <div class="border-l-4 border-blue-600 pl-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 class="text-xl font-semibold text-gray-800">Junior Web Developer</h3>
+                  <span class="text-gray-600 font-medium">2018 - 2019</span>
+                </div>
+                <p class="text-blue-600 font-medium mb-3">StartUp Hub</p>
+                <ul class="text-gray-700 space-y-1">
+                  <li>• Built and maintained company websites using HTML, CSS, and JavaScript</li>
+                  <li>• Assisted in database design and optimization</li>
+                  <li>• Provided technical support and bug fixes</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Education -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Education</h2>
+            <div class="border-l-4 border-blue-600 pl-6">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                <h3 class="text-xl font-semibold text-gray-800">Bachelor of Science in Computer Science</h3>
+                <span class="text-gray-600 font-medium">2014 - 2018</span>
+              </div>
+              <p class="text-blue-600 font-medium">University of Technology</p>
+              <p class="text-gray-700 mt-1">GPA: 3.8/4.0 • Magna Cum Laude</p>
+            </div>
+          </section>
+
+          <!-- Projects -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Key Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">E-Commerce Platform</h3>
+                <p class="text-gray-700 text-sm mb-3">
+                  Full-stack e-commerce solution with React, Node.js, and Stripe integration
+                </p>
+                <div class="flex flex-wrap gap-1">
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">React</span>
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">Node.js</span>
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">MongoDB</span>
+                </div>
+              </div>
+
+              <div class="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Task Management App</h3>
+                <p class="text-gray-700 text-sm mb-3">
+                  Real-time collaborative task management with Vue.js and Socket.io
+                </p>
+                <div class="flex flex-wrap gap-1">
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">Vue.js</span>
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">Socket.io</span>
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">PostgreSQL</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Certifications -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-600 pb-2">Certifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700">AWS Certified Developer - Associate</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700">Google Cloud Platform Professional</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700">Certified Scrum Master (CSM)</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span class="text-gray-700">MongoDB Certified Developer</span>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </main>
 </MainLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    const cvContent = document.getElementById('cvContent');
+
+    if (downloadBtn && cvContent) {
+      downloadBtn.addEventListener('click', function() {
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        
+        if (printWindow) {
+          printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>John Doe - CV</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+                .cv-content { max-width: 800px; margin: 0 auto; }
+                .header { background: linear-gradient(to right, #2563eb, #1d4ed8); color: white; padding: 30px; margin-bottom: 30px; }
+                .header h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+                .header p { margin: 5px 0; }
+                .section { margin-bottom: 30px; }
+                .section h2 { color: #1d4ed8; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
+                .experience-item { margin-bottom: 20px; padding-left: 20px; border-left: 4px solid #2563eb; }
+                .skills-tag { display: inline-block; background: #e0e7ff; color: #1d4ed8; padding: 5px 10px; margin: 2px; border-radius: 15px; font-size: 0.9em; }
+                ul { padding-left: 20px; }
+                li { margin-bottom: 5px; }
+                @media print {
+                  body { margin: 0; padding: 15px; }
+                  .header { background: #2563eb !important; }
+                }
+              </style>
+            </head>
+            <body>
+              ${cvContent.innerHTML}
+            </body>
+            </html>
+          `);
+          
+          printWindow.document.close();
+          
+          // Wait for content to load then print
+          setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+          }, 500);
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  @media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    
+    #downloadBtn {
+      display: none;
+    }
+    
+    #cvContent {
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+</style>
 
