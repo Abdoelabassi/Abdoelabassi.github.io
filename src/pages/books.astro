@@ -1,0 +1,319 @@
+---
+import MainLayout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+
+// Get all books from the collection
+let allBooks;
+try {
+  allBooks = await getCollection('books');
+} catch (error) {
+  console.error('Error loading books collection:', error);
+  allBooks = [];
+}
+
+// Sort books by featured first, then by rating, then by year
+const sortedBooks = allBooks.length > 0 ? allBooks.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  if (a.data.rating && b.data.rating && a.data.rating !== b.data.rating) {
+    return b.data.rating - a.data.rating;
+  }
+  if (a.data.year && b.data.year) {
+    return b.data.year - a.data.year;
+  }
+  return 0;
+}) : [];
+
+const categories = {
+  physics: { label: "Physics", icon: "tabler:atom", color: "emerald" },
+  philosophy: { label: "Philosophy", icon: "tabler:brain", color: "purple" },
+  fiction: { label: "Fiction", icon: "tabler:book", color: "blue" },
+  comics: { label: "Comics", icon: "tabler:photo", color: "red" }
+};
+
+const getCategoryColor = (category: string) => {
+  const colors: Record<string, string> = {
+    physics: "emerald",
+    philosophy: "purple",
+    fiction: "blue",
+    comics: "red"
+  };
+  return colors[category] || "gray";
+};
+
+const getCategoryClasses = (category: string, type: 'gradient' | 'badge' | 'hover') => {
+  const color = getCategoryColor(category);
+  const classes = {
+    gradient: {
+      emerald: "from-emerald-400 to-emerald-600 dark:from-emerald-500 dark:to-emerald-700",
+      purple: "from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-700",
+      blue: "from-blue-400 to-blue-600 dark:from-blue-500 dark:to-blue-700",
+      red: "from-red-400 to-red-600 dark:from-red-500 dark:to-red-700",
+      gray: "from-gray-400 to-gray-600 dark:from-gray-500 dark:to-gray-700"
+    },
+    badge: {
+      emerald: "bg-emerald-500 dark:bg-emerald-600",
+      purple: "bg-purple-500 dark:bg-purple-600",
+      blue: "bg-blue-500 dark:bg-blue-600",
+      red: "bg-red-500 dark:bg-red-600",
+      gray: "bg-gray-500 dark:bg-gray-600"
+    },
+    hover: {
+      emerald: "hover:bg-emerald-100 dark:hover:bg-emerald-900/30",
+      purple: "hover:bg-purple-100 dark:hover:bg-purple-900/30",
+      blue: "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+      red: "hover:bg-red-100 dark:hover:bg-red-900/30",
+      gray: "hover:bg-gray-100 dark:hover:bg-gray-900/30"
+    }
+  };
+  return classes[type][color as keyof typeof classes[typeof type]] || classes[type].gray;
+};
+
+// Count books by category
+const categoryCounts = {
+  physics: sortedBooks.filter(b => b.data.category === 'physics').length,
+  philosophy: sortedBooks.filter(b => b.data.category === 'philosophy').length,
+  fiction: sortedBooks.filter(b => b.data.category === 'fiction').length,
+  comics: sortedBooks.filter(b => b.data.category === 'comics').length,
+};
+---
+
+<MainLayout title="Books & Reads - Abderrazaq EL Abassi" description="My favorite books and reads on physics, fiction, philosophy, and comics.">
+  <div class="container mx-auto px-4 py-12 max-w-7xl">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">
+        My Library
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        A curated collection of books that have shaped my thinking, from particle physics to philosophy, fiction, and comics.
+      </p>
+      {sortedBooks.length === 0 && (
+        <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <p class="text-yellow-800 dark:text-yellow-200 text-sm">
+            ⚠️ No books found. Please restart your dev server if you just added the books collection.
+          </p>
+        </div>
+      )}
+    </div>
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
+      <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-lg p-6 text-center border border-emerald-200 dark:border-emerald-800">
+        <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{sortedBooks.length}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Books</div>
+      </div>
+      <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-lg p-6 text-center border border-emerald-200 dark:border-emerald-800">
+        <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{categoryCounts.physics}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Physics</div>
+      </div>
+      <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-6 text-center border border-purple-200 dark:border-purple-800">
+        <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">{categoryCounts.philosophy}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Philosophy</div>
+      </div>
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-6 text-center border border-blue-200 dark:border-blue-800">
+        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">{categoryCounts.fiction}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Fiction</div>
+      </div>
+      <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 rounded-lg p-6 text-center border border-red-200 dark:border-red-800">
+        <div class="text-3xl font-bold text-red-600 dark:text-red-400">{categoryCounts.comics}</div>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Comics</div>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="flex flex-wrap gap-3 mb-8 justify-center">
+      <button 
+        class="category-filter active px-4 py-2 rounded-full bg-emerald-600 text-white dark:bg-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium"
+        data-category="all"
+      >
+        All Books
+      </button>
+      {Object.entries(categories).map(([key, { label, icon }]) => (
+        <button 
+          class={`category-filter px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 ${getCategoryClasses(key, 'hover')} transition-colors font-medium flex items-center gap-2`}
+          data-category={key}
+        >
+          <Icon name={icon} class="w-4 h-4" />
+          {label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Books Grid - Library Style -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="books-grid">
+      {sortedBooks.map((book) => {
+        const categoryInfo = categories[book.data.category];
+        const coverUrl = book.data.cover || `https://via.placeholder.com/300x450/4B5563/FFFFFF?text=${encodeURIComponent(book.data.title)}`;
+        
+        return (
+          <div 
+            class={`book-card group relative cursor-pointer transform transition-all duration-300 hover:scale-105`}
+            data-category={book.data.category}
+          >
+            <a 
+              href={book.data.link || '#'} 
+              target={book.data.link ? "_blank" : undefined}
+              rel={book.data.link ? "noopener noreferrer" : undefined}
+              class="block"
+            >
+              <!-- Book Cover -->
+              <div class="relative mb-3 shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800">
+                <div class="aspect-[2/3] relative">
+                  {book.data.cover ? (
+                    <img 
+                      src={coverUrl} 
+                      alt={`${book.data.title} cover`}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'450\'%3E%3Crect fill=\'%234B5563\' width=\'300\' height=\'450\'/%3E%3Ctext fill=\'white\' font-family=\'Arial\' font-size=\'14\' x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\'%3EBook Cover%3C/text%3E%3C/svg%3E';"
+                    />
+                  ) : (
+                    <div class={`w-full h-full bg-gradient-to-br ${getCategoryClasses(book.data.category, 'gradient')} flex items-center justify-center`}>
+                      <Icon name="tabler:book" class="w-16 h-16 text-white/80" />
+                    </div>
+                  )}
+                  
+                  <!-- Featured Badge -->
+                  {book.data.featured && (
+                    <div class="absolute top-2 left-2 px-2 py-1 rounded bg-yellow-400 dark:bg-yellow-500 text-yellow-900 text-xs font-bold shadow-lg">
+                      ⭐ Featured
+                    </div>
+                  )}
+                  
+                  <!-- Category Badge -->
+                  <div class={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-semibold ${getCategoryClasses(book.data.category, 'badge')} text-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
+                    <Icon name={categoryInfo.icon} class="w-3 h-3 inline mr-1" />
+                    {categoryInfo.label}
+                  </div>
+                  
+                  <!-- Year Badge -->
+                  {book.data.year && (
+                    <div class="absolute bottom-2 left-2 px-2 py-1 rounded bg-black/70 text-white text-xs font-medium">
+                      {book.data.year}
+                    </div>
+                  )}
+                  
+                  <!-- Rating Overlay -->
+                  {book.data.rating && (
+                    <div class="absolute bottom-2 right-2 flex items-center gap-1 bg-black/70 px-2 py-1 rounded">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Icon 
+                          name={i < book.data.rating! ? "tabler:star-filled" : "tabler:star"} 
+                          class={`w-3 h-3 ${i < book.data.rating! ? 'text-yellow-400' : 'text-gray-400'}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  
+                  <!-- Hover Overlay -->
+                  <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <Icon name="tabler:external-link" class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Book Info -->
+              <div class="text-center">
+                <h3 class="text-sm font-bold mb-1 text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
+                  {book.data.title}
+                </h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-1">
+                  {book.data.author}
+                </p>
+              </div>
+            </a>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty State (hidden by default) -->
+    <div id="empty-state" class="hidden text-center py-12">
+      <Icon name="tabler:book-off" class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
+      <p class="text-gray-600 dark:text-gray-400 text-lg">No books found in this category.</p>
+    </div>
+  </div>
+
+  <style>
+    .line-clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .book-card {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .book-card.hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    // Category filter functionality
+    const filterButtons = document.querySelectorAll('.category-filter');
+    const bookCards = document.querySelectorAll('.book-card');
+    const emptyState = document.getElementById('empty-state');
+    const booksGrid = document.getElementById('books-grid');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const category = button.getAttribute('data-category');
+        
+        // Update active state
+        filterButtons.forEach(btn => {
+          btn.classList.remove('active', 'bg-emerald-600', 'text-white', 'dark:bg-emerald-500');
+          if (!btn.classList.contains('active')) {
+            btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+          }
+        });
+        
+        button.classList.add('active', 'bg-emerald-600', 'text-white', 'dark:bg-emerald-500');
+        button.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+
+        // Filter books
+        let visibleCount = 0;
+        bookCards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          if (category === 'all' || cardCategory === category) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Show/hide empty state
+        if (visibleCount === 0) {
+          emptyState?.classList.remove('hidden');
+          booksGrid?.classList.add('hidden');
+        } else {
+          emptyState?.classList.add('hidden');
+          booksGrid?.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</MainLayout>
