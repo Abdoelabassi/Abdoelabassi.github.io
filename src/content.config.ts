@@ -38,6 +38,24 @@ const product = defineCollection({
   }),
 });
 
+const books = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "src/content/books" }),
+  schema: z.object({
+    title: z.string(),
+    author: z.string(),
+    description: z.string(),
+    category: z.enum(["physics", "fiction", "philosophy", "comics"]),
+    year: z.number().optional(),
+    rating: z.number().min(0).max(5).optional(),
+    cover: z.string().url().optional(),
+    link: z.string().url().optional(),
+    publisher: z.string().optional(),
+    isbn: z.string().optional(),
+    featured: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   product,
+  books,
 };
