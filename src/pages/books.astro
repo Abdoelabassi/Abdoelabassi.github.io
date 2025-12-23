@@ -2,9 +2,10 @@
 import MainLayout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
 // Get all books from the collection
-let allBooks;
+let allBooks: CollectionEntry<'books'>[] = [];
 try {
   allBooks = await getCollection('books');
 } catch (error) {
@@ -148,16 +149,11 @@ const categoryCounts = {
         const coverUrl = book.data.cover || `https://via.placeholder.com/300x450/4B5563/FFFFFF?text=${encodeURIComponent(book.data.title)}`;
         
         return (
-          <div 
-            class={`book-card group relative cursor-pointer transform transition-all duration-300 hover:scale-105`}
+          <a 
+            href={`/books/${book.id}/`}
+            class={`book-card group relative block cursor-pointer transform transition-all duration-300 hover:scale-105`}
             data-category={book.data.category}
           >
-            <a 
-              href={book.data.link || '#'} 
-              target={book.data.link ? "_blank" : undefined}
-              rel={book.data.link ? "noopener noreferrer" : undefined}
-              class="block"
-            >
               <!-- Book Cover -->
               <div class="relative mb-3 shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800">
                 <div class="aspect-[2/3] relative">
@@ -214,17 +210,16 @@ const categoryCounts = {
                 </div>
               </div>
               
-              <!-- Book Info -->
-              <div class="text-center">
-                <h3 class="text-sm font-bold mb-1 text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
-                  {book.data.title}
-                </h3>
-                <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-1">
-                  {book.data.author}
-                </p>
-              </div>
-            </a>
-          </div>
+            <!-- Book Info -->
+            <div class="text-center">
+              <h3 class="text-sm font-bold mb-1 text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
+                {book.data.title}
+              </h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-1">
+                {book.data.author}
+              </p>
+            </div>
+          </a>
         );
       })}
     </div>

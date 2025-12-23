@@ -1,7 +1,7 @@
 ---
 title: "Absolute Martian Manhunter"
-author: "John Ostrander, Tom Mandrake, Various"
-description: "Deluxe oversized hardcover collection featuring the greatest Martian Manhunter stories in premium format."
+author: "Deniz Camp, Javier Rodríguez"
+description: "A weird, cerebral take on J’onn J’onzz that leans into horror, identity, and how alien loneliness really feels."
 category: comics
 year: 2025
 rating: 5
@@ -12,4 +12,4 @@ isbn: ""
 featured: true
 ---
 
-Stunning oversized hardcover edition showcasing Martian Manhunter's greatest adventures with premium quality and beautiful artwork.
+Camp writes Martian Manhunter like a glitching empathy engine dropped into our world, and the book never lets you forget how wrong he is for this planet. It’s dense, unnerving, and exactly the kind of off‑center cosmic book you end up infodumping about to friends who “just like Superman.”

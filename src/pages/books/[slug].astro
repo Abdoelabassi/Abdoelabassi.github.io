@@ -1,0 +1,264 @@
+---
+import MainLayout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const books = await getCollection('books');
+  return books.map((entry) => ({
+    params: { slug: entry.id },
+    props: { book: entry },
+  }));
+}
+
+type Props = {
+  book: CollectionEntry<'books'>;
+};
+
+const { book } = Astro.props as Props;
+
+const categories = {
+  physics: { label: "Physics", icon: "tabler:atom", color: "emerald" },
+  philosophy: { label: "Philosophy", icon: "tabler:brain", color: "purple" },
+  fiction: { label: "Fiction", icon: "tabler:book", color: "blue" },
+  comics: { label: "Comics", icon: "tabler:photo", color: "red" }
+} as const;
+
+const categoryInfo = categories[book.data.category];
+const coverUrl =
+  book.data.cover ||
+  `https://via.placeholder.com/600x900/4B5563/FFFFFF?text=${encodeURIComponent(
+    book.data.title,
+  )}`;
+
+const getCategoryPillClasses = (category: keyof typeof categories) => {
+  const base = "inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-semibold shadow-sm";
+  const map: Record<string, string> = {
+    physics: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/40",
+    philosophy: "bg-purple-500/10 text-purple-500 dark:text-purple-300 border border-purple-500/40",
+    fiction: "bg-blue-500/10 text-blue-500 dark:text-blue-300 border border-blue-500/40",
+    comics: "bg-rose-500/10 text-rose-500 dark:text-rose-300 border border-rose-500/40",
+  };
+  return `${base} ${map[category] ?? "bg-slate-500/10 text-slate-400 border border-slate-500/40"}`;
+};
+
+const nerdReview = (() => {
+  const title = book.data.title.toLowerCase();
+
+  // Hand-tuned mini-reviews for some iconic books
+  if (title.includes("killing joke")) {
+    return "A tight, nasty little thought experiment about one bad day, sanity as a coin flip, and why Batman refuses to laugh even when the joke lands. It’s the book that makes you uncomfortable about how much you relate to both of them.";
+  }
+  if (title.includes("watchmen")) {
+    return "The superhero genre cracked open and dissected with a clockmaker’s precision. Every panel is a data point; you don’t just read it, you run forensic analysis on it.";
+  }
+  if (title.includes("dune")) {
+    return "Messiah narratives, ecological warfare, and political game theory on a planet made of anxiety sand. It rewards obsessive re-reading and punishes casual skimming.";
+  }
+  if (title.includes("1984")) {
+    return "Not just a dystopia, but a user manual for how truth can be version-controlled. The horror isn’t the torture, it’s how easy the brain hotfixes itself to survive.";
+  }
+  if (title.includes("feynman")) {
+    return "Physics explained with the energy of a late‑night whiteboard session where every tangent somehow turns into a revelation. It makes Maxwell and quantum weirdness feel like puzzles you’re almost smart enough to solve.";
+  }
+  if (title.includes("brief history of time")) {
+    return "Cosmology as an existential speedrun. It takes you from the Big Bang to black holes and leaves you staring at your ceiling wondering why time insists on having a direction.";
+  }
+
+  // Smart generic fallback depending on category
+  switch (book.data.category) {
+    case "physics":
+      return "Reads like a debug session for reality itself — diagrams, equations, and mind-bending thought experiments that make spacetime feel like a system you could, in theory, patch.";
+    case "philosophy":
+      return "The kind of book that silently rewires your background processes. You close it and suddenly everyday decisions feel like miniature thought experiments.";
+    case "fiction":
+      return "Storytelling tuned for readers who over-analyze everything: layered themes, callbacks that reward obsessive memory, and a world that keeps expanding in your head after the last page.";
+    case "comics":
+      return "Comic-book storytelling with the density of a good tech spec: every panel doing double duty, every line of dialogue carrying lore, emotion, or both.";
+    default:
+      return "One of those books that hijacks your brain’s idle cycles. You’ll catch yourself replaying scenes and arguments days later like background threads you forgot you spawned.";
+  }
+})();
+---
+
+<MainLayout title={`${book.data.title} – Book Review`} description={book.data.description}>
+  <div class="relative overflow-hidden">
+    <!-- Ambient gradient background -->
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-emerald-500/20 blur-3xl dark:bg-emerald-500/30"></div>
+      <div class="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl dark:bg-cyan-500/30"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.75),_transparent_55%)] dark:bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.9),_transparent_55%)]"></div>
+    </div>
+
+    <div class="container mx-auto max-w-6xl px-4 py-10 md:py-16">
+      <!-- Breadcrumb -->
+      <nav class="mb-6 text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-2">
+        <a href="/books" class="inline-flex items-center gap-1 hover:text-emerald-500 transition-colors">
+          <Icon name="tabler:chevron-left" class="h-3 w-3" />
+          Back to library
+        </a>
+        <span class="text-slate-400 dark:text-slate-500">/</span>
+        <span class="truncate">{book.data.title}</span>
+      </nav>
+
+      <!-- Hero -->
+      <div class="grid gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)] items-start">
+        <!-- Cover & meta -->
+        <div class="relative">
+          <div
+            class="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 shadow-2xl shadow-emerald-900/40 backdrop-blur-lg"
+          >
+            <div class="relative aspect-[2/3]">
+              <img
+                src={coverUrl}
+                alt={`${book.data.title} cover`}
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+
+              {book.data.featured && (
+                <div
+                  class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-yellow-400 text-xs font-semibold text-yellow-950 px-2 py-1 shadow-lg shadow-yellow-900/50"
+                >
+                  <Icon name="tabler:flame" class="h-3 w-3" />
+                  Featured pick
+                </div>
+              )}
+
+              {book.data.rating && (
+                <div
+                  class="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-yellow-300 backdrop-blur"
+                >
+                  <Icon name="tabler:star-filled" class="h-4 w-4 text-yellow-400" />
+                  <span>{book.data.rating.toFixed(1)}</span>
+                  <span class="text-[10px] text-slate-300/80">/ 5</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- Quick stats -->
+          <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-400">
+            {book.data.year && (
+              <div class="rounded-2xl border border-white/5 bg-slate-900/70 px-3 py-2 backdrop-blur">
+                <div class="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-slate-500">
+                  <Icon name="tabler:calendar" class="h-3 w-3" />
+                  Year
+                </div>
+                <p class="mt-1 text-sm font-semibold text-slate-100">{book.data.year}</p>
+              </div>
+            )}
+
+            {book.data.publisher && (
+              <div class="rounded-2xl border border-white/5 bg-slate-900/70 px-3 py-2 backdrop-blur">
+                <div class="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-slate-500">
+                  <Icon name="tabler:building" class="h-3 w-3" />
+                  Publisher
+                </div>
+                <p class="mt-1 line-clamp-2 text-sm font-medium text-slate-100">{book.data.publisher}</p>
+              </div>
+            )}
+
+            {book.data.isbn && (
+              <div class="rounded-2xl border border-white/5 bg-slate-900/70 px-3 py-2 backdrop-blur col-span-2">
+                <div class="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-slate-500">
+                  <Icon name="tabler:id" class="h-3 w-3" />
+                  ISBN
+                </div>
+                <p class="mt-1 text-sm font-mono text-slate-100">{book.data.isbn}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Text content -->
+        <div class="space-y-6">
+          <div>
+            <div class="mb-3 flex flex-wrap items-center gap-3">
+              <span class={getCategoryPillClasses(book.data.category)}>
+                <Icon name={categoryInfo.icon} class="h-3.5 w-3.5" />
+                <span>{categoryInfo.label}</span>
+              </span>
+
+              {book.data.featured && (
+                <span
+                  class="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-400 border border-emerald-500/40"
+                >
+                  <Icon name="tabler:sparkles" class="h-3 w-3" />
+                  Core shelf
+                </span>
+              )}
+            </div>
+
+            <h1
+              class="text-balance bg-gradient-to-r from-slate-50 via-emerald-100 to-cyan-200 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl lg:text-5xl"
+            >
+              {book.data.title}
+            </h1>
+            <p class="mt-2 text-sm font-medium text-emerald-300">
+              by {book.data.author}
+            </p>
+          </div>
+
+          <p class="max-w-xl text-sm text-slate-300/90">
+            {book.data.description}
+          </p>
+
+          <!-- Nerdy review -->
+          <section
+            class="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-slate-900/80 via-slate-900/60 to-emerald-900/50 p-5 shadow-lg shadow-emerald-900/40"
+          >
+            <div class="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-emerald-500/20 blur-2xl"></div>
+            <div class="pointer-events-none absolute -bottom-16 -left-8 h-40 w-40 rounded-full bg-cyan-500/10 blur-2xl"></div>
+
+            <div class="relative flex items-start gap-3">
+              <div
+                class="mt-1 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30"
+              >
+                <Icon name="tabler:mood-nerd" class="h-5 w-5" />
+              </div>
+              <div class="space-y-1">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-emerald-300/80">
+                  Geek’s cut
+                </p>
+                <p class="text-sm leading-relaxed text-emerald-50/95">
+                  {nerdReview}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Body / extended thoughts -->
+          {book.body && (
+            <section
+              class="prose prose-invert prose-sm max-w-none prose-headings:text-slate-50 prose-a:text-emerald-300 hover:prose-a:text-emerald-200 prose-strong:text-emerald-100"
+            >
+              <h2 class="text-base font-semibold tracking-tight text-slate-100">
+                Deeper dive
+              </h2>
+              <div set:html={book.body} />
+            </section>
+          )}
+
+          <!-- External links -->
+          {book.data.link && (
+            <div class="pt-2">
+              <a
+                href={book.data.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-4 py-2 text-xs font-semibold text-emerald-950 shadow-lg shadow-emerald-900/50 transition hover:-translate-y-0.5 hover:bg-emerald-400"
+              >
+                <Icon name="tabler:external-link" class="h-4 w-4" />
+                View on Goodreads / external
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+

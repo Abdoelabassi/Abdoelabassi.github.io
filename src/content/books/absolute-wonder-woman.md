@@ -1,9 +1,9 @@
 ---
 title: "Absolute Wonder Woman"
-author: "George Pérez, Greg Rucka, Various"
-description: "Deluxe oversized hardcover collections featuring the greatest Wonder Woman stories in premium format."
+author: "Kelly Thompson, Haiden Sherman"
+description: "A sharp, modern Wonder Woman relaunch that treats myth, politics, and punching as equally important skill trees."
 category: comics
-year: 2010
+year: 2025
 rating: 5
 cover: ""
 link: ""
@@ -12,4 +12,4 @@ isbn: ""
 featured: true
 ---
 
-Stunning oversized hardcover editions showcasing Wonder Woman's greatest adventures with beautiful artwork and premium presentation.
+Thompson’s Diana feels like a fully patched version of the character: compassionate, terrifying when needed, and painfully aware of how messy the modern world is. It’s the kind of run where the good quips land, but the ethical dilemmas stick in your head longer.
