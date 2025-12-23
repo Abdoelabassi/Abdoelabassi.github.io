@@ -3,20 +3,41 @@ import Layout from '../layouts/Layout.astro';
 import PDFViewer from '../components/PdfViewer';
 ---
 
+<Layout>
+  <main class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-8">
+        <a
+          href="/publications"
+          class="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-emerald-300 transition-colors"
+        >
+          <span class="inline-block rounded-full bg-slate-800 px-2 py-0.5 text-[10px] uppercase tracking-wide border border-slate-700">
+            Back to publications
+          </span>
+        </a>
+      </div>
 
-<Layout >
-    <main class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-2xl font-bold text-center text-blue-900 mb-10 mt-10">The Poster</h1>
-        
-        <!-- The client:load directive ensures the component runs on the client -->
-        <div class="ax-w-6xl mx-auto space-y-8">
-          <!-- You'll need to place your PDF file in the public folder -->
-          <PDFViewer
-             
-            fileUrl="/ppt/Poster-2023-1110.pdf" 
-            height="800px"
-            client:load 
-          />
-        </div>
-      </main>
+      <header class="mb-8 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-300 mb-4">
+          Hyper-Kamiokande
+        </p>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-50 mb-3">
+          Hyper-Kamiokande Calibration Poster
+        </h1>
+        <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto">
+          Poster for the &ldquo;Energy scale cross-calibration of Hyper-Kamiokande detector using Deuterium–Tritium neutron generator&rdquo; contribution.
+        </p>
+      </header>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur shadow-xl p-3 sm:p-4">
+        <PDFViewer
+          fileUrl="/ppt/Poster-2023-1110.pdf"
+          height="800px"
+          client:load
+        />
+      </section>
+    </div>
+  </main>
 </Layout>
+
+

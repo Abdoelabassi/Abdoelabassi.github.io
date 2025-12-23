@@ -4,103 +4,125 @@ import { Icon } from 'astro-icon/components';
 
 const publications = [
   {
+    type: "Preprint",
+    featured: true,
     title: "Sensitivity of the Hyper-Kamiokande experiment to neutrino oscillation parameters using accelerator neutrinos",
     authors: "Hyper-Kamiokande Collaboration",
-    journal: "",
+    journal: "arXiv preprint",
     year: "2025",
     doi: "10.48550/arXiv.2505.15019",
-    abstract: `
-    This paper presents the expected sensitivity to the
-neutrino oscillation parameters of the Hyper-Kamiokande
-long-baseline program. The Hyper-Kamiokande experi-
-ment, currently under construction in Japan, will measure
-the oscillations of accelerator-produced neutrinos with thou-
-sands of selected events per sample: this corresponds to an
-increase of statistics of a factor 25 to 100 with respect
-to recent results from the currently-running long-baseline
-neutrino oscillation experiment in Japan, T2K. In the most
-favorable scenario we will achieve the discovery of Charge-
-Parity (CP) violation in neutrino oscillation at 5σ \\mathrm{C.L.} in
-less than three years. With 10 years of data-taking, and as-
-suming a neutrino : antineutrino beam running ratio of 1:3, a
-CP violation discovery at 5σ \\mathrm{C.L.} is possible for more than
-60% of the actual values of the CP-violating phase, \\delta_{CP}.
-Moreover, we will measure \\delta_{CP} with a precision ranging
-from 20◦, in the case of maximal CP violation, to 6◦, in the
-case of CP conservation. We aim to achieve a 0.5% resolu-
-resolution on the \\Delta_{m32} parameter, and a resolution between 3%
-and 0.5% on the \\sin^{2} θ23 parameter, depending on its true
-value. These results are obtained by extending the analysis
-methods of T2K with dedicated tuning to take into account
-the Hyper-Kamiokande design: the larger far detector, the
-more powerful beam, the upgraded near detector ND280,
-and the planned additional Intermediate Water Cherenkov
-Detector`,
+    abstract: `This paper presents the expected sensitivity of the Hyper-Kamiokande long-baseline program to neutrino oscillation parameters. Hyper-Kamiokande, currently under construction in Japan, will observe accelerator-produced neutrinos with statistics up to 25–100× larger than T2K. In the most favorable scenario, the experiment can achieve a 5σ discovery of CP violation in less than three years, and after 10 years measure δ₍CP₎ with a precision ranging from about 20° (maximal CPV) to 6° (CP conservation), alongside sub‑percent level resolution on Δm²₃₂ and precise constraints on sin²θ₂₃.`,
     links: [
       { icon: "tabler:file-text", url: "/hkpaper", label: "PDF" },
-      { icon: "tabler:code", url: "#", label: "Code" },
-      { icon: "tabler:external-link", url: "http://arxiv.org/abs/2505.15019", label: "Publisher" }
+      { icon: "tabler:external-link", url: "http://arxiv.org/abs/2505.15019", label: "arXiv" }
     ]
   },
   {
+    type: "Conference Poster",
+    featured: false,
     title:"Energy scale cross-calibration of Hyper-Kamiokande detector using Deuterium-Tritium neutron generator",
     authors: "Abderrazaq EL Abassi, Rafik Er-Rabit, Moahmed Gouighri",
-    journal: "Spring book: First African Conference of High Energy Physics",
+    journal: "First African Conference of High Energy Physics (Springer book)",
     year: "2025",
-    doi: "loading ....",
-    abstract: "This poster presents the energy scale cross-calibration of the Hyper-Kamiokande detector using a Deuterium-Tritium neutron generator. The calibration is crucial for accurate neutrino detection and measurement.",
+    doi: "",
+    abstract: "Poster on the energy-scale cross-calibration strategy for Hyper-Kamiokande using a Deuterium–Tritium neutron generator, focusing on how a well‑controlled neutron source can anchor the detector response for precision neutrino measurements.",
     links: [
-      { icon: "tabler:file-text", url: "/hkposter", label: "PDF" },
-      { icon: "tabler:code", url: "#", label: "Code" },
-      { icon: "tabler:external-link", url: "https://indico.marwan.ma/event/1/contributions/482/", label: "Publisher" }
+      { icon: "tabler:file-text", url: "/hkposter", label: "Poster PDF" },
+      { icon: "tabler:external-link", url: "https://indico.marwan.ma/event/1/contributions/482/", label: "Indico entry" }
     ]
   }
-  
- 
 ];
 ---
 
 <MainLayout title="Publications - Abderrazaq">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <h1 class="text-3xl font-bold mb-8">Publications</h1>
-    
-    <div class="space-y-8">
-      {publications.map(pub => (
-        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-          <h2 class="text-xl font-bold mb-2">{pub.title}</h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-1">{pub.authors}</p>
-          <p class="text-gray-600 dark:text-gray-400 mb-4">{pub.journal} {pub.year}</p>
-          
-          <div class="mb-4">
-            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1"></h3>
-            <p class="text-gray-700 dark:text-gray-300">{pub.abstract}</p>
-          </div>
-          
-          <div class="flex flex-wrap gap-3">
-            <a 
-              href={`https://doi.org/${pub.doi}`} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
-            >
-              <Icon name="tabler:link" class="w-4 h-4" />
-              <span>DOI: {pub.doi}</span>
-            </a>
-            
-            {pub.links.map(link => (
-              <a 
-                href={link.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline"
-              >
-                <Icon name={link.icon} class="w-4 h-4" />
-                <span>{link.label}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      ))}
+  <div class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl dark:bg-emerald-500/25"></div>
+      <div class="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl dark:bg-cyan-500/25"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+      <header class="mb-10 text-center">
+        <p class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 mb-4">
+          <Icon name="tabler:atom" class="w-4 h-4" />
+          Selected work
+        </p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-3">
+          Publications & Posters
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          A snapshot of my work at the intersection of neutrino physics, detector calibration, and large‑scale experiments.
+        </p>
+      </header>
+
+      <div class="relative border-l border-dashed border-slate-200 dark:border-slate-700 pl-4 sm:pl-6 space-y-8">
+        {publications.map((pub, index) => (
+          <article class="relative group">
+            <div class="absolute -left-[9px] sm:-left-[11px] mt-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 border-emerald-500 bg-slate-950 dark:bg-slate-900 group-hover:bg-emerald-400 transition-colors"></div>
+
+            <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur shadow-sm hover:shadow-xl transition-all duration-300 px-4 py-4 sm:px-6 sm:py-5">
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+                  <Icon name={pub.type === "Preprint" ? "tabler:math" : "tabler:presentation"} class="w-3.5 h-3.5" />
+                  {pub.type}
+                </span>
+                {pub.featured && (
+                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-300 border border-emerald-500/30">
+                    <Icon name="tabler:star" class="w-3.5 h-3.5" />
+                    Featured
+                  </span>
+                )}
+                <span class="ml-auto text-xs font-medium text-slate-500 dark:text-slate-400">
+                  {pub.year}
+                </span>
+              </div>
+
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-50 leading-snug mb-1.5">
+                {pub.title}
+              </h2>
+
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-2">
+                {pub.authors}
+              </p>
+
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                {pub.journal}
+              </p>
+
+              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-4">
+                {pub.abstract}
+              </p>
+
+              <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
+                {pub.doi && (
+                  <a 
+                    href={`https://doi.org/${pub.doi}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500 text-emerald-950 px-3 py-1 font-semibold shadow-sm hover:bg-emerald-400 transition-colors"
+                  >
+                    <Icon name="tabler:link" class="w-3.5 h-3.5" />
+                    <span>DOI</span>
+                    <span class="hidden sm:inline text-[11px] font-normal opacity-80">{pub.doi}</span>
+                  </a>
+                )}
+
+                {pub.links.map(link => (
+                  <a 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="inline-flex items-center gap-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 px-3 py-1 text-slate-700 dark:text-slate-200 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
+                  >
+                    <Icon name={link.icon} class="w-3.5 h-3.5" />
+                    <span>{link.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </MainLayout>
