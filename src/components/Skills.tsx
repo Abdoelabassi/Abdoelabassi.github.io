@@ -41,7 +41,7 @@ const ModernSkillsPage: React.FC = () => {
       color: "from-purple-500 to-pink-500",
       skills: [
         { name: "High‑Energy Physics", hint: "Collider phenomenology, SM & BSM intuition, stats‑heavy analysis" },
-        { name: "Simulation & Tooling", hint: "GEANT4, ROOT, Monte Carlo workflows, detector effects" },
+        { name: "Simulation & Tooling", hint: "GEANT4, ROOT, Monte Carlo workflows" },
         { name: "Data Reduction Pipelines", hint: "From raw events to analysis‑ready ntuples" },
         { name: "Uncertainty & Inference", hint: "Likelihoods, systematics, significance, fits" },
         { name: "Scientific Communication", hint: "Papers, talks, posters, peer‑review feedback loops" },
@@ -53,11 +53,11 @@ const ModernSkillsPage: React.FC = () => {
       icon: <Code2 className="w-6 h-6" />,
       color: "from-orange-500 to-red-500",
       skills: [
-        { name: "Core Stack", hint: "Python, NumPy, pandas, Jupyter, SQL" },
-        { name: "Classical ML", hint: "Scikit‑learn, XGBoost, feature engineering, evaluation" },
+        { name: "Core Stack", hint: "Python, NumPy, pandas, Jupyter, SQL, Docker" },
+        { name: "Classical ML", hint: "Scikit‑learn, XGBoost, LightGBM, feature engineering, evaluation" },
         { name: "Deep Learning", hint: "PyTorch / TensorFlow, CNNs, RNNs, Transformers" },
         { name: "MLOps Mindset", hint: "Reproducible experiments, versioning, monitoring metrics" },
-        { name: "Applied Domains", hint: "Tabular forecasting, classification, NLP‑style text work" },
+        { name: "Applied Domains", hint: "Tabular forecasting, classification, image processing" },
       ]
     },
     {
