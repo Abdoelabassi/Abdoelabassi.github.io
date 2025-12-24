@@ -5,7 +5,7 @@ description: "Frank Miller's revolutionary run on Daredevil that redefined the c
 category: comics
 year: 1979
 rating: 5
-cover: ""
+cover: "/covers/daredevilfm.webp"
 link: ""
 publisher: "Marvel Comics"
 isbn: ""

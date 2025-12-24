@@ -5,7 +5,7 @@ description: "A young Wally West trying to learn speed without the comfort of th
 category: comics
 year: 2025
 rating: 5
-cover: ""
+cover: "/covers/af1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

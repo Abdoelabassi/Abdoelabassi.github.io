@@ -5,7 +5,7 @@ description: "Tom Taylor's acclaimed run on Nightwing, bringing heart, humor, an
 category: comics
 year: 2021
 rating: 5
-cover: ""
+cover: "/covers/nightwing.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

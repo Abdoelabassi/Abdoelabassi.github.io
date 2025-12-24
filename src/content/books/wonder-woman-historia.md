@@ -5,7 +5,7 @@ description: "A stunning reimagining of the Amazons' origin story. A visually br
 category: comics
 year: 2021
 rating: 5
-cover: ""
+cover: "/covers/wwh1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

@@ -3,9 +3,9 @@ title: "Absolute Wonder Woman"
 author: "Kelly Thompson, Haiden Sherman"
 description: "A sharp, modern Wonder Woman relaunch that treats myth, politics, and punching as equally important skill trees."
 category: comics
-year: 2025
+year: 2024
 rating: 5
-cover: ""
+cover: "/covers/aww1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

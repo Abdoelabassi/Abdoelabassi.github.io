@@ -5,7 +5,7 @@ description: "Young, broke Bruce Wayne tries to build Batman from scratch in a G
 category: comics
 year: 2024
 rating: 5
-cover: ""
+cover: "/covers/ab1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

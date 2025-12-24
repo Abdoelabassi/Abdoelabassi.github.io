@@ -5,7 +5,7 @@ description: "A weird, cerebral take on J’onn J’onzz that leans into horror,
 category: comics
 year: 2025
 rating: 5
-cover: ""
+cover: "/covers/ammh1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""

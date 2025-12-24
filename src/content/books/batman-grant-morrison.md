@@ -5,7 +5,7 @@ description: "Grant Morrison's epic, mind-bending run on Batman that spans time,
 category: comics
 year: 2006
 rating: 5
-cover: ""
+cover: "/covers/Batman-by-Grant-Morrison-Book-1-2024.webp"
 link: ""
 publisher: "DC Comics"
 isbn: ""

@@ -5,7 +5,7 @@ description: "The legendary X-Men story that changed everything. Jean Grey's tra
 category: comics
 year: 1980
 rating: 5
-cover: ""
+cover: "/covers/darkphoenix.webp"
 link: ""
 publisher: "Marvel Comics"
 isbn: ""

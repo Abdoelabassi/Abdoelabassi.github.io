@@ -1,15 +1,15 @@
 ---
-title: "Absolute Green Lantern"
-author: "Al Ewing, Jahnoy Lindsay"
-description: "Multiple Lanterns, one very bad omen falling from space, and Ewing doing cosmic problem‑solving the way only he does."
+title: "Absolute Super-Man"
+author: "Jason Aaron, Rafa Sandoval"
+description: "SUPERSTARS JASON AARON AND RAFA SANDOVAL UNLEASH A SHOCKING NEW TAKE ON THE LAST SON OF KRYPTON! Without the fortress… without the family… without a home… what’s left is the Absolute Man of Steel!."
 category: comics
-year: 2025
+year: 2024
 rating: 5
-cover: ""
+cover: "/covers/as1.jpg"
 link: ""
 publisher: "DC Comics"
 isbn: ""
 featured: true
 ---
 
-If you like your space epics with actual ideas per page, this is the Green Lantern book to obsess over. Ewing treats continuity like a playground and a lab at the same time, and the result feels more like hard sci‑fi with power rings than simple superhero comfort food.
+If you like your space epics with actual ideas per page, this is the Absolute Super-Man book to obsess over. Jason treats continuity like a playground and a lab at the same time.
