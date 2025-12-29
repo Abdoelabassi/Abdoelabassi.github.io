@@ -67,6 +67,8 @@ const currentPath = pathname.slice(1); // remove the first "/"
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="icon" type="image/svg+xml" href="/fav.png" />
     <script src={`https://www.paypal.com/sdk/js?client-id=${import.meta.env.PAYPAL_CLIENT_ID}&currency=MAD`}></script>
+    <!-- 100% privacy-first analytics -->
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <title>{title}</title>
   </head>
 
@@ -155,9 +157,6 @@ const currentPath = pathname.slice(1); // remove the first "/"
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
     </script>
-    <!-- 100% privacy-first analytics -->
-<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-
   </body>
   
 </html>
