@@ -1,15 +1,15 @@
 ---
 title: "Jujutsu Kaisen"
-author: "Akutami Gege"
-description: "An incredible story of sorcerers students mentored by the strongest sorcerer in modern world so called Saturo Gojo, trying to be strong and protect the common people from evil curses."
+author: "Gege Akutami"
+description: "A high-octane supernatural action series following Yuji Itadori, a high school student who becomes the vessel for a powerful curse. Mentored by Satoru Gojo, the strongest sorcerer alive, Yuji and his fellow students fight to protect humanity from curses while uncovering dark conspiracies."
 category: comics
 year: 2018
-rating: 4
+rating: 5
 cover: "/covers/jjk30.jpg"
 link: ""
-publisher: "Jump Comics"
+publisher: "Weekly Shonen Jump"
 isbn: ""
 featured: true
 ---
 
-Gege wrote a hard core story about students leveling up to be the strongest in their sorcerer technqiue, facing horrobale curses, and trying to proect the common poeple, but some elder sorcers from the heing era have different philosophy about a sorcerer means, the master mind kenjaku set up a hellish tournament so-called the culling game between curses and sorcerers of the old age and modern age. 
+Gege Akutami's electrifying manga follows Yuji Itadori as he joins Tokyo Jujutsu High to master cursed techniques and protect the world from supernatural threats. With intense battles, compelling character development, and shocking plot twists, Jujutsu Kaisen blends action, humor, and emotion. The series explores themes of sacrifice, power, and humanity's struggle against ancient evils, featuring the mysterious mastermind Kenjaku and the epic Culling Game tournament. 

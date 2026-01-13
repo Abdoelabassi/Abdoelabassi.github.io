@@ -1,7 +1,7 @@
 ---
-title: "Absolute Super-Man"
+title: "Absolute Superman"
 author: "Jason Aaron, Rafa Sandoval"
-description: "SUPERSTARS JASON AARON AND RAFA SANDOVAL UNLEASH A SHOCKING NEW TAKE ON THE LAST SON OF KRYPTON! Without the fortress… without the family… without a home… what’s left is the Absolute Man of Steel!."
+description: "Jason Aaron and Rafa Sandoval's Absolute Universe reimagining strips Superman of everything—fortress, family, and past. What remains is a raw, powerful exploration of the Last Son of Krypton discovering what heroism truly means."
 category: comics
 year: 2024
 rating: 5
@@ -12,4 +12,4 @@ isbn: ""
 featured: true
 ---
 
-If you like your space epics with actual ideas per page, this is the Absolute Super-Man book to obsess over. Jason treats continuity like a playground and a lab at the same time.
+In this bold reimagining of DC's Absolute Universe, Jason Aaron presents Superman without his typical support systems and connections to his past. With Rafa Sandoval's stunning artwork, this series explores what it means to be heroic when stripped of technology, family bonds, and earthly ties. It's a character-driven space epic that treats Superman's mythology as both a playground and laboratory for fresh ideas.
