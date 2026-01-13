@@ -1,0 +1,225 @@
+---
+import MainLayout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(price);
+};
+---
+
+<MainLayout>
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <!-- Header -->
+    <section class="py-12 md:py-20 px-4 border-b border-gray-200 dark:border-gray-700">
+      <div class="max-w-6xl mx-auto">
+        <a href="/shop" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 mb-6">
+          <Icon name="tabler:arrow-left" class="w-4 h-4" />
+          Back to Shop
+        </a>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+          Shopping Cart
+        </h1>
+        <p class="text-gray-600 dark:text-gray-300 mt-2">
+          Review and manage your items
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 md:py-16 px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Cart Items -->
+          <div class="lg:col-span-2">
+            <div id="cart-items" class="space-y-4">
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8 text-center">
+                <Icon name="tabler:shopping-cart" class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" />
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Your cart is empty</p>
+                <a href="/shop" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                  Continue Shopping
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:col-span-1">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sticky top-6">
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Order Summary</h2>
+              
+              <div class="space-y-4 mb-6">
+                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                  <span>Subtotal</span>
+                  <span id="subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                  <span>Shipping</span>
+                  <span id="shipping">$0.00</span>
+                </div>
+                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                  <span>Tax</span>
+                  <span id="tax">$0.00</span>
+                </div>
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between text-lg font-bold text-gray-900 dark:text-white">
+                  <span>Total</span>
+                  <span id="total">$0.00</span>
+                </div>
+              </div>
+
+              <a href="/checkout" class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white py-3 rounded-lg font-semibold text-center transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                Proceed to Checkout
+              </a>
+
+              <button onclick="clearCart()" class="w-full mt-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                Clear Cart
+              </button>
+
+              <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <p class="text-sm text-blue-900 dark:text-blue-300">
+                  ✓ Free shipping on orders over $100
+                </p>
+                <p class="text-sm text-blue-900 dark:text-blue-300 mt-2">
+                  ✓ Secure checkout powered by PayPal
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Cart management
+    const STORAGE_KEY = 'shop_cart';
+
+    interface CartItem {
+      id: string;
+      title: string;
+      price: number;
+      quantity: number;
+      image?: string;
+      category?: string;
+    }
+
+    function getCart(): CartItem[] {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function saveCart(cart: CartItem[]) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    function removeFromCart(itemId: string) {
+      let cart = getCart();
+      cart = cart.filter(item => item.id !== itemId);
+      saveCart(cart);
+      renderCart();
+      updateSummary();
+    }
+
+    function updateQuantity(itemId: string, quantity: number) {
+      const cart = getCart();
+      const item = cart.find(i => i.id === itemId);
+      if (item) {
+        item.quantity = Math.max(1, quantity);
+        saveCart(cart);
+        renderCart();
+        updateSummary();
+      }
+    }
+
+    function clearCart() {
+      if (confirm('Are you sure you want to clear your cart?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderCart();
+        updateSummary();
+      }
+    }
+
+    function formatPrice(price: number): string {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(price);
+    }
+
+    function renderCart() {
+      const cart = getCart();
+      const container = document.getElementById('cart-items');
+      if (!container) return;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-8 text-center">
+            <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Your cart is empty</p>
+            <a href="/shop" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+              Continue Shopping
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex gap-4">
+          <div class="w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <img src="${item.image || 'https://via.placeholder.com/96'}" alt="${item.title}" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-900 dark:text-white">${item.title}</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">${item.category || 'Product'}</p>
+            <div class="mt-2">
+              <span class="text-sm font-medium text-gray-900 dark:text-white">${formatPrice(item.price)}</span>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-3">
+            <div class="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">−</button>
+              <span class="px-2 py-1 min-w-[2rem] text-center text-gray-900 dark:text-white">${item.quantity}</span>
+              <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})" class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">+</button>
+            </div>
+            <button onclick="removeFromCart('${item.id}')" class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium">
+              Remove
+            </button>
+          </div>
+          <div class="flex-shrink-0 text-right">
+            <p class="text-lg font-bold text-gray-900 dark:text-white">${formatPrice(item.price * item.quantity)}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateSummary() {
+      const cart = getCart();
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const shipping = subtotal > 100 ? 0 : 10;
+      const tax = subtotal * 0.08;
+      const total = subtotal + shipping + tax;
+
+      document.getElementById('subtotal')!.textContent = formatPrice(subtotal);
+      document.getElementById('shipping')!.textContent = shipping === 0 ? 'FREE' : formatPrice(shipping);
+      document.getElementById('tax')!.textContent = formatPrice(tax);
+      document.getElementById('total')!.textContent = formatPrice(total);
+    }
+
+    // Initialize
+    renderCart();
+    updateSummary();
+
+    // Make functions globally available
+    (window as any).removeFromCart = removeFromCart;
+    (window as any).updateQuantity = updateQuantity;
+    (window as any).clearCart = clearCart;
+  </script>
+</MainLayout>
