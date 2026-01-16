@@ -5,7 +5,7 @@ description: "Mark Millar and Steve McNiven present a dystopian future where vil
 category: comics
 year: 2008
 rating: 5
-cover: "https://covers.openlibrary.org/b/isbn/9780785131380-L.jpg"
+cover: "/covers/oldmanlogan.jpg"
 link: ""
 publisher: "Marvel Comics"
 isbn: "978-0785131380"

@@ -5,7 +5,7 @@ description: "Robert Kirkman's superhero epic subverts genre expectations. Invin
 category: comics
 year: 2003
 rating: 5
-cover: "/covers/invincible.jpg"
+cover: "/covers/Invincible.webp"
 link: ""
 publisher: "Image Comics"
 isbn: ""
