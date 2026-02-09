@@ -27,7 +27,7 @@ const sortedProducts = allProducts.length > 0 ? allProducts.sort((a, b) => {
 const categories = new Set(allProducts.map(p => p.data.category).filter(Boolean));
 const categoryIcons: Record<string, string> = {
   'Electronics': 'tabler:device-laptop',
-  'Furniture': 'tabler:chair',
+  'Furniture': 'tabler:armchair',
   'Digital Products': 'tabler:cloud-download',
 };
 
@@ -207,10 +207,9 @@ const getDiscountPercentage = (price: number, originalPrice?: number) => {
                   )}
 
                   <!-- CTA Button -->
-                  <button class={`w-full py-2 px-4 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r ${getCategoryClasses(product.data.category, 'gradient')} ${getCategoryClasses(product.data.category, 'hover')} text-white disabled:opacity-50 disabled:cursor-not-allowed`}
-                    disabled={!product.data.inStock}>
+                  <a href={`/shop/${product.id}`} class={`block w-full py-2 px-4 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r ${getCategoryClasses(product.data.category, 'gradient')} ${getCategoryClasses(product.data.category, 'hover')} text-white text-center ${!product.data.inStock ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}>
                     {product.data.inStock ? 'View Details' : 'Out of Stock'}
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
