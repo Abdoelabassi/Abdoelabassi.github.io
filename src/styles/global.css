@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../**/*.{astro,html,js,jsx,ts,tsx,md,mdx}";
 
 @layer base {
   :root {
