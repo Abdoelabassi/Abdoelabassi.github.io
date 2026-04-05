@@ -1,17 +1,52 @@
 ---
 import MainLayout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderInlineMath(text: string) {
+  return text
+    .split(/(\$\$[^$]+\$\$|\$[^$]+\$)/g)
+    .map((segment) => {
+      if (segment.startsWith('$$') && segment.endsWith('$$')) {
+        return katex.renderToString(segment.slice(2, -2), {
+          displayMode: true,
+          throwOnError: false,
+        });
+      }
+
+      if (segment.startsWith('$') && segment.endsWith('$')) {
+        return katex.renderToString(segment.slice(1, -1), {
+          displayMode: false,
+          throwOnError: false,
+        });
+      }
+
+      return escapeHtml(segment);
+    })
+    .join('');
+}
 
 const publications = [
   {
-    type: "Preprint",
+    type: "Journal Article",
     featured: true,
     title: "Sensitivity of the Hyper-Kamiokande experiment to neutrino oscillation parameters using accelerator neutrinos",
     authors: "Hyper-Kamiokande Collaboration",
-    journal: "arXiv preprint",
-    year: "2025",
-    doi: "https://doi.org/10.1140/epjc/s10052-025-14938-9",
-    abstract: `This paper presents the expected sensitivity of the Hyper-Kamiokande long-baseline program to neutrino oscillation parameters. Hyper-Kamiokande, currently under construction in Japan, will observe accelerator-produced neutrinos with statistics up to 25–100× larger than T2K. In the most favorable scenario, the experiment can achieve a 5σ discovery of CP violation in less than three years, and after 10 years measure δ₍CP₎ with a precision ranging from about 20° (maximal CPV) to 6° (CP conservation), alongside sub‑percent level resolution on Δm²₃₂ and precise constraints on sin²θ₂₃.`,
+    journal: "February 2026, The European Physical Journal C 86(2)",
+    year: "2026",
+    doi: "10.1140/epjc/s10052-025-14938-9",
+    license: "CC BY 4.0",
+    abstract: `This paper presents the expected sensitivity of the Hyper-Kamiokande long-baseline program to neutrino oscillation parameters. Hyper-Kamiokande, currently under construction in Japan, will observe accelerator-produced neutrinos with statistics up to 25–100× larger than T2K. In the most favorable scenario, the experiment can achieve a $5\\sigma$ discovery of CP violation in less than three years, and after 10 years measure $\\delta_{\\mathrm{CP}}$ with a precision ranging from about $20^\\circ$ (maximal CPV) to $6^\\circ$ (CP conservation), alongside sub-percent level resolution on $\\Delta m^2_{32}$ and precise constraints on $\\sin^2\\theta_{23}$.`,
     links: [
       { icon: "tabler:file-text", url: "/hkpaper", label: "PDF" },
       { icon: "tabler:external-link", url: "http://arxiv.org/abs/2505.15019", label: "arXiv" }
@@ -89,8 +124,13 @@ const publications = [
                 {pub.journal}
               </p>
 
-              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-4">
-                {pub.abstract}
+              {pub.license && (
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+                  License {pub.license}
+                </p>
+              )}
+
+              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-4" set:html={renderInlineMath(pub.abstract)}>
               </p>
 
               <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
