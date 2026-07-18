@@ -79,113 +79,179 @@ const skills = [
 ];
 ---
 
-<MainLayout title="CV - Your Name">
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold">Curriculum Vitae</h1>
-      <a 
-        href="/Modern_Academic_CV_Example_based_on_Forty_Seconds_CV-1.pdf" 
-        target="_blank" 
-        class="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors"
-      >
-        <Icon name="tabler:download" class="w-5 h-5" />
-        <span>Download PDF (v1)</span>
-      </a>
-      <a 
-        href="/cv.pdf" 
-        target="_blank" 
-        class="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition-colors"
-      >
-        <Icon name="tabler:download" class="w-5 h-5" />
-        <span>Download PDF (v2)</span>
-      </a>
-    </div>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Experience</h2>
-      <div class="space-y-6">
-        {experience.map(job => (
-          <div>
-            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
-              <h3 class="text-xl font-bold">{job.title}</h3>
-              <span class="text-gray-600 dark:text-gray-400">{job.period}</span>
+<MainLayout title="Curriculum Vitae">
+  <div class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <div class="mx-auto max-w-6xl px-6 py-14 lg:px-8 lg:py-18">
+      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+        <section class="rounded-3xl border border-gray-200 bg-gray-50 p-7 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 sm:p-10">
+          <p class="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-400">Curriculum Vitae</p>
+          <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Academic profile</h1>
+          <p class="mt-5 max-w-2xl text-base leading-7 text-gray-600 dark:text-gray-300 sm:text-lg">
+            A concise academic CV highlighting research experience, education, and the technical profile supporting my work in particle physics.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
+            >
+              <Icon name="tabler:download" class="h-4 w-4" />
+              Download current CV
+            </a>
+            <a
+              href="/Modern_Academic_CV_Example_based_on_Forty_Seconds_CV-1.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 px-5 py-3 text-sm font-medium text-gray-700 transition-colors hover:border-emerald-300 hover:text-emerald-700 dark:border-gray-700 dark:text-gray-200 dark:hover:border-emerald-700 dark:hover:text-emerald-300"
+            >
+              <Icon name="tabler:external-link" class="h-4 w-4" />
+              Open older version
+            </a>
+          </div>
+        </section>
+
+        <aside class="space-y-4 rounded-3xl border border-gray-200 bg-white p-7 dark:border-gray-800 dark:bg-gray-900/50 sm:p-8">
+          <h2 class="text-lg font-semibold">Profile at a glance</h2>
+          <div class="space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
+            <div>
+              <p class="font-medium text-gray-900 dark:text-gray-100">Research focus</p>
+              <p>Underground neutrino physics and simulation-driven analysis.</p>
             </div>
-            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{job.organization}, {job.location}</p>
-            <p class="mb-2">{job.description}</p>
-            <div class="flex flex-wrap gap-2">
-              {job.skills.map(skill => (
-                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-md text-sm">
-                  {skill}
-                </span>
-              ))}
+            <div>
+              <p class="font-medium text-gray-900 dark:text-gray-100">Methods</p>
+              <p>Statistical analysis, detector studies, scientific writing, and reproducible workflows.</p>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900 dark:text-gray-100">Tools</p>
+              <p>Python, C++, Linux, ROOT, Geant4, Git, and data-oriented research tooling.</p>
             </div>
           </div>
-        ))}
+        </aside>
       </div>
-    </section>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Education</h2>
-      <div class="space-y-6">
-        {education.map(edu => (
-          <div>
-            <div class="flex flex-col sm:flex-row sm:justify-between mb-1">
-              <h3 class="text-xl font-bold">{edu.degree}</h3>
-              <span class="text-gray-600 dark:text-gray-400">{edu.period}</span>
+
+      <div class="mt-10 grid gap-8 lg:grid-cols-2">
+        <section class="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 sm:p-8">
+          <div class="flex items-center justify-between gap-4 border-b border-gray-200 pb-4 dark:border-gray-800">
+            <div>
+              <h2 class="text-xl font-semibold">Experience</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Research roles and postgraduate training.</p>
             </div>
-            <p class="text-emerald-600 dark:text-emerald-400 mb-2">{edu.institution}, {edu.location}</p>
-            <p>{edu.description}</p>
           </div>
-        ))}
+
+          <div class="mt-6 space-y-6">
+            {experience.map((job) => (
+              <article class="border-l border-emerald-200 pl-4 dark:border-emerald-900">
+                <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 class="text-lg font-semibold">{job.title}</h3>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-400">{job.organization}</p>
+                  </div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{job.period}</span>
+                </div>
+                <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">{job.location}</p>
+                <p class="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{job.description}</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {job.skills.map((skill) => (
+                    <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 sm:p-8">
+          <div class="flex items-center justify-between gap-4 border-b border-gray-200 pb-4 dark:border-gray-800">
+            <div>
+              <h2 class="text-xl font-semibold">Education</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Formal academic background.</p>
+            </div>
+          </div>
+
+          <div class="mt-6 space-y-6">
+            {education.map((edu) => (
+              <article class="border-l border-emerald-200 pl-4 dark:border-emerald-900">
+                <div class="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 class="text-lg font-semibold">{edu.degree}</h3>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-400">{edu.institution}</p>
+                  </div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{edu.period}</span>
+                </div>
+                <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">{edu.location}</p>
+                <p class="mt-3 text-sm leading-6 text-gray-700 dark:text-gray-200">{edu.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
-    </section>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Selected Publications</h2>
-      <div class="space-y-4">
-        {publications.map(pub => (
-          <div>
-            <h3 class="font-bold">{pub.title}</h3>
-            <p class="text-gray-700 dark:text-gray-300">{pub.authors}</p>
-            <p class="text-gray-600 dark:text-gray-400">
-              {pub.journal} {pub.year}
-              <a 
-                href={`https://doi.org/${pub.doi}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="text-emerald-600 dark:text-emerald-400 hover:underline"
-              >
-                {pub.doi}
-              </a>
-            </p>
+
+      <div class="mt-10 grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+        <section class="rounded-3xl border border-gray-200 bg-white p-7 shadow-sm dark:border-gray-800 dark:bg-gray-900/50 sm:p-8">
+          <div class="flex items-center justify-between gap-4 border-b border-gray-200 pb-4 dark:border-gray-800">
+            <div>
+              <h2 class="text-xl font-semibold">Selected publications</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">See the full list on the publications page.</p>
+            </div>
           </div>
-        ))}
-        <p class="mt-2">
-          <a href="/publications" class="text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+
+          <div class="mt-6 space-y-4">
+            {publications.map((pub) => (
+              <article class="rounded-2xl border border-gray-200 p-5 dark:border-gray-800">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">{pub.title || 'Publication details will appear here'}</h3>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">{pub.authors || 'Author list'}</p>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {pub.journal || 'Journal'} {pub.year}
+                  {pub.doi ? (
+                    <a
+                      href={`https://doi.org/${pub.doi}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="ml-2 text-emerald-700 hover:underline dark:text-emerald-400"
+                    >
+                      {pub.doi}
+                    </a>
+                  ) : null}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <a href="/publications" class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-emerald-700 hover:underline dark:text-emerald-400">
             <span>View all publications</span>
-            <Icon name="tabler:arrow-right" class="w-4 h-4" />
+            <Icon name="tabler:arrow-right" class="h-4 w-4" />
           </a>
-        </p>
-      </div>
-    </section>
-    
-    <section>
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">Skills</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        {skills.map(skillGroup => (
-          <div>
-            <h3 class="text-lg font-bold mb-2">{skillGroup.category}</h3>
-            <div class="flex flex-wrap gap-2">
-              {skillGroup.items.map(item => (
-                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                  {item}
-                </span>
-              ))}
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-gray-50 p-7 dark:border-gray-800 dark:bg-gray-900/50 sm:p-8">
+          <div class="flex items-center justify-between gap-4 border-b border-gray-200 pb-4 dark:border-gray-800">
+            <div>
+              <h2 class="text-xl font-semibold">Skills</h2>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Technical and academic capabilities.</p>
             </div>
           </div>
-        ))}
+
+          <div class="mt-6 space-y-5">
+            {skills.map((skillGroup) => (
+              <article>
+                <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-gray-600 dark:text-gray-400">{skillGroup.category}</h3>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {skillGroup.items.map((item) => (
+                    <span class="rounded-full border border-gray-200 bg-white px-3 py-1 text-sm text-gray-700 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-200">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   </div>
 </MainLayout>
 
