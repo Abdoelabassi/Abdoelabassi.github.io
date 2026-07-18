@@ -3,7 +3,7 @@ title: "Green Lantern by Geoff Johns"
 author: "Geoff Johns, Ivan Reis, Ethan Van Sciver"
 description: "The acclaimed run that redefined Green Lantern mythology with emotional spectrum lore, cosmic stakes, and definitive Hal Jordan stories."
 category: comics
-year: 2015
+year: 2004
 rating: 5
 cover: "/covers/Green-Lantern-by-Geoff-Johns-Omnibus-Vol.-1-2015-Fan-Made.webp"
 link: ""

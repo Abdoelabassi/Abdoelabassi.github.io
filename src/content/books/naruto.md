@@ -7,7 +7,7 @@ rating: 5
 year: 1999
 publisher: Shueisha
 featured: true
-cover: /covers/naruto.jpg
+cover: "https://en.wikipedia.org/wiki/Special:FilePath/NarutoCoverTankobon1.jpg"
 link: https://www.viz.com/shonenjump/chapters/naruto
 ---
 

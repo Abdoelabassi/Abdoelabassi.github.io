@@ -7,7 +7,7 @@ rating: 5
 year: 2023
 publisher: Shueisha
 featured: true
-cover: /covers/kagurabachi.jpg
+cover: "https://en.wikipedia.org/wiki/Special:FilePath/Kagurabachi_Volume_1_Cover.jpg"
 link: https://www.viz.com/shonenjump/chapters/kagurabachi
 ---
 
