@@ -46,6 +46,11 @@ const publications = [
     year: "2026",
     doi: "10.1140/epjc/s10052-025-14938-9",
     license: "CC BY 4.0",
+    researchInterestScore: 15.4,
+    recommendations: 3,
+    citations: 25,
+    reads: 149,
+    keywords: ["neutrino oscillations", "Hyper-Kamiokande", "CP violation"],
     abstract: `This paper presents the expected sensitivity of the Hyper-Kamiokande long-baseline program to neutrino oscillation parameters. Hyper-Kamiokande, currently under construction in Japan, will observe accelerator-produced neutrinos with statistics up to 25–100× larger than T2K. In the most favorable scenario, the experiment can achieve a $5\\sigma$ discovery of CP violation in less than three years, and after 10 years measure $\\delta_{\\mathrm{CP}}$ with a precision ranging from about $20^\\circ$ (maximal CPV) to $6^\\circ$ (CP conservation), alongside sub-percent level resolution on $\\Delta m^2_{32}$ and precise constraints on $\\sin^2\\theta_{23}$.`,
     links: [
       { icon: "tabler:file-text", url: "/hkpaper", label: "PDF" },
@@ -60,6 +65,11 @@ const publications = [
     journal: "First African Conference of High Energy Physics (Springer book)",
     year: "2025",
     doi: "https://link.springer.com/book/10.1007/978-3-031-88933-2",
+    researchInterestScore: 0.1,
+    recommendations: 0,
+    citations: 0,
+    reads: 38,
+    keywords: ["detector calibration", "neutron generator", "Hyper-Kamiokande"],
     abstract: "Poster on the energy-scale cross-calibration strategy for Hyper-Kamiokande using a Deuterium–Tritium neutron generator, focusing on how a well‑controlled neutron source can anchor the detector response for precision neutrino measurements.",
     links: [
       { icon: "tabler:file-text", url: "/hkposter", label: "Poster PDF" },
@@ -67,6 +77,22 @@ const publications = [
     ]
   }
 ];
+
+const researchGate = {
+  url: "https://www.researchgate.net/profile/El-Abassi-Abderrazaq",
+  researchInterestScore: 5.0,
+  citations: 28,
+  hIndex: 2,
+  reads: 411,
+  recommendations: 7,
+  citationReadShare: 49,
+  recommendationReadShare: 7,
+  fullTextReadShare: 28.8,
+  lastChecked: "September 14, 2026",
+};
+
+const totalCitations = publications.reduce((sum, publication) => sum + (publication.citations ?? 0), 0);
+const totalReads = publications.reduce((sum, publication) => sum + (publication.reads ?? 0), 0);
 ---
 
 <MainLayout title="Publications - Abderrazaq">
@@ -76,94 +102,87 @@ const publications = [
       <div class="absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-cyan-500/15 blur-3xl dark:bg-cyan-500/25"></div>
     </div>
 
-    <div class="container mx-auto px-4 py-12 max-w-5xl">
-      <header class="mb-10 text-center">
-        <p class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 mb-4">
-          <Icon name="tabler:atom" class="w-4 h-4" />
-          Selected work
-        </p>
-        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 mb-3">
-          Publications & Posters
-        </h1>
-        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-          A snapshot of my work at the intersection of neutrino physics, detector calibration, and large‑scale experiments.
-        </p>
+    <div class="container mx-auto max-w-6xl px-4 py-10 sm:py-14">
+      <header class="mb-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p class="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">
+            <Icon name="tabler:atom" class="h-4 w-4" /> Research record
+          </p>
+          <h1 class="max-w-3xl text-4xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl">Publications & posters</h1>
+          <p class="mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300">Selected work in neutrino physics, detector calibration, and large-scale experiments.</p>
+        </div>
+        <a href={researchGate.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 border border-emerald-600 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-600 hover:text-white dark:border-emerald-400 dark:text-emerald-300 dark:hover:bg-emerald-400 dark:hover:text-slate-950">
+          <Icon name="simple-icons:researchgate" class="h-4 w-4" /> Open ResearchGate <Icon name="tabler:arrow-up-right" class="h-4 w-4" />
+        </a>
       </header>
 
-      <div class="relative border-l border-dashed border-slate-200 dark:border-slate-700 pl-4 sm:pl-6 space-y-8">
-        {publications.map((pub, index) => (
-          <article class="relative group">
-            <div class="absolute -left-[9px] sm:-left-[11px] mt-1.5 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 border-emerald-500 bg-slate-950 dark:bg-slate-900 group-hover:bg-emerald-400 transition-colors"></div>
+      <section class="mb-8 grid gap-px overflow-hidden border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-5 dark:border-slate-800 dark:bg-slate-800" aria-label="Research metrics">
+        <div class="bg-white p-5 dark:bg-slate-950"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Research interest</p><p class="mt-2 text-3xl font-black text-slate-950 dark:text-white">{researchGate.researchInterestScore.toFixed(1)}</p><p class="mt-1 text-xs text-slate-500">ResearchGate score</p></div>
+        <div class="bg-white p-5 dark:bg-slate-950"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Citations</p><p class="mt-2 text-3xl font-black text-slate-950 dark:text-white">{researchGate.citations}</p><p class="mt-1 text-xs text-slate-500">ResearchGate total</p></div>
+        <div class="bg-white p-5 dark:bg-slate-950"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">h-index</p><p class="mt-2 text-3xl font-black text-slate-950 dark:text-white">{researchGate.hIndex}</p><p class="mt-1 text-xs text-slate-500">ResearchGate total</p></div>
+        <div class="bg-white p-5 dark:bg-slate-950"><p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Reads</p><p class="mt-2 text-3xl font-black text-slate-950 dark:text-white">{researchGate.reads}</p><p class="mt-1 text-xs text-slate-500">ResearchGate total</p></div>
+        <div class="bg-emerald-50 p-5 dark:bg-emerald-950/30"><p class="text-xs font-semibold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Publications listed</p><p class="mt-2 text-3xl font-black text-emerald-950 dark:text-emerald-100">{publications.length}</p><p class="mt-1 text-xs text-emerald-800/70 dark:text-emerald-200/70">Updated {researchGate.lastChecked}</p></div>
+      </section>
 
-            <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur shadow-sm hover:shadow-xl transition-all duration-300 px-4 py-4 sm:px-6 sm:py-5">
-              <div class="flex flex-wrap items-center gap-3 mb-3">
-                <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
-                  <Icon name={pub.type === "Preprint" ? "tabler:math" : "tabler:presentation"} class="w-3.5 h-3.5" />
-                  {pub.type}
-                </span>
-                {pub.featured && (
-                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-300 border border-emerald-500/30">
-                    <Icon name="tabler:star" class="w-3.5 h-3.5" />
-                    Featured
-                  </span>
-                )}
-                <span class="ml-auto text-xs font-medium text-slate-500 dark:text-slate-400">
-                  {pub.year}
-                </span>
-              </div>
+      <section class="mb-8 border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950" aria-labelledby="engagement-heading">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div><p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:text-emerald-300">Profile insights</p><h2 id="engagement-heading" class="mt-1 text-xl font-bold text-slate-950 dark:text-white">How the work is being read</h2></div>
+          <p class="text-xs text-slate-500">ResearchGate profile data · {researchGate.lastChecked}</p>
+        </div>
+        <div class="mt-5 grid gap-4 sm:grid-cols-3">
+          <div><div class="mb-2 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300"><span>Citation-related reads</span><span>{researchGate.citationReadShare}%</span></div><div class="h-2 bg-slate-100 dark:bg-slate-800"><div class="h-2 bg-emerald-500" style={`width: ${researchGate.citationReadShare}%`}></div></div></div>
+          <div><div class="mb-2 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300"><span>Recommendation-related reads</span><span>{researchGate.recommendationReadShare}%</span></div><div class="h-2 bg-slate-100 dark:bg-slate-800"><div class="h-2 bg-amber-500" style={`width: ${researchGate.recommendationReadShare}%`}></div></div></div>
+          <div><div class="mb-2 flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300"><span>Full-text reads</span><span>{researchGate.fullTextReadShare}%</span></div><div class="h-2 bg-slate-100 dark:bg-slate-800"><div class="h-2 bg-cyan-500" style={`width: ${researchGate.fullTextReadShare}%`}></div></div></div>
+        </div>
+        <p class="mt-4 text-xs text-slate-500">{researchGate.recommendations} recommendations · percentages are displayed as reported by ResearchGate and may represent overlapping profile insights.</p>
+      </section>
 
-              <h2 class="text-base sm:text-lg font-semibold text-slate-900 dark:text-slate-50 leading-snug mb-1.5">
-                {pub.title}
-              </h2>
+      <section class="mb-8 border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950" aria-label="Publication filters">
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <label class="relative flex-1"><span class="sr-only">Search publications</span><Icon name="tabler:search" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input id="publication-search" type="search" placeholder="Search title, author, or topic" class="w-full border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-900 outline-none transition focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white" /></label>
+          <label><span class="sr-only">Filter by type</span><select id="publication-type" class="w-full border border-slate-300 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-900 dark:text-white"><option value="all">All formats</option>{[...new Set(publications.map((pub) => pub.type))].map((type) => <option value={type}>{type}</option>)}</select></label>
+        </div>
+        <p id="publication-count" class="mt-3 text-xs text-slate-500">Showing {publications.length} publications</p>
+      </section>
 
-              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mb-2">
-                {pub.authors}
-              </p>
-
-              <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                {pub.journal}
-              </p>
-
-              {pub.license && (
-                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                  License {pub.license}
-                </p>
-              )}
-
-              <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed mb-4" set:html={renderInlineMath(pub.abstract)}>
-              </p>
-
-              <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
-                {pub.doi && (
-                  <a 
-                    href={`https://doi.org/${pub.doi}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1.5 rounded-full bg-emerald-500 text-emerald-950 px-3 py-1 font-semibold shadow-sm hover:bg-emerald-400 transition-colors"
-                  >
-                    <Icon name="tabler:link" class="w-3.5 h-3.5" />
-                    <span>DOI</span>
-                    <span class="hidden sm:inline text-[11px] font-normal opacity-80">{pub.doi}</span>
-                  </a>
-                )}
-
-                {pub.links.map(link => (
-                  <a 
-                    href={link.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="inline-flex items-center gap-1.5 rounded-full border border-slate-300/70 dark:border-slate-700 px-3 py-1 text-slate-700 dark:text-slate-200 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors"
-                  >
-                    <Icon name={link.icon} class="w-3.5 h-3.5" />
-                    <span>{link.label}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+      <div id="publication-list" class="grid gap-5 lg:grid-cols-2">
+        {publications.map((pub) => (
+          <article class="publication-card border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-lg dark:border-slate-800 dark:bg-slate-950" data-search={`${pub.title} ${pub.authors} ${pub.keywords.join(" ")}`.toLowerCase()} data-type={pub.type}>
+            <div class="mb-4 flex items-start justify-between gap-3"><span class="inline-flex items-center gap-1.5 bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:bg-slate-800 dark:text-slate-300"><Icon name={pub.type === "Conference Poster" ? "tabler:presentation" : "tabler:file-text"} class="h-3.5 w-3.5" /> {pub.type}</span><span class="text-xs font-bold text-emerald-700 dark:text-emerald-300">{pub.year}</span></div>
+            <h2 class="text-lg font-bold leading-snug text-slate-950 dark:text-white">{pub.title}</h2>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{pub.authors}</p>
+            <p class="mt-1 text-xs text-slate-500">{pub.journal}</p>
+            <div class="mt-4 flex flex-wrap gap-2">{pub.keywords.map((keyword) => <span class="border border-emerald-200 px-2 py-1 text-[10px] font-semibold text-emerald-700 dark:border-emerald-900 dark:text-emerald-300">{keyword}</span>)}</div>
+            <p class="mt-4 text-sm leading-6 text-slate-700 dark:text-slate-200" set:html={renderInlineMath(pub.abstract)}></p>
+            <div class="mt-5 grid grid-cols-2 gap-3 border-y border-slate-100 py-3 sm:grid-cols-4 dark:border-slate-800"><div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">RIS</p><p class="mt-1 text-sm font-bold text-slate-900 dark:text-white">{pub.researchInterestScore.toFixed(1)}</p></div><div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Citations</p><p class="mt-1 text-sm font-bold text-slate-900 dark:text-white">{pub.citations ?? "Not available"}</p></div><div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Recs</p><p class="mt-1 text-sm font-bold text-slate-900 dark:text-white">{pub.recommendations}</p></div><div><p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Reads</p><p class="mt-1 text-sm font-bold text-slate-900 dark:text-white">{pub.reads ?? "Not available"}</p></div></div>
+            <div class="mt-4 flex flex-wrap items-center gap-3 text-xs sm:text-sm">{pub.doi && <a href={pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-semibold text-emerald-700 hover:underline dark:text-emerald-300"><Icon name="tabler:external-link" class="h-4 w-4" /> DOI / record</a>}{pub.links.map((link) => <a href={link.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-semibold text-slate-600 hover:text-emerald-700 dark:text-slate-300 dark:hover:text-emerald-300"><Icon name={link.icon} class="h-4 w-4" /> {link.label}</a>)}</div>
           </article>
         ))}
       </div>
+      <p id="publication-empty" class="hidden py-12 text-center text-sm text-slate-500">No publications match your search.</p>
     </div>
   </div>
 </MainLayout>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>('#publication-search');
+  const type = document.querySelector<HTMLSelectElement>('#publication-type');
+  const cards = [...document.querySelectorAll<HTMLElement>('.publication-card')];
+  const count = document.querySelector<HTMLElement>('#publication-count');
+  const empty = document.querySelector<HTMLElement>('#publication-empty');
+  const filter = () => {
+    const query = search?.value.trim().toLowerCase() ?? '';
+    const selectedType = type?.value ?? 'all';
+    let visible = 0;
+    cards.forEach((card) => {
+      const matches = card.dataset.search?.includes(query) && (selectedType === 'all' || card.dataset.type === selectedType);
+      card.classList.toggle('hidden', !matches);
+      if (matches) visible += 1;
+    });
+    if (count) count.textContent = `Showing ${visible} publication${visible === 1 ? '' : 's'}`;
+    empty?.classList.toggle('hidden', visible !== 0);
+  };
+  search?.addEventListener('input', filter);
+  type?.addEventListener('change', filter);
+</script>
 

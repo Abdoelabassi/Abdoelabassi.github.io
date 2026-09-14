@@ -8,8 +8,8 @@ const experience = [
     organization: "University of Ibn-Todail",
     location: "Kenitra, Morocco",
     period: "2021 - present",
-    description: "Underground Neutrinos Physics in collaboration with Hyper-Kamiokande experiment",
-    skills: ["Physics Simulation", "Statistical Analysis", "Scientific Writing", "Collaboration"]
+    description: "Simulation and reconstruction of upward-going muons for neutrino physics in collaboration with the Hyper-Kamiokande experiment",
+    skills: ["Muon Simulation", "Particle Reconstruction", "Machine Learning", "Detector Calibration", "Software Analysis"]
   },
   {
     title: "Master in High Energy Physics",
@@ -27,7 +27,7 @@ const education = [
     institution: "University Ibn-Tofail",
     location: "Kenitra, Morocco",
     period: "2021 - present",
-    description: "Long-base line neutrinos oscillation analysis, and Low-energy scale calibration of Far detector using DTG neutron generator"
+    description: "Upward-going muon simulation and reconstruction, machine-learning applications in particle reconstruction, detector calibration, and software analysis"
   },
   {
     degree: "MSc in Mathematical Physics",
@@ -47,22 +47,47 @@ const education = [
 
 const publications = [
   {
-    title: "",
-    authors: "",
-    journal: "",
-    year: "",
-    doi: ""
+    type: "Journal article",
+    title: "Sensitivity of the Hyper-Kamiokande experiment to neutrino oscillation parameters using accelerator neutrinos",
+    authors: "Hyper-Kamiokande Collaboration",
+    journal: "The European Physical Journal C 86(2)",
+    year: "2026",
+    doi: "10.1140/epjc/s10052-025-14938-9",
+    researchInterestScore: 15.4,
+    citations: 25,
+    recommendations: 3,
+    reads: 149,
+    links: [
+      { label: "PDF", url: "/hkpaper" },
+      { label: "arXiv", url: "http://arxiv.org/abs/2505.15019" }
+    ]
+  },
+  {
+    type: "Conference poster",
+    title: "Energy scale cross-calibration of Hyper-Kamiokande detector using Deuterium-Tritium neutron generator",
+    authors: "Abderrazaq EL Abassi, Rafik Er-Rabit, Moahmed Gouighri",
+    journal: "First African Conference of High Energy Physics, Springer book",
+    year: "2025",
+    doi: "https://link.springer.com/book/10.1007/978-3-031-88933-2",
+    researchInterestScore: 0.1,
+    citations: 0,
+    recommendations: 0,
+    reads: 38,
+    links: [
+      { label: "Poster PDF", url: "/hkposter" },
+      { label: "Indico entry", url: "https://indico.marwan.ma/event/1/contributions/482/" }
+    ]
   }
 ];
 
 const skills = [
   {
     category: "Programming",
-    items: ["Python", "C++", "Rust", "JavaScript/TypeScript", "SQL", "MATLAB", "Bash Scripting"]
+    items: ["Python", "C++", "SQL", "Bash Scripting"]
   },
   {
     category: "Data Science",
-    items: ["Machine Learning", "Statistical Analysis", "Data Visualization", "Physics Simulation"]
+    items: ["Machine Learning", "Deep Learning", "PyTorch", "Statistical Analysis", "Data Visualization", "Physics Simulation"]
   },
   {
     category: "Tools",
@@ -74,7 +99,7 @@ const skills = [
   },
   {
     category: "Languages",
-    items: ["Arabic (Native)", "English (Conversational)", "Spanish (basic)", "French (middle)", "Japanese (basic)"]
+    items: ["Arabic (Native)", "English (Fluent)", "Spanish (basic)", "French (Conversational)", "Japanese (basic)"]
   }
 ];
 ---
@@ -117,15 +142,15 @@ const skills = [
           <div class="space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-300">
             <div>
               <p class="font-medium text-gray-900 dark:text-gray-100">Research focus</p>
-              <p>Underground neutrino physics and simulation-driven analysis.</p>
+              <p>Upward-going muon simulation and reconstruction for neutrino physics, with applications to Hyper-Kamiokande.</p>
             </div>
             <div>
               <p class="font-medium text-gray-900 dark:text-gray-100">Methods</p>
-              <p>Statistical analysis, detector studies, scientific writing, and reproducible workflows.</p>
+              <p>Machine learning and deep learning for particle reconstruction, detector calibration, and software-based physics analysis.</p>
             </div>
             <div>
               <p class="font-medium text-gray-900 dark:text-gray-100">Tools</p>
-              <p>Python, C++, Linux, ROOT, Geant4, Git, and data-oriented research tooling.</p>
+              <p>Python, C++, Linux, ROOT, Geant4, machine-learning workflows, Git, and reproducible analysis software.</p>
             </div>
           </div>
         </aside>
@@ -202,21 +227,25 @@ const skills = [
           <div class="mt-6 space-y-4">
             {publications.map((pub) => (
               <article class="rounded-2xl border border-gray-200 p-5 dark:border-gray-800">
-                <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">{pub.title || 'Publication details will appear here'}</h3>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">{pub.authors || 'Author list'}</p>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">{pub.type}</span>
+                  <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">{pub.year}</span>
+                </div>
+                <h3 class="mt-2 text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{pub.title}</h3>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">{pub.authors}</p>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  {pub.journal || 'Journal'} {pub.year}
-                  {pub.doi ? (
-                    <a
-                      href={`https://doi.org/${pub.doi}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="ml-2 text-emerald-700 hover:underline dark:text-emerald-400"
-                    >
-                      {pub.doi}
-                    </a>
-                  ) : null}
+                  {pub.journal}
                 </p>
+                <div class="mt-4 grid grid-cols-2 gap-2 border-y border-gray-100 py-3 text-xs dark:border-gray-800 sm:grid-cols-4">
+                  <div><span class="block text-[10px] uppercase tracking-wider text-gray-500">RIS</span><strong>{pub.researchInterestScore.toFixed(1)}</strong></div>
+                  <div><span class="block text-[10px] uppercase tracking-wider text-gray-500">Citations</span><strong>{pub.citations}</strong></div>
+                  <div><span class="block text-[10px] uppercase tracking-wider text-gray-500">Recs</span><strong>{pub.recommendations}</strong></div>
+                  <div><span class="block text-[10px] uppercase tracking-wider text-gray-500">Reads</span><strong>{pub.reads}</strong></div>
+                </div>
+                <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium">
+                  <a href={pub.doi.startsWith('http') ? pub.doi : `https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" class="text-emerald-700 hover:underline dark:text-emerald-400">DOI / record</a>
+                  {pub.links.map((link) => <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-emerald-700 hover:underline dark:text-gray-300 dark:hover:text-emerald-400">{link.label}</a>)}
+                </div>
               </article>
             ))}
           </div>
