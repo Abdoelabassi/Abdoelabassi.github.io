@@ -5,7 +5,7 @@ description: "After Coast City is destroyed, Hal Jordan's grief and fury push hi
 category: comics
 year: 1994
 rating: 4
-cover: "/covers/emerald-twilight.jpg"
+cover: "/covers/emrald-twilight.jpg"
 link: "https://www.dc.com/graphic-novels/green-lantern-emerald-twilight-new-dawn-1994/green-lantern-emerald-twilight-new-dawn"
 publisher: "DC Comics"
 isbn: "978-1401230848"

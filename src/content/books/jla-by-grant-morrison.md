@@ -5,7 +5,7 @@ description: "The world's greatest superheroes reunite on an immense scale, faci
 category: comics
 year: 1997
 rating: 5
-cover: "/covers/jla-by-grant-morrison.jpg"
+cover: "/covers/jla.jpg"
 link: "https://www.dc.com/graphic-novels/jla-1997/jla-by-grant-morrison-and-howard-porter"
 publisher: "DC Comics"
 isbn: "978-1401230141"
