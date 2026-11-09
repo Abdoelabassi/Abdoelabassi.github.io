@@ -1,13 +1,118 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @source "../**/*.{astro,html,js,jsx,ts,tsx,md,mdx}";
+
+/* The theme toggle in Layout.astro sets `.dark` on <html>; make `dark:` follow it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * "Cherenkov" design system.
+ * The site's markup uses emerald-* as its accent and gray-/slate-* as neutrals,
+ * so re-mapping those scales re-skins every page without touching its content.
+ */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Accent: the blue glow of Cherenkov light in a water tank */
+  --color-emerald-50: #eef5ff;
+  --color-emerald-100: #d9e9ff;
+  --color-emerald-200: #b4d3ff;
+  --color-emerald-300: #7db4ff;
+  --color-emerald-400: #4f93ff;
+  --color-emerald-500: #2d74ff;
+  --color-emerald-600: #1d58eb;
+  --color-emerald-700: #1a45c2;
+  --color-emerald-800: #1b3c98;
+  --color-emerald-900: #1b3577;
+  --color-emerald-950: #121f47;
+
+  /* Neutrals: blue-black ink */
+  --color-gray-50: #f6f7fb;
+  --color-gray-100: #eceef6;
+  --color-gray-200: #dce0ec;
+  --color-gray-300: #bcc2d6;
+  --color-gray-400: #8d94ae;
+  --color-gray-500: #656c88;
+  --color-gray-600: #4a506b;
+  --color-gray-700: #343951;
+  --color-gray-800: #1f2335;
+  --color-gray-900: #131623;
+  --color-gray-950: #090b13;
+
+  --color-slate-50: #f6f7fb;
+  --color-slate-100: #eceef6;
+  --color-slate-200: #dce0ec;
+  --color-slate-300: #bcc2d6;
+  --color-slate-400: #8d94ae;
+  --color-slate-500: #656c88;
+  --color-slate-600: #4a506b;
+  --color-slate-700: #343951;
+  --color-slate-800: #1f2335;
+  --color-slate-900: #131623;
+  --color-slate-950: #090b13;
+
+  /* Second accent: a detector-hit amber, used sparingly */
+  --color-signal-300: #ffd38a;
+  --color-signal-400: #ffbd57;
+  --color-signal-500: #ffa52e;
+  --color-signal-600: #e9870f;
+
+  --animate-rise: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
 
 @layer base {
   :root {
-    --color-primary: 16 185 129; /* emerald-500 */
+    --color-primary: 45 116 255;
+    --page-bg: #f5f6fa;
+    --grid-line: rgb(19 22 35 / 0.05);
+    color-scheme: light;
   }
 
   .dark {
-    --color-primary: 52 211 153; /* emerald-400 */
+    --color-primary: 79 147 255;
+    --page-bg: #07090f;
+    --grid-line: rgb(125 180 255 / 0.05);
+    color-scheme: dark;
+  }
+
+  html {
+    background: var(--page-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgb(45 116 255 / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-500);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
@@ -23,5 +128,88 @@
 
   .prose a {
     @apply text-emerald-600 dark:text-emerald-400 hover:underline;
+  }
+
+  /* Small monospace label used across the redesign */
+  .eyebrow {
+    @apply font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-emerald-600 dark:text-emerald-400;
+  }
+
+  /* Panel surface: hairline border, subtle glass */
+  .surface {
+    @apply rounded-2xl border border-gray-200/80 bg-white/70 backdrop-blur-sm dark:border-white/[0.07] dark:bg-white/[0.03];
+  }
+
+  .glow-text {
+    background: linear-gradient(100deg, var(--color-emerald-500) 0%, #33d6ff 55%, var(--color-emerald-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Page backdrop: fine grid + Cherenkov-ring glow (fixed, purely decorative) */
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.site-backdrop .grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 100%);
+}
+
+.site-backdrop .glow-a,
+.site-backdrop .glow-b {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+}
+
+.site-backdrop .glow-a {
+  width: 46rem;
+  height: 46rem;
+  top: -28rem;
+  left: 50%;
+  transform: translateX(-60%);
+  background: radial-gradient(circle, rgb(45 116 255 / 0.28), transparent 65%);
+}
+
+.site-backdrop .glow-b {
+  width: 30rem;
+  height: 30rem;
+  top: -16rem;
+  right: -10rem;
+  background: radial-gradient(circle, rgb(51 214 255 / 0.18), transparent 65%);
+}
+
+.site-backdrop svg {
+  position: absolute;
+  right: -12rem;
+  top: 6rem;
+  width: 42rem;
+  height: 42rem;
+  color: var(--color-emerald-500);
+  opacity: 0.09;
+}
+
+.dark .site-backdrop svg {
+  opacity: 0.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

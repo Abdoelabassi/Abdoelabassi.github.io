@@ -69,94 +69,156 @@ const currentPath = pathname.slice(1); // remove the first "/"
     <script src={`https://www.paypal.com/sdk/js?client-id=${import.meta.env.PAYPAL_CLIENT_ID}&currency=MAD`}></script>
     <!-- 100% privacy-first analytics -->
     <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <script is:inline>
+      // Check for saved theme preference or use the system preference (in <head> to avoid a flash)
+      (function () {
+        let theme = null;
+        try { theme = localStorage.getItem('theme'); } catch (e) {}
+        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      })();
+    </script>
     <title>{title}</title>
   </head>
 
 
 
-  <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col">
+  <body class="relative min-h-screen flex flex-col bg-transparent text-gray-800 dark:text-gray-200">
     <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KRQZ7VFK"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-    <header class="border-b border-gray-200 dark:border-gray-800">
-      <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <nav class="flex items-center space-x-6 text-sm mx-auto">
-          <a href="/" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === '' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Home</a>
-          <a href="/skills" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'skills' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Skills</a>
-          {/* <a href="/projects" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'projects' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Projects</a>*/}
-          <a href="/talks" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'talks' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Talks</a>
-          <a href="/publications" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'publications' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Publications</a>
-          <a href="/books" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'books' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>Books & Reads</a>
-          <a href="/vitae" class={`hover:text-emerald-600 dark:hover:text-emerald-400 ${currentPath === 'cv' ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>CV</a>
-           {/*<a href="/hkvideos" class="text-xl font-bold flex items-center gap-2">
+
+    <!-- Decorative backdrop: grid + Cherenkov rings -->
+    <div class="site-backdrop" aria-hidden="true">
+      <div class="grid-lines"></div>
+      <div class="glow-a"></div>
+      <div class="glow-b"></div>
+      <svg viewBox="0 0 400 400" fill="none" stroke="currentColor">
+        <circle cx="200" cy="200" r="60" stroke-width="1.5" />
+        <circle cx="200" cy="200" r="105" stroke-width="1" stroke-dasharray="2 6" />
+        <circle cx="200" cy="200" r="150" stroke-width="1.5" />
+        <circle cx="200" cy="200" r="195" stroke-width="1" stroke-dasharray="1 9" />
+        <ellipse cx="236" cy="188" rx="120" ry="96" stroke-width="2.5" transform="rotate(-18 236 188)" />
+      </svg>
+    </div>
+
+    <header class="sticky top-0 z-40 border-b border-gray-200/70 bg-white/70 backdrop-blur-xl dark:border-white/[0.06] dark:bg-gray-950/60">
+      <div class="container mx-auto max-w-6xl px-4 h-16 flex items-center justify-between gap-4">
+        <a href="/" class="group flex items-center gap-3 shrink-0" aria-label="Home">
+          <span class="relative grid h-9 w-9 place-items-center rounded-xl bg-gray-900 text-white dark:bg-white dark:text-gray-950 font-display text-sm font-bold tracking-tight shadow-[0_0_0_1px_rgb(45_116_255/0.4),0_8px_24px_-8px_rgb(45_116_255/0.7)]">
+            AE
+            <span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-gray-950"></span>
+          </span>
+          <span class="hidden sm:flex flex-col leading-tight">
+            <span class="font-display text-sm font-semibold text-gray-900 dark:text-white">EL Abassi Abderrazaq</span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Particle Physics</span>
+          </span>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-1 text-sm" aria-label="Main">
+          <a href="/" class={`nav-link ${currentPath === '' ? 'is-active' : ''}`}>Home</a>
+          <a href="/skills" class={`nav-link ${currentPath === 'skills' ? 'is-active' : ''}`}>Skills</a>
+          {/* <a href="/projects" class={`nav-link ${currentPath === 'projects' ? 'is-active' : ''}`}>Projects</a>*/}
+          <a href="/talks" class={`nav-link ${currentPath === 'talks' ? 'is-active' : ''}`}>Talks</a>
+          <a href="/publications" class={`nav-link ${currentPath === 'publications' ? 'is-active' : ''}`}>Publications</a>
+          <a href="/books" class={`nav-link ${currentPath.startsWith('books') ? 'is-active' : ''}`}>Books & Reads</a>
+          <a href="/vitae" class={`nav-link ${currentPath === 'vitae' || currentPath === 'cv' ? 'is-active' : ''}`}>CV</a>
+          {/*<a href="/hkvideos" class="text-xl font-bold flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" viewBox="0 0 20 20" fill="currentColor">
             <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
             <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
           </svg>
           ThesisToPodcast
         </a>*/}
-        
-        <div class="flex items-center gap-4">
-          <form class="hidden md:flex">
-            <input 
-              type="search" 
-              placeholder="Search..." 
-              class="px-4 py-1 border border-gray-300 dark:border-gray-600 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700"
-            />
-            <button type="submit" class="px-4 py-1 bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-600 border-l-0 rounded-r-full hover:bg-gray-200 dark:hover:bg-gray-500">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-              </svg>
-            </button>
-          </form>
-        </div>
         </nav>
-        <div class="flex items-center space-x-2">
-          
-          <button id="theme-toggle" aria-label="Toggle dark mode" class="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-            <Icon name="tabler:moon" class="w-5 h-5 dark:hidden" />
-            <Icon name="tabler:sun" class="w-5 h-5 hidden dark:block" />
+
+        <div class="flex items-center gap-2">
+          <form class="hidden xl:flex items-center rounded-full border border-gray-200 bg-white/80 pl-3 pr-1 dark:border-white/10 dark:bg-white/5 focus-within:border-emerald-400" role="search">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+            <input
+              type="search"
+              placeholder="Search..."
+              aria-label="Search"
+              class="w-36 bg-transparent px-2 py-1.5 text-sm outline-none placeholder:text-gray-400"
+            />
+            <button type="submit" class="rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-gray-500 hover:text-emerald-600 dark:text-gray-400 dark:hover:text-emerald-400">Go</button>
+          </form>
+
+          <button id="theme-toggle" aria-label="Toggle dark mode" class="grid h-9 w-9 place-items-center rounded-full border border-gray-200 text-gray-600 hover:border-emerald-400 hover:text-emerald-600 dark:border-white/10 dark:text-gray-300 dark:hover:text-emerald-400 transition-colors">
+            <Icon name="tabler:moon" class="w-4.5 h-4.5 dark:hidden" />
+            <Icon name="tabler:sun" class="w-4.5 h-4.5 hidden dark:block" />
+          </button>
+
+          <button id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" class="lg:hidden grid h-9 w-9 place-items-center rounded-full border border-gray-200 text-gray-700 dark:border-white/10 dark:text-gray-200">
+            <Icon name="tabler:menu-2" class="w-4.5 h-4.5" />
           </button>
         </div>
       </div>
+
+      <nav id="mobile-nav" class="hidden lg:hidden border-t border-gray-200/70 dark:border-white/[0.06]" aria-label="Mobile">
+        <div class="container mx-auto max-w-6xl px-4 py-3 grid grid-cols-2 gap-1 text-sm">
+          <a href="/" class={`nav-link ${currentPath === '' ? 'is-active' : ''}`}>Home</a>
+          <a href="/skills" class={`nav-link ${currentPath === 'skills' ? 'is-active' : ''}`}>Skills</a>
+          <a href="/talks" class={`nav-link ${currentPath === 'talks' ? 'is-active' : ''}`}>Talks</a>
+          <a href="/publications" class={`nav-link ${currentPath === 'publications' ? 'is-active' : ''}`}>Publications</a>
+          <a href="/books" class={`nav-link ${currentPath.startsWith('books') ? 'is-active' : ''}`}>Books & Reads</a>
+          <a href="/vitae" class={`nav-link ${currentPath === 'vitae' || currentPath === 'cv' ? 'is-active' : ''}`}>CV</a>
+        </div>
+      </nav>
     </header>
-    
+
     <main class="flex-grow">
       <slot />
     </main>
-    
-    <footer class="border-t border-gray-200 dark:border-gray-800 py-6 mt-12">
-      <div class="container mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+
+    <footer class="mt-16 border-t border-gray-200/70 dark:border-white/[0.06]">
+      <div class="container mx-auto max-w-6xl px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-400">
         <p>© Copyright {new Date().getFullYear()} EL Abassi Abderrazaq</p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
+          PhD student in Particle Physics · Kenitra
+        </p>
       </div>
     </footer>
 
-    <script>
-      // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      
-      // Check for saved theme preference or use the system preference
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      })();
-      
-      // Apply the theme
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+    <style is:global>
+      .nav-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        padding: 0.4rem 0.85rem;
+        color: var(--color-gray-600);
+        transition: color 0.15s, background-color 0.15s;
       }
-      
-      // Save the theme preference when toggled
+      .dark .nav-link { color: var(--color-gray-300); }
+      .nav-link:hover { color: var(--color-gray-950); background: rgb(19 22 35 / 0.05); }
+      .dark .nav-link:hover { color: #fff; background: rgb(255 255 255 / 0.06); }
+      .nav-link.is-active { color: var(--color-emerald-600); background: rgb(45 116 255 / 0.09); }
+      .dark .nav-link.is-active { color: var(--color-emerald-300); background: rgb(45 116 255 / 0.16); }
+    </style>
+
+    <script>
+      // Theme toggle: save the preference when toggled
+      const themeToggle = document.getElementById('theme-toggle');
       themeToggle?.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
+
+      // Mobile navigation
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      menuToggle?.addEventListener('click', () => {
+        const open = mobileNav?.classList.toggle('hidden') === false;
+        menuToggle.setAttribute('aria-expanded', String(open));
+      });
     </script>
   </body>
-  
+
 </html>

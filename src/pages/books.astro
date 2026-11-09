@@ -3,6 +3,7 @@ import MainLayout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { comicExtras } from '../data/comicMoments';
 
 // Get all books from the collection
 let allBooks: CollectionEntry<'books'>[] = [];
@@ -81,66 +82,69 @@ const categoryCounts = {
 ---
 
 <MainLayout title="Books & Reads - Abderrazaq EL Abassi" description="My favorite books and reads on physics, fiction, philosophy, and comics.">
-  <div class="container mx-auto px-4 py-12 max-w-7xl">
+  <div class="container mx-auto px-4 py-12 md:py-16 max-w-7xl">
     <!-- Header Section -->
-    <div class="text-center mb-12">
-      <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">
-        My Library
-      </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        A curated collection of books that have shaped my thinking, from physics to philosophy, fiction, and comics.
-        (more books will be added ;) )
-      </p>
-      {sortedBooks.length === 0 && (
-        <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-          <p class="text-yellow-800 dark:text-yellow-200 text-sm">
-            ⚠️ No books found. Please restart your dev server if you just added the books collection.
-          </p>
-        </div>
-      )}
-    </div>
+    <div class="mb-12 grid gap-8 lg:grid-cols-[1fr_minmax(0,36rem)] lg:items-end">
+      <div class="animate-rise">
+        <p class="eyebrow mb-4 flex items-center gap-3">
+          <span class="inline-block h-px w-8 bg-current"></span>
+          Books & Reads
+        </p>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tight text-gray-950 dark:text-white">
+          My <span class="glow-text">Library</span>
+        </h1>
+        <p class="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
+          A curated collection of books that have shaped my thinking, from physics to philosophy, fiction, and comics.
+          (more books will be added ;) )
+        </p>
+        {sortedBooks.length === 0 && (
+          <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+            <p class="text-yellow-800 dark:text-yellow-200 text-sm">
+              ⚠️ No books found. Please restart your dev server if you just added the books collection.
+            </p>
+          </div>
+        )}
+      </div>
 
-    <!-- Stats Section -->
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-      <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-lg p-6 text-center border border-emerald-200 dark:border-emerald-800">
-        <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{sortedBooks.length}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Books</div>
-      </div>
-      <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 rounded-lg p-6 text-center border border-emerald-200 dark:border-emerald-800">
-        <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">{categoryCounts.physics}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Physics</div>
-      </div>
-      <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-6 text-center border border-purple-200 dark:border-purple-800">
-        <div class="text-3xl font-bold text-purple-600 dark:text-purple-400">{categoryCounts.philosophy}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Philosophy</div>
-      </div>
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-6 text-center border border-blue-200 dark:border-blue-800">
-        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">{categoryCounts.fiction}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Fiction</div>
-      </div>
-      <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 rounded-lg p-6 text-center border border-red-200 dark:border-red-800">
-        <div class="text-3xl font-bold text-red-600 dark:text-red-400">{categoryCounts.comics}</div>
-        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Comics</div>
+      <!-- Stats Section -->
+      <div class="grid grid-cols-5 divide-x divide-gray-200 dark:divide-white/10 surface overflow-hidden animate-rise [animation-delay:100ms]">
+        {[
+          { n: sortedBooks.length, label: "Total Books", dot: "bg-gray-900 dark:bg-white" },
+          { n: categoryCounts.physics, label: "Physics", dot: "bg-emerald-500" },
+          { n: categoryCounts.philosophy, label: "Philosophy", dot: "bg-purple-500" },
+          { n: categoryCounts.fiction, label: "Fiction", dot: "bg-blue-400" },
+          { n: categoryCounts.comics, label: "Comics", dot: "bg-red-500" },
+        ].map((s) => (
+          <div class="px-2 py-5 sm:px-4 text-center">
+            <div class="font-display text-2xl sm:text-3xl font-bold text-gray-950 dark:text-white tabular-nums">{s.n}</div>
+            <div class="mt-1.5 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-1.5 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.06em] leading-tight text-gray-500 dark:text-gray-400">
+              <span class={`h-1.5 w-1.5 shrink-0 rounded-full ${s.dot}`}></span>
+              <span>{s.label}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
 
     <!-- Category Filter -->
-    <div class="flex flex-wrap gap-3 mb-8 justify-center">
-      <button 
-        class="category-filter active px-4 py-2 rounded-full bg-emerald-600 text-white dark:bg-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors font-medium"
-        data-category="all"
-      >
-        All Books
-      </button>
-      {Object.entries(categories).map(([key, { label, icon }]) => (
-        <button 
-          class={`category-filter px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 ${getCategoryClasses(key, 'hover')} transition-colors font-medium flex items-center gap-2`}
-          data-category={key}
+    <div class="sticky top-16 z-30 -mx-4 mb-8 px-4 py-3 backdrop-blur-xl bg-[color-mix(in_srgb,var(--page-bg)_75%,transparent)]">
+      <div class="flex gap-2 overflow-x-auto no-scrollbar sm:flex-wrap sm:justify-center">
+        <button
+          class="category-filter active shrink-0 px-4 py-2 rounded-full bg-emerald-600 text-white dark:bg-emerald-500 hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors text-sm font-medium"
+          data-category="all"
         >
-          <Icon name={icon} class="w-4 h-4" />
-          {label}
+          All Books
         </button>
-      ))}
+        {Object.entries(categories).map(([key, { label, icon }]) => (
+          <button
+            class={`category-filter shrink-0 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 ${getCategoryClasses(key, 'hover')} transition-colors text-sm font-medium flex items-center gap-2`}
+            data-category={key}
+          >
+            <Icon name={icon} class="w-4 h-4" />
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
 
     <!-- Books Grid - Library Style -->
@@ -156,7 +160,7 @@ const categoryCounts = {
             data-category={book.data.category}
           >
               <!-- Book Cover -->
-              <div class="relative mb-3 shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-lg overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800">
+              <div class="relative mb-3 shadow-lg shadow-gray-900/10 group-hover:shadow-[0_18px_40px_-12px_rgb(45_116_255/0.55)] ring-1 ring-gray-900/5 dark:ring-white/10 group-hover:ring-emerald-400/60 transition-shadow duration-300 rounded-xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800">
                 <div class="aspect-[2/3] relative">
                   {book.data.cover ? (
                     <img 
@@ -179,6 +183,14 @@ const categoryCounts = {
                     </div>
                   )}
                   
+                  <!-- Key-moments badge (comics & manga) -->
+                  {book.data.category === 'comics' && comicExtras[book.id] && (
+                    <div class={`absolute left-2 ${book.data.featured ? 'top-9' : 'top-2'} inline-flex items-center gap-1 rounded bg-signal-400 px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-wider text-gray-950 shadow-[2px_2px_0_0_#000]`}>
+                      <Icon name="tabler:bolt" class="w-3 h-3" />
+                      Moments
+                    </div>
+                  )}
+
                   <!-- Category Badge -->
                   <div class={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-semibold ${getCategoryClasses(book.data.category, 'badge')} text-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity`}>
                     <Icon name={categoryInfo.icon} class="w-3 h-3 inline mr-1" />
@@ -263,6 +275,13 @@ const categoryCounts = {
     }
 
     .book-card.hidden {
+      display: none;
+    }
+
+    .no-scrollbar {
+      scrollbar-width: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
   </style>

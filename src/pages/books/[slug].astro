@@ -3,6 +3,7 @@ import MainLayout from '../../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { getComicExtras } from '../../data/comicMoments';
 
 export async function getStaticPaths() {
   const books = await getCollection('books');
@@ -26,6 +27,8 @@ const categories = {
 } as const;
 
 const categoryInfo = categories[book.data.category];
+// Comics & manga only: story highlights and panels
+const extras = book.data.category === 'comics' ? getComicExtras(book.id) : undefined;
 const coverUrl =
   book.data.cover ||
   `https://via.placeholder.com/600x900/4B5563/FFFFFF?text=${encodeURIComponent(
@@ -83,7 +86,7 @@ const nerdReview = (() => {
 ---
 
 <MainLayout title={`${book.data.title} – Book Review`} description={book.data.description}>
-  <div class="relative overflow-hidden">
+  <div class="relative isolate overflow-hidden bg-gray-950 text-slate-200">
     <!-- Ambient gradient background -->
     <div class="pointer-events-none absolute inset-0 -z-10">
       <div class="absolute -top-40 -left-40 h-80 w-80 rounded-full bg-emerald-500/20 blur-3xl dark:bg-emerald-500/30"></div>
@@ -257,8 +260,105 @@ const nerdReview = (() => {
           )}
         </div>
       </div>
+
+      {extras && (
+        <section class="comic-extras mt-16 md:mt-20" aria-labelledby="moments-heading">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-white/10 pb-5">
+            <div>
+              <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-signal-400">Issue by issue</p>
+              <h2 id="moments-heading" class="mt-2 font-display text-3xl sm:text-4xl font-bold text-white">
+                Key moments
+              </h2>
+            </div>
+            <button
+              type="button"
+              class="spoiler-toggle inline-flex items-center gap-2 self-start sm:self-auto rounded-full border border-signal-400/50 bg-signal-400/10 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-signal-300 transition hover:bg-signal-400/20"
+              aria-pressed="false"
+            >
+              <Icon name="tabler:eye" class="h-4 w-4" />
+              <span class="spoiler-label">Reveal spoilers</span>
+            </button>
+          </div>
+
+          <ol class="moments mt-8 grid gap-4 md:grid-cols-2" data-spoilers="hidden">
+            {extras.moments.map((m, i) => (
+              <li class="moment relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 pl-16 sm:p-6 sm:pl-20">
+                <span class="absolute left-4 top-5 sm:left-5 sm:top-6 grid h-9 w-9 sm:h-10 sm:w-10 -rotate-6 place-items-center rounded-lg bg-signal-400 font-display text-base sm:text-lg font-bold text-gray-950 shadow-[3px_3px_0_0_#000]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 class="font-display text-lg font-semibold text-white">{m.title}</h3>
+                  {m.where && (
+                    <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-300/80">{m.where}</span>
+                  )}
+                </div>
+                <p class="moment-text mt-2 text-sm leading-relaxed text-slate-300">{m.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          {extras.panels && extras.panels.length > 0 && (
+            <div class="mt-14">
+              <p class="font-mono text-[11px] uppercase tracking-[0.22em] text-emerald-300">From the page</p>
+              <h2 class="mt-2 font-display text-2xl sm:text-3xl font-bold text-white">Panels</h2>
+              <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {extras.panels.map((p) => (
+                  <figure class="group">
+                    <div class="overflow-hidden rounded-xl border-[3px] border-white bg-white shadow-[6px_6px_0_0_rgb(45_116_255/0.55)] transition-transform group-hover:-translate-y-1 group-hover:rotate-[-0.6deg]">
+                      <img src={p.src} alt={p.caption} loading="lazy" class="block w-full h-auto max-h-[420px] object-contain bg-white" />
+                    </div>
+                    <figcaption class="mt-4 space-y-1">
+                      <p class="text-sm text-slate-200">
+                        <span class="mr-2 rounded bg-white/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest text-slate-300">{p.kind === 'artwork' ? 'Artwork' : 'Panel'}</span>
+                        {p.caption}
+                      </p>
+                      <p class="text-xs text-slate-400">
+                        {p.credit} ·
+                        <a href={p.source} target="_blank" rel="noopener noreferrer" class="underline decoration-slate-500 underline-offset-2 hover:text-emerald-300">source</a>
+                      </p>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+              <p class="mt-6 max-w-2xl text-xs leading-relaxed text-slate-500">
+                Low-resolution excerpts shown for commentary. All artwork remains the property of its creators and publishers.
+              </p>
+            </div>
+          )}
+        </section>
+      )}
     </div>
   </div>
+
+  <style>
+    .moments[data-spoilers="hidden"] .moment-text {
+      filter: blur(6px);
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+    .moments[data-spoilers="hidden"] .moment:hover .moment-text,
+    .moments[data-spoilers="hidden"] .moment:focus-within .moment-text {
+      filter: blur(3px);
+    }
+    .moments[data-spoilers="shown"] .moment-text {
+      filter: none;
+      transition: filter 0.3s ease;
+    }
+  </style>
+
+  <script>
+    document.querySelectorAll<HTMLButtonElement>('.spoiler-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const list = btn.closest('.comic-extras')?.querySelector<HTMLElement>('.moments');
+        if (!list) return;
+        const show = list.dataset.spoilers !== 'shown';
+        list.dataset.spoilers = show ? 'shown' : 'hidden';
+        btn.setAttribute('aria-pressed', String(show));
+        const label = btn.querySelector('.spoiler-label');
+        if (label) label.textContent = show ? 'Hide spoilers' : 'Reveal spoilers';
+      });
+    });
+  </script>
 </MainLayout>
 
 
