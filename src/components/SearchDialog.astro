@@ -1,0 +1,326 @@
+---
+// Site search: a native <dialog> fed by the build-time index at /search-index.json.
+// Open with the header button, "/" or Ctrl/⌘+K; ↑/↓ to move, Enter to open, Esc to close.
+import { Icon } from 'astro-icon/components';
+---
+
+<dialog id="site-search" class="site-search" aria-label="Search the site">
+  <div class="search-panel">
+    <div class="flex items-center gap-3 border-b border-gray-200 px-4 dark:border-white/10">
+      <Icon name="tabler:search" class="h-5 w-5 shrink-0 text-emerald-500" aria-hidden="true" />
+      <input
+        id="site-search-input"
+        type="search"
+        placeholder="Search books, papers, pages…"
+        autocomplete="off"
+        spellcheck="false"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="site-search-results"
+        aria-autocomplete="list"
+        class="h-14 w-full bg-transparent text-base text-gray-900 outline-none placeholder:text-gray-400 dark:text-white [&::-webkit-search-cancel-button]:hidden"
+      />
+      <button type="button" data-close class="shrink-0 rounded-md border border-gray-200 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-gray-500 hover:text-gray-900 dark:border-white/10 dark:text-gray-400 dark:hover:text-white" aria-label="Close search">
+        Esc
+      </button>
+    </div>
+
+    <div class="search-scroll max-h-[min(60vh,32rem)] overflow-y-auto overscroll-contain p-2">
+      <p id="site-search-status" class="px-3 pt-3 pb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-gray-400" aria-live="polite">Jump to</p>
+      <ul id="site-search-results" role="listbox" aria-label="Search results" class="space-y-0.5"></ul>
+    </div>
+
+    <div class="hidden sm:flex items-center gap-4 border-t border-gray-200 px-4 py-2.5 font-mono text-[10px] uppercase tracking-wider text-gray-400 dark:border-white/10">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+      <span class="ml-auto"><kbd>/</kbd> or <kbd>Ctrl</kbd><kbd>K</kbd> to search</span>
+    </div>
+  </div>
+</dialog>
+
+<style is:global>
+  .site-search {
+    width: min(42rem, calc(100vw - 2rem));
+    max-width: none;
+    max-height: none;
+    margin: 12vh auto auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    overflow: visible;
+  }
+  .site-search::backdrop {
+    background: rgb(7 9 15 / 0.55);
+    backdrop-filter: blur(6px);
+  }
+  .site-search[open] .search-panel {
+    animation: search-in 0.18s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @keyframes search-in {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .search-panel {
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid var(--color-gray-200);
+    background: rgb(255 255 255 / 0.96);
+    box-shadow: 0 30px 80px -20px rgb(19 22 35 / 0.45), 0 0 0 1px rgb(45 116 255 / 0.08);
+  }
+  .dark .search-panel {
+    border-color: rgb(255 255 255 / 0.08);
+    background: rgb(17 20 33 / 0.96);
+    box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.8), 0 0 60px -20px rgb(45 116 255 / 0.45);
+  }
+  .site-search kbd {
+    display: inline-block;
+    min-width: 1.25rem;
+    margin-right: 0.15rem;
+    padding: 0.05rem 0.3rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--color-gray-200);
+    text-align: center;
+    font-family: var(--font-mono);
+  }
+  .dark .site-search kbd { border-color: rgb(255 255 255 / 0.12); }
+
+  .search-result {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    border-radius: 0.65rem;
+    padding: 0.55rem 0.75rem;
+    color: var(--color-gray-700);
+    text-decoration: none;
+    scroll-margin: 0.5rem;
+  }
+  .dark .search-result { color: var(--color-gray-300); }
+  .search-result[aria-selected="true"] {
+    background: rgb(45 116 255 / 0.1);
+    box-shadow: inset 2px 0 0 var(--color-emerald-500);
+  }
+  .dark .search-result[aria-selected="true"] { background: rgb(45 116 255 / 0.18); }
+  .search-result mark {
+    background: transparent;
+    color: var(--color-emerald-600);
+    font-weight: 600;
+  }
+  .dark .search-result mark { color: var(--color-emerald-300); }
+
+  @media (max-width: 639px) {
+    .site-search {
+      width: calc(100vw - 1rem);
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  type Entry = {
+    type: 'page' | 'book' | 'publication' | 'talk';
+    title: string;
+    url: string;
+    subtitle?: string;
+    meta?: string;
+    image?: string;
+    text: string;
+  };
+  type Indexed = Entry & { _title: string; _sub: string; _all: string };
+
+  const dialog = document.getElementById('site-search') as HTMLDialogElement | null;
+  const input = document.getElementById('site-search-input') as HTMLInputElement | null;
+  const list = document.getElementById('site-search-results') as HTMLUListElement | null;
+  const status = document.getElementById('site-search-status');
+
+  const ICONS: Record<Entry['type'], string> = {
+    page: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>',
+    publication: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"/><path d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(-60 12 12)"/></svg>',
+    talk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18M4 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4M12 16v4M9 20h6"/></svg>',
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13M12 6v13M21 6v13"/></svg>',
+  };
+  const TYPE_LABEL: Record<Entry['type'], string> = { page: 'Page', book: 'Book', publication: 'Publication', talk: 'Talk' };
+
+  const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  let index: Indexed[] | null = null;
+  let loading: Promise<void> | null = null;
+  let results: Indexed[] = [];
+  let active = 0;
+
+  function load() {
+    if (!loading) {
+      loading = fetch('/search-index.json')
+        .then((r) => r.json() as Promise<Entry[]>)
+        .then((data) => {
+          index = data.map((e) => ({
+            ...e,
+            _title: norm(e.title),
+            _sub: norm(`${e.subtitle ?? ''} ${e.meta ?? ''}`),
+            _all: norm(`${e.title} ${e.subtitle ?? ''} ${e.meta ?? ''} ${e.text}`),
+          }));
+        })
+        .catch(() => {
+          loading = null;
+          if (status) status.textContent = 'Search is unavailable right now';
+        });
+    }
+    return loading;
+  }
+
+  function score(e: Indexed, q: string, tokens: string[]) {
+    let s = 0;
+    for (const t of tokens) {
+      if (!e._all.includes(t)) return 0; // every word must match somewhere
+      if (e._title.includes(t)) s += new RegExp(`(^|[^a-z0-9])${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).test(e._title) ? 30 : 15;
+      else if (e._sub.includes(t)) s += 8;
+      else s += 2;
+    }
+    if (e._title === q) s += 100;
+    else if (e._title.startsWith(q)) s += 50;
+    else if (e._title.includes(q)) s += 25;
+    if (e.type === 'page') s += 3;
+    return s;
+  }
+
+  function highlight(text: string, tokens: string[]) {
+    if (!tokens.length) return esc(text);
+    const n = norm(text);
+    const marks = new Array(text.length).fill(false);
+    for (const t of tokens) {
+      let i = n.indexOf(t);
+      while (i !== -1) {
+        for (let k = i; k < i + t.length && k < marks.length; k++) marks[k] = true;
+        i = n.indexOf(t, i + t.length);
+      }
+    }
+    let out = '';
+    let open = false;
+    for (let i = 0; i < text.length; i++) {
+      if (marks[i] && !open) { out += '<mark>'; open = true; }
+      if (!marks[i] && open) { out += '</mark>'; open = false; }
+      out += esc(text[i]);
+    }
+    return open ? out + '</mark>' : out;
+  }
+
+  function render(tokens: string[]) {
+    if (!list) return;
+    list.innerHTML = results
+      .map((e, i) => {
+        const thumb = e.image
+          ? `<img src="${esc(e.image)}" alt="" loading="lazy" class="h-12 w-8 shrink-0 rounded object-cover ring-1 ring-black/10" onerror="this.style.visibility='hidden'" />`
+          : `<span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 [&>svg]:h-[18px] [&>svg]:w-[18px]">${ICONS[e.type]}</span>`;
+        return `<li role="presentation"><a id="sr-${i}" role="option" aria-selected="${i === active}" href="${esc(e.url)}" class="search-result" data-index="${i}">
+          ${thumb}
+          <span class="min-w-0 flex-1">
+            <span class="block truncate text-sm font-medium text-gray-900 dark:text-white">${highlight(e.title, tokens)}</span>
+            ${e.subtitle ? `<span class="block truncate text-xs text-gray-500 dark:text-gray-400">${highlight(e.subtitle, tokens)}</span>` : ''}
+          </span>
+          <span class="hidden sm:block shrink-0 text-right font-mono text-[10px] uppercase tracking-wider text-gray-400">${esc(e.meta || TYPE_LABEL[e.type])}</span>
+        </a></li>`;
+      })
+      .join('');
+    input?.setAttribute('aria-activedescendant', results.length ? `sr-${active}` : '');
+  }
+
+  async function update() {
+    if (!input || !status) return;
+    const raw = input.value.trim();
+    if (!index) {
+      status.textContent = 'Loading…';
+      await load();
+      if (!index) return;
+    }
+    const q = norm(raw);
+    const tokens = q.split(/\s+/).filter(Boolean);
+    active = 0;
+    if (!tokens.length) {
+      results = index.filter((e) => e.type === 'page').slice(0, 8);
+      status.textContent = 'Jump to';
+    } else {
+      results = index
+        .map((e) => ({ e, s: score(e, q, tokens) }))
+        .filter((r) => r.s > 0)
+        .sort((a, b) => b.s - a.s)
+        .slice(0, 30)
+        .map((r) => r.e);
+      status.textContent = results.length
+        ? `${results.length}${results.length === 30 ? '+' : ''} result${results.length === 1 ? '' : 's'}`
+        : `No results for “${raw}”`;
+    }
+    render(tokens);
+  }
+
+  function move(delta: number) {
+    if (!results.length || !list) return;
+    active = (active + delta + results.length) % results.length;
+    list.querySelectorAll<HTMLElement>('[role="option"]').forEach((el, i) => el.setAttribute('aria-selected', String(i === active)));
+    input?.setAttribute('aria-activedescendant', `sr-${active}`);
+    document.getElementById(`sr-${active}`)?.scrollIntoView({ block: 'nearest' });
+  }
+
+  function open(initial = '') {
+    if (!dialog || !input) return;
+    if (!dialog.open) dialog.showModal();
+    document.documentElement.style.overflow = 'hidden';
+    if (initial) input.value = initial;
+    input.focus();
+    input.select();
+    update();
+  }
+
+  function close() {
+    if (dialog?.open) dialog.close();
+    document.documentElement.style.overflow = '';
+  }
+
+  dialog?.addEventListener('close', () => {
+    document.documentElement.style.overflow = '';
+  });
+  // click on the backdrop closes
+  dialog?.addEventListener('click', (ev) => {
+    if (ev.target === dialog) close();
+  });
+  dialog?.querySelector('[data-close]')?.addEventListener('click', close);
+
+  input?.addEventListener('input', update);
+  input?.addEventListener('keydown', (ev) => {
+    // type=search inputs swallow the first Esc to clear themselves; close right away instead
+    if (ev.key === 'Escape') { ev.preventDefault(); close(); }
+    else if (ev.key === 'ArrowDown') { ev.preventDefault(); move(1); }
+    else if (ev.key === 'ArrowUp') { ev.preventDefault(); move(-1); }
+    else if (ev.key === 'Enter') {
+      ev.preventDefault();
+      const target = results[active];
+      if (target) window.location.href = target.url;
+    }
+  });
+  list?.addEventListener('mousemove', (ev) => {
+    const el = (ev.target as HTMLElement).closest<HTMLElement>('[data-index]');
+    if (el && Number(el.dataset.index) !== active) move(Number(el.dataset.index) - active);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-search-open]').forEach((btn) =>
+    btn.addEventListener('click', () => open()),
+  );
+
+  document.addEventListener('keydown', (ev) => {
+    const t = ev.target as HTMLElement;
+    const typing = t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+    if ((ev.key === 'k' || ev.key === 'K') && (ev.metaKey || ev.ctrlKey)) {
+      ev.preventDefault();
+      dialog?.open ? close() : open();
+    } else if (ev.key === '/' && !typing && !dialog?.open) {
+      ev.preventDefault();
+      open();
+    }
+  });
+
+  // Warm the index when the user shows intent
+  document.querySelectorAll<HTMLElement>('[data-search-open]').forEach((btn) =>
+    btn.addEventListener('pointerenter', () => load(), { once: true }),
+  );
+</script>
