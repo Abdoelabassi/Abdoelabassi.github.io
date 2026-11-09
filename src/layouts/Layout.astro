@@ -10,6 +10,8 @@ interface Props {
   description?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  /** Show the decorative grid/ring backdrop (the home page draws its own). */
+  backdrop?: boolean;
   // Add other props for dynamic meta tags
 }
 
@@ -18,6 +20,7 @@ const {
   description = 'Welcome to my personal website! Here you can find information about my skills, projects, talks, and publications.',
   ogImage = '/images/abdo.jpeg',
   canonicalUrl = Astro.url.href, // Get the current page URL
+  backdrop = true,
 } = Astro.props;
 
 const pathname = new URL(Astro.request.url).pathname;
@@ -94,7 +97,7 @@ const currentPath = pathname.slice(1); // remove the first "/"
   <!-- End Google Tag Manager (noscript) -->
 
     <!-- Decorative backdrop: grid + Cherenkov rings -->
-    <div class="site-backdrop" aria-hidden="true">
+    <div class:list={['site-backdrop', !backdrop && 'hidden']} aria-hidden="true">
       <div class="grid-lines"></div>
       <div class="glow-a"></div>
       <div class="glow-b"></div>

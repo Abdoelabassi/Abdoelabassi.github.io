@@ -1,0 +1,396 @@
+---
+// Hyper-Kamiokande style event display (toy Monte Carlo, computed in the browser).
+//
+// Physics of the toy:
+//  - Inner detector: upright cylinder, Ø 68 m × 71 m, walls lined with PMTs.
+//  - An upward-going muon (from a ν_μ interaction in the rock below) enters through
+//    the bottom cap and stops inside the tank (an "upward-stopping" muon, 12 m track).
+//  - Every 5 cm along the track it emits Cherenkov photons on a cone of
+//    cos θc = 1/(nβ), n = 1.34, β ≈ 1 → θc ≈ 41.7°.
+//  - Photons are ray-traced to the wall; each PMT records charge (photon count,
+//    weighted by water attenuation and incidence angle) and the time of its first
+//    photon: t = s/c + n·d/c. A muon does not shower, so its ring has a sharp
+//    outer edge (an electron's shower would smear it into a fuzzy ring).
+//  - A sprinkle of dark-noise hits is added at random times.
+// Rendering: rotating perspective view on <canvas>, hits coloured by time.
+// The replay is slowed ~10^8 times; prefers-reduced-motion gets a static frame.
+---
+
+<div class="hk-display" data-hk-display aria-hidden="true">
+  <canvas></canvas>
+</div>
+
+<style>
+  .hk-display {
+    position: absolute;
+    inset: 0;
+  }
+  .hk-display canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+
+<script>
+  type Pmt = { x: number; y: number; z: number; cap: 0 | 1 | -1; q: number; t: number; nx: number; ny: number; nz: number };
+
+  // ---- detector & event parameters (SI-ish units: metres, ns) ----
+  const R = 34; // ID radius [m]
+  const HH = 35.5; // half height [m]
+  const N_WATER = 1.34;
+  const C = 0.2998; // m/ns
+  const THETA_C = Math.acos(1 / N_WATER); // ≈ 41.7°
+  const L_ATT = 90; // effective attenuation length [m]
+  const SPACING = 2.2; // drawn PMT pitch [m] (real ID: ~0.7 m; thinned for legibility)
+
+  // Seeded RNG so every visitor sees the same event
+  let seed = 20260611;
+  const rand = () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+
+  // Muon: enters through the bottom cap near the centre, travelling upward at 72° from
+  // vertical (cos θzenith ≈ −0.31 in the usual "coming from below" convention) toward the
+  // far wall, and stops after 12 m (~2.5 GeV, above the usual 7 m upward-stopping cut).
+  // A shallow axis keeps the 42° cone's upper edge (72°−42° = 30° from vertical) below the
+  // top cap, so the ring closes on the far barrel; its lower part, emitted next to the
+  // floor, lands on the bottom cap. Light from the entry point makes the ring's sharp
+  // outer edge, light from the stopping point its inner edge, so the ring is hollow.
+  const zen = (72 * Math.PI) / 180;
+  const az = (125 * Math.PI) / 180; // heads toward the far wall in the default view
+  const MU_DIR = [Math.sin(zen) * Math.cos(az), Math.sin(zen) * Math.sin(az), Math.cos(zen)];
+  const MU_START = [-0.2, -5.0, -HH];
+  const MU_LEN = 12;
+  const muAt = (s: number) => [MU_START[0] + MU_DIR[0] * s, MU_START[1] + MU_DIR[1] * s, MU_START[2] + MU_DIR[2] * s];
+
+  // ---- PMT layout ----
+  const pmts: Pmt[] = [];
+  const nPhi = Math.round((2 * Math.PI * R) / SPACING);
+  const nZ = Math.round((2 * HH) / SPACING);
+  const barrelIdx = (iphi: number, iz: number) => iz * nPhi + iphi;
+  for (let iz = 0; iz < nZ; iz++) {
+    for (let ip = 0; ip < nPhi; ip++) {
+      const phi = ((ip + 0.5) / nPhi) * 2 * Math.PI;
+      pmts.push({ x: R * Math.cos(phi), y: R * Math.sin(phi), z: -HH + ((iz + 0.5) / nZ) * 2 * HH, cap: 0, q: 0, t: Infinity, nx: -Math.cos(phi), ny: -Math.sin(phi), nz: 0 });
+    }
+  }
+  const capMap = new Map<string, number>();
+  for (const side of [1, -1] as const) {
+    const n = Math.floor(R / SPACING);
+    for (let i = -n; i <= n; i++) {
+      for (let j = -n; j <= n; j++) {
+        const x = i * SPACING, y = j * SPACING;
+        if (x * x + y * y > (R - 0.8) ** 2) continue;
+        capMap.set(`${side}:${i}:${j}`, pmts.length);
+        pmts.push({ x, y, z: side * HH, cap: side, q: 0, t: Infinity, nx: 0, ny: 0, nz: -side });
+      }
+    }
+  }
+
+  // ---- ray tracing ----
+  function traceToWall(p: number[], u: number[]) {
+    let t = Infinity;
+    const a = u[0] * u[0] + u[1] * u[1];
+    if (a > 1e-12) {
+      const b = 2 * (p[0] * u[0] + p[1] * u[1]);
+      const c = p[0] * p[0] + p[1] * p[1] - R * R;
+      t = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+    }
+    if (u[2] > 1e-9) t = Math.min(t, (HH - p[2]) / u[2]);
+    if (u[2] < -1e-9) t = Math.min(t, (-HH - p[2]) / u[2]);
+    return { t, x: p[0] + u[0] * t, y: p[1] + u[1] * t, z: p[2] + u[2] * t };
+  }
+
+  function pmtAt(x: number, y: number, z: number): number | undefined {
+    if (z > HH - 1e-6 || z < -HH + 1e-6) {
+      const side = z > 0 ? 1 : -1;
+      return capMap.get(`${side}:${Math.round(x / SPACING)}:${Math.round(y / SPACING)}`);
+    }
+    let phi = Math.atan2(y, x);
+    if (phi < 0) phi += 2 * Math.PI;
+    const ip = Math.min(nPhi - 1, Math.floor((phi / (2 * Math.PI)) * nPhi));
+    const iz = Math.min(nZ - 1, Math.max(0, Math.floor(((z + HH) / (2 * HH)) * nZ)));
+    return barrelIdx(ip, iz);
+  }
+
+  // orthonormal basis around the muon direction
+  const ref = Math.abs(MU_DIR[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+  const cross = (a: number[], b: number[]) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = (a: number[]) => { const l = Math.hypot(a[0], a[1], a[2]); return [a[0] / l, a[1] / l, a[2] / l]; };
+  const E1 = norm(cross(MU_DIR, ref));
+  const E2 = cross(MU_DIR, E1);
+  const coneDir = (psi: number) => {
+    const s = Math.sin(THETA_C), c = Math.cos(THETA_C);
+    return [0, 1, 2].map((k) => c * MU_DIR[k] + s * (Math.cos(psi) * E1[k] + Math.sin(psi) * E2[k]));
+  };
+
+  // ---- simulate ----
+  const STEP = 0.05, N_AZ = 120;
+  for (let s = 0; s <= MU_LEN; s += STEP) {
+    const p = muAt(s);
+    for (let k = 0; k < N_AZ; k++) {
+      const u = coneDir(((k + rand()) / N_AZ) * 2 * Math.PI);
+      const hit = traceToWall(p, u);
+      const id = pmtAt(hit.x, hit.y, hit.z);
+      if (id === undefined) continue;
+      const pm = pmts[id];
+      const cosInc = Math.abs(u[0] * pm.nx + u[1] * pm.ny + u[2] * pm.nz);
+      pm.q += Math.exp(-hit.t / L_ATT) * cosInc * (0.6 + 0.8 * rand());
+      const time = s / C + (N_WATER * hit.t) / C;
+      if (time < pm.t) pm.t = time;
+    }
+  }
+  const qMax = Math.max(...pmts.map((p) => p.q));
+  const hits: Pmt[] = pmts.filter((p) => p.q > 0.025 * qMax);
+  // colour scale spans the signal hits only
+  const tMin = Math.min(...hits.map((h) => h.t));
+  const tMax = Math.max(...hits.map((h) => h.t));
+  const nSignal = hits.length;
+  // dark noise: a few random low-charge hits anywhere in the readout window
+  for (let i = 0; i < 70; i++) {
+    const pm = pmts[Math.floor(rand() * pmts.length)];
+    if (pm.q > 0) continue;
+    pm.q = 0.05 * qMax;
+    pm.t = tMin + rand() * (tMax - tMin);
+    hits.push(pm);
+  }
+  hits.sort((a, b) => a.t - b.t);
+
+  // Expose summary for the HUD
+  const hud = { hits: nSignal, span: Math.round(tMax - tMin), theta: (THETA_C * 180) / Math.PI };
+  document.querySelectorAll<HTMLElement>('[data-hk-hits]').forEach((el) => (el.textContent = String(hud.hits)));
+  document.querySelectorAll<HTMLElement>('[data-hk-span]').forEach((el) => (el.textContent = `${hud.span} ns`));
+  document.querySelectorAll<HTMLElement>('[data-hk-theta]').forEach((el) => (el.textContent = `${hud.theta.toFixed(1)}°`));
+
+  // ---- colours ----
+  const STOPS: [number, number[]][] = [
+    [0, [45, 116, 255]],
+    [0.3, [51, 214, 255]],
+    [0.55, [110, 240, 160]],
+    [0.78, [255, 200, 90]],
+    [1, [255, 84, 64]],
+  ];
+  function timeColour(f: number): number[] {
+    f = Math.max(0, Math.min(1, f));
+    for (let i = 1; i < STOPS.length; i++) {
+      if (f <= STOPS[i][0]) {
+        const [f0, c0] = STOPS[i - 1], [f1, c1] = STOPS[i];
+        const k = (f - f0) / (f1 - f0);
+        return [0, 1, 2].map((j) => Math.round(c0[j] + (c1[j] - c0[j]) * k));
+      }
+    }
+    return STOPS[STOPS.length - 1][1];
+  }
+
+  // ---- rendering ----
+  const root = document.querySelector<HTMLElement>('[data-hk-display]');
+  const canvas = root?.querySelector('canvas');
+  const ctx = canvas?.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (root && canvas && ctx) {
+    let W = 0, Hc = 0, dpr = 1;
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = root.clientWidth;
+      Hc = root.clientHeight;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(Hc * dpr);
+      draw(lastNow);
+    };
+
+    const ELEV = (20 * Math.PI) / 180;
+    const CAM_D = 260;
+    let yaw0 = (-35 * Math.PI) / 180;
+
+    function project(x: number, y: number, z: number, yaw: number, k: number, cx: number, cy: number) {
+      const xr = x * Math.cos(yaw) - y * Math.sin(yaw);
+      const yr = x * Math.sin(yaw) + y * Math.cos(yaw);
+      const up = z * Math.cos(ELEV) + yr * Math.sin(ELEV);
+      const depth = yr * Math.cos(ELEV) - z * Math.sin(ELEV);
+      const s = CAM_D / (CAM_D + depth);
+      return { X: cx + k * xr * s, Y: cy - k * up * s, s, depth };
+    }
+
+    // replay timing (ms)
+    const T_LIGHT = 4200, T_HOLD = 4500, T_FADE = 900;
+    const CYCLE = T_LIGHT + T_HOLD + T_FADE;
+    let start = performance.now();
+    let lastNow = start;
+
+    // Unrolled view (top cap / barrel / bottom cap), drawn into the HUD if present
+    const unrolled = document.querySelector<HTMLCanvasElement>('[data-hk-unrolled]');
+    const uctx = unrolled?.getContext('2d');
+    const PHI_C = az; // centre the barrel on the muon's heading
+    function drawUnrolled(tNow: number, fade: number, dark: boolean) {
+      if (!unrolled || !uctx) return;
+      const w = unrolled.clientWidth, h = unrolled.clientHeight;
+      if (!w || !h) return;
+      if (unrolled.width !== Math.round(w * dpr)) { unrolled.width = Math.round(w * dpr); unrolled.height = Math.round(h * dpr); }
+      uctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      uctx.clearRect(0, 0, w, h);
+      const totalW = 2 * Math.PI * R, totalH = 2 * HH + 4 * R;
+      const k = Math.min(w / totalW, h / totalH) * 0.98;
+      const cx = w / 2, barTop = h / 2 - HH * k;
+      const topCy = barTop - R * k, botCy = barTop + 2 * HH * k + R * k;
+      const ink = dark ? '255,255,255' : '19,22,35';
+      const map = (p: Pmt) => {
+        let d = Math.atan2(p.y, p.x) - PHI_C;
+        d = ((d + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+        if (p.cap === 0) return { X: cx + d * R * k, Y: barTop + (HH - p.z) * k };
+        const r = Math.hypot(p.x, p.y);
+        return p.cap === 1
+          ? { X: cx + r * Math.sin(d) * k, Y: topCy + r * Math.cos(d) * k }
+          : { X: cx + r * Math.sin(d) * k, Y: botCy - r * Math.cos(d) * k };
+      };
+      uctx.strokeStyle = `rgba(${ink},0.25)`;
+      uctx.lineWidth = 1;
+      uctx.strokeRect(cx - Math.PI * R * k, barTop, 2 * Math.PI * R * k, 2 * HH * k);
+      for (const cy of [topCy, botCy]) { uctx.beginPath(); uctx.arc(cx, cy, R * k, 0, Math.PI * 2); uctx.stroke(); }
+      uctx.fillStyle = `rgba(${ink},0.12)`;
+      for (const p of pmts) { const m = map(p); uctx.fillRect(m.X - 0.5, m.Y - 0.5, 1, 1); }
+      for (const hh of hits) {
+        if (hh.t > tNow) break;
+        const m = map(hh);
+        const col = timeColour((hh.t - tMin) / (tMax - tMin));
+        const qn = Math.min(1, hh.q / (0.55 * qMax));
+        uctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${0.95 * fade})`;
+        const r = 0.6 + 1.2 * Math.sqrt(qn);
+        uctx.fillRect(m.X - r, m.Y - r, 2 * r, 2 * r);
+      }
+    }
+
+    function draw(now: number) {
+      lastNow = now;
+      if (!W || !Hc) return;
+      const dark = document.documentElement.classList.contains('dark');
+      const still = reduced.matches;
+      const el = still ? T_LIGHT + 1 : (now - start) % CYCLE;
+      const yaw = yaw0 + (still ? 0 : Math.sin((now - start) / 14000) * 0.35);
+
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx!.clearRect(0, 0, W, Hc);
+
+      const k = Math.min(W / (2 * R * 1.22), Hc / ((2 * HH + 2 * R * Math.sin(ELEV)) * 1.28));
+      // leave room for the HUD panel on the right on wide layouts
+      const cx = W > 700 ? W * 0.42 : W / 2, cy = Hc / 2 + k * 2;
+      const ink = dark ? '255,255,255' : '19,22,35';
+
+      // phase: muon time and how much light has arrived
+      // one physical clock: τ = 0 when the muon enters, the muon moves at c,
+      // and each PMT lights up when its first photon arrives
+      const prog = Math.min(1, el / T_LIGHT); // 0..1 over the replay
+      const tNow = prog * tMax * 1.02;
+      const sNow = Math.min(MU_LEN, Math.max(0, C * tNow));
+      const fade = el > T_LIGHT + T_HOLD ? 1 - (el - T_LIGHT - T_HOLD) / T_FADE : 1;
+
+      // tank outline
+      ctx!.lineWidth = 1;
+      ctx!.strokeStyle = `rgba(${ink},${dark ? 0.16 : 0.18})`;
+      for (const z of [HH, -HH]) {
+        ctx!.beginPath();
+        for (let i = 0; i <= 96; i++) {
+          const a = (i / 96) * 2 * Math.PI;
+          const p = project(R * Math.cos(a), R * Math.sin(a), z, yaw, k, cx, cy);
+          i ? ctx!.lineTo(p.X, p.Y) : ctx!.moveTo(p.X, p.Y);
+        }
+        ctx!.stroke();
+      }
+      // silhouette edges
+      for (const a of [-yaw, Math.PI - yaw]) {
+        const p1 = project(R * Math.cos(a), R * Math.sin(a), HH, yaw, k, cx, cy);
+        const p2 = project(R * Math.cos(a), R * Math.sin(a), -HH, yaw, k, cx, cy);
+        ctx!.beginPath(); ctx!.moveTo(p1.X, p1.Y); ctx!.lineTo(p2.X, p2.Y); ctx!.stroke();
+      }
+
+      // unlit PMTs (tiny dots, front wall fainter)
+      for (const p of pmts) {
+        const q = project(p.x, p.y, p.z, yaw, k, cx, cy);
+        const back = q.depth > 0 || p.cap !== 0;
+        ctx!.fillStyle = `rgba(${ink},${back ? (dark ? 0.2 : 0.16) : dark ? 0.08 : 0.07})`;
+        const r = Math.max(0.6, 0.85 * q.s);
+        ctx!.fillRect(q.X - r / 2, q.Y - r / 2, r, r);
+      }
+
+      // incoming direction (from the rock below) + muon track
+      const pIn = project(MU_START[0] - MU_DIR[0] * 30, MU_START[1] - MU_DIR[1] * 30, MU_START[2] - MU_DIR[2] * 30, yaw, k, cx, cy);
+      const p0 = project(MU_START[0], MU_START[1], MU_START[2], yaw, k, cx, cy);
+      const head = muAt(sNow);
+      const pH = project(head[0], head[1], head[2], yaw, k, cx, cy);
+      ctx!.setLineDash([3, 5]);
+      ctx!.strokeStyle = `rgba(${dark ? '255,189,87' : '233,135,15'},${0.55 * fade})`;
+      ctx!.beginPath(); ctx!.moveTo(pIn.X, pIn.Y); ctx!.lineTo(p0.X, p0.Y); ctx!.stroke();
+      ctx!.setLineDash([]);
+
+      // Cherenkov cone from the current muon position (during the replay)
+      if (sNow > 0 && el < T_LIGHT + T_HOLD) {
+        const coneAlpha = (el < T_LIGHT ? 0.22 : 0.22 * (1 - (el - T_LIGHT) / T_HOLD)) * fade;
+        ctx!.strokeStyle = `rgba(${dark ? '79,147,255' : '29,88,235'},${coneAlpha})`;
+        ctx!.lineWidth = 0.8;
+        for (let i = 0; i < 40; i++) {
+          const u = coneDir((i / 40) * 2 * Math.PI);
+          const hw = traceToWall(head, u);
+          const pw = project(hw.x, hw.y, hw.z, yaw, k, cx, cy);
+          ctx!.beginPath(); ctx!.moveTo(pH.X, pH.Y); ctx!.lineTo(pw.X, pw.Y); ctx!.stroke();
+        }
+      }
+
+      // hit PMTs coloured by first-photon time, size by charge
+      ctx!.globalCompositeOperation = dark ? 'lighter' : 'source-over';
+      for (const h of hits) {
+        if (h.t > tNow) break;
+        const q = project(h.x, h.y, h.z, yaw, k, cx, cy);
+        const col = timeColour((h.t - tMin) / (tMax - tMin)).map((c) => (dark ? c : Math.round(c * 0.8)));
+        const qn = Math.min(1, h.q / (0.55 * qMax));
+        const front = q.depth < 0 && h.cap === 0;
+        const alpha = (front ? 0.55 : 0.95) * fade;
+        const r = (1.1 + 2.6 * Math.sqrt(qn)) * q.s * Math.max(0.75, k / 6);
+        if (dark && qn > 0.25) {
+          ctx!.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${0.12 * alpha})`;
+          ctx!.beginPath(); ctx!.arc(q.X, q.Y, r * 2.4, 0, Math.PI * 2); ctx!.fill();
+        }
+        ctx!.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
+        ctx!.beginPath(); ctx!.arc(q.X, q.Y, r, 0, Math.PI * 2); ctx!.fill();
+      }
+      ctx!.globalCompositeOperation = 'source-over';
+
+      drawUnrolled(tNow, fade, dark);
+
+      // muon track on top
+      ctx!.lineCap = 'round';
+      ctx!.strokeStyle = dark ? `rgba(255,255,255,${0.95 * fade})` : `rgba(19,22,35,${0.9 * fade})`;
+      ctx!.lineWidth = 2.2;
+      ctx!.beginPath(); ctx!.moveTo(p0.X, p0.Y); ctx!.lineTo(pH.X, pH.Y); ctx!.stroke();
+      // entry point & head
+      ctx!.fillStyle = dark ? `rgba(255,189,87,${fade})` : `rgba(233,135,15,${fade})`;
+      ctx!.beginPath(); ctx!.arc(p0.X, p0.Y, 3, 0, Math.PI * 2); ctx!.fill();
+      if (sNow > 0) {
+        ctx!.fillStyle = dark ? `rgba(255,255,255,${fade})` : `rgba(19,22,35,${fade})`;
+        ctx!.beginPath(); ctx!.arc(pH.X, pH.Y, 3.2, 0, Math.PI * 2); ctx!.fill();
+      }
+    }
+
+    // animation loop: ~30 fps, paused when off-screen or tab hidden
+    let visible = true, raf = 0, lastFrame = 0;
+    const loop = (now: number) => {
+      raf = 0;
+      if (!visible || document.hidden || reduced.matches) return;
+      if (now - lastFrame > 32) { lastFrame = now; draw(now); }
+      raf = requestAnimationFrame(loop);
+    };
+    const kick = () => { if (!raf && visible && !document.hidden && !reduced.matches) raf = requestAnimationFrame(loop); else draw(performance.now()); };
+
+    new ResizeObserver(resize).observe(root);
+    new IntersectionObserver((e) => { visible = e[0]?.isIntersecting ?? true; kick(); }).observe(root);
+    document.addEventListener('visibilitychange', kick);
+    reduced.addEventListener?.('change', kick);
+    new MutationObserver(() => draw(performance.now())).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    resize();
+    kick();
+  }
+</script>
